@@ -167,9 +167,81 @@
 
 %-------------------------------------------------------------------------------
 \begin{frame}
-    \frametitle{ROC curve and AUC}
+    \frametitle{Precision-Recall (PR) Curve (Optional)}
     
+    Average precision (AP) summarizes such a plot as the weighted mean of precisions achieved at each threshold.
+    \[
+        AP = \sum_{n}(R_n - R_{n-1})P_n
+    \]
+
+    \begin{itemize}
+        \item Where $P_n$ and $R_n$ are the precision and recall at the n-th threshold.
+        \item A pair $(P_n, P_k)$ is referred to as an \textit{operating point}.
+    \end{itemize}
     
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.35\columnwidth]{../plots/pr_curve.pdf}
+        \caption{A SVM classifier trained on the Breast Cancer dataset}
+    \end{figure}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Receiver Operating Characteristic (ROC) Curve}
+    
+    \begin{itemize}
+        \item The ROC curve is created by plotting the true positive rate (TPR) against the false positive rate (FPR) at various threshold settings.
+        \item Area Under Curve (AUC): The integration of the ROC function between 0 and 1.
+    \end{itemize}
+    
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.3\columnwidth]{../plots/roc_curve.pdf}
+        \caption{A SVM classifier trained on the Breast Cancer dataset}
+    \end{figure}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Example -- Weather Prediction}
+    
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            Build a logistic regression model to predict the weather based on the humidity. \\
+            Recorded 10 days in total.
+            
+            \begin{table}[]
+                \begin{tabular}{cc|cccccc}
+                \textbf{}      & \textbf{}           & \multicolumn{6}{l}{\textbf{Thresholds}}                                             \\
+                \textbf{Class} & \textbf{Prediction} & \textbf{0} & \textbf{0.2} & \textbf{0.4} & \textbf{0.6} & \textbf{0.8} & \textbf{1} \\ \hline
+                P              & 0.95                & 1          & 1            & 1            & 1            & 1            & 0          \\
+                N              & 0.85                & 1          & 1            & 1            & 1            & 1            & 0          \\
+                P              & 0.78                & 1          & 1            & 1            & 1            & 0            & 0          \\
+                P              & 0.66                & 1          & 1            & 1            & 1            & 0            & 0          \\
+                N              & 0.6                 & 1          & 1            & 1            & 1            & 0            & 0          \\
+                P              & 0.55                & 1          & 1            & 1            & 0            & 0            & 0          \\
+                N              & 0.53                & 1          & 1            & 1            & 0            & 0            & 0          \\
+                N              & 0.52                & 1          & 1            & 1            & 0            & 0            & 0          \\
+                N              & 0.51                & 1          & 1            & 1            & 0            & 0            & 0          \\
+                P              & 0.4                 & 1          & 1            & 1            & 0            & 0            & 0         
+                \end{tabular}
+                \end{table}
+
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            
+            \begin{table}[]
+                \begin{tabular}{c|cccccc}
+                \textbf{Threshold} & \textbf{0} & \textbf{0.2} & \textbf{0.4} & \textbf{0.6} & \textbf{0.8} & \textbf{1} \\ \hline
+                \textbf{TPR}       & 1          & 1            & 1            & 0.60         & 0.2          & 0          \\
+                \textbf{FPR}       & 1          & 1            & 1            & 0.4          & 0.2          & 0         
+                \end{tabular}
+            \end{table}
+            
+        \end{column}
+    \end{columns}
 \end{frame}
 
 %-------------------------------------------------------------------------------
