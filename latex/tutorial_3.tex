@@ -233,6 +233,8 @@
         \end{column}
         \begin{column}{0.5\textwidth}
             
+            Counting TP and FP:
+
             \begin{table}[]
                 \begin{tabular}{c|cccccc}
                 \textbf{Threshold} & \textbf{0} & \textbf{0.2} & \textbf{0.4} & \textbf{0.6} & \textbf{0.8} & \textbf{1} \\ \hline
@@ -263,15 +265,79 @@
 %-------------------------------------------------------------------------------
 \begin{frame}
     \frametitle{Should you trust the results?}
-    
+
+    Scenario 1 from Page 48 in Week 2 slides
+
+    \begin{itemize}
+        \item I built a model based on the data you gave me
+        \item It classified your data with 98\% accuracy
+        \item It should get 98\% accuracy on the rest of your data
+    \end{itemize}
+
+    Should you trust them?\\
+
+    \begin{itemize}
+        \item They are reporting training error
+        \item This might have nothing to do with test error
+        \item E.g., They could have t a very deep decision tree
+    \end{itemize}
+
+    Why?
+
+    \begin{itemize}
+        \item If they only tried a few very simple models, the 98\% might be reliable
+        \item E.g., They only considered decision stumps with simple 1-variable rules
+    \end{itemize}
     
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \begin{frame}
-    \frametitle{Parametric Tests VS. Non-parametric Tests}
+    \frametitle{Should you trust the results?}
     
+    Scenario 2 from Page 49 in Week 2 slides
+
+    \begin{itemize}
+        \item I built a model based on half of the data you gave me
+        \item It classified the other half of the data with 98\% accuracy
+        \item It should get 98\% accuracy on the rest of your data
+    \end{itemize}
+
+    Probably
+
+    \begin{itemize}
+        \item They computed the validation error once
+        \item This is an unbiased approximation of the test error
+        \item Trust them if you believe they did not violate the golden rule
+    \end{itemize}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Should you trust the results?}
     
+    Scenario 4 from Page 51 in Week 2 slides
+
+    \begin{itemize}
+        \item I built 1 billion models based on half of the data you gave me
+        \item One of them classified the other half of the data with 98\% accuracy
+        \item It should get 98\% accuracy on the rest of your data
+    \end{itemize}
+
+    Probably not
+
+    \begin{itemize}
+        \item They computed the validation error a huge number of times
+        \item They tried so many models, one of them is likely to work by chance
+    \end{itemize}
+
+    Why?
+
+    \begin{itemize}
+        \item If the 1 billion models were all extremely-simple, 98\% might be reliable.
+    \end{itemize}
+
 \end{frame}
 
 %-------------------------------------------------------------------------------
