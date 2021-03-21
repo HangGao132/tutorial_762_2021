@@ -31,7 +31,7 @@
     urlcolor=blue,
 }
 
-\title{Tutorial 2}
+\title{Tutorial 3}
 \subtitle{Decision Tree, Cross-validation, Precision and Recall}
 \author{Luke Chang}
 \institute{The University of Auckland}
@@ -50,9 +50,9 @@
         \item Evaluation Metrics: Accuracy, Precision, Recall and F1 score
         \item ROC curve and AUC
         \item Should you trust the results?
-        \item Parametric Tests VS. Non-parametric Tests
         \item Regression and Least Square Problem
-        \item Ensemble Methods
+        \item Cross-Validation Questions
+        \item Ensemble Questions
     \end{enumerate}
     
 \end{frame}
@@ -247,7 +247,7 @@
 
             \begin{table}[]
                 \begin{tabular}{c|cccccc}
-                \textbf{Threshold} & \textbf{0} & \textbf{0.2} & \textbf{0.4} & \textbf{0.6} & \textbf{0.8} & \textbf{1} \\ \hline
+                \textbf{Threshold} & \textbf{1} & \textbf{0.8} & \textbf{0.6} & \textbf{0.4} & \textbf{0.2} & \textbf{0} \\ \hline
                 \textbf{TPR}       & 0          & 0.2            & 0.6            & 1         & 1         & 1          \\
                 \textbf{FPR}       & 0          & 0.2           & 0.4           & 1          & 1          & 1         
                 \end{tabular}
@@ -395,18 +395,21 @@
         If you do 2-fold cross validation, 10-fold cross validation or leave-one-out, or use a 70/30 percent train/validation single split.  What effect will this have on your results?
     \end{block}
     
+    \onslide<2->{
     \begin{itemize}
         \item Leave-one-out means that you have a bigger training set and a bigger validation set. Also you have N repetitions where N is the size of your dataset.
         \item 2-fold gives you a much smaller training set but a bigger validation set.  A bigger validation set is good but a smaller training set is not – high bias.
         \item 10-fold validation gives you a bigger training set but an even smaller validation set than 2-fold – high variance.
     \end{itemize}
+    }
 
     \begin{block}{Question 2}
         Which will give you the best representative value to the “unseen test set”?
     \end{block}
 
-    Probably leave-one-out, with 2-fold the training set might be too small and with 10-fold then validation set might be too small, but tenfold is typically better than 2-fold.
-
+    \onslide<3->{
+        Probably leave-one-out, with 2-fold the training set might be too small and with 10-fold then validation set might be too small, but tenfold is typically better than 2-fold.
+    }
 \end{frame}
 
 %-------------------------------------------------------------------------------
@@ -417,19 +420,23 @@
         Will you get a different answer for a very big or a very small dataset?
     \end{block}
 
-    \begin{itemize}
-        \item For a very big dataset – all will probably give you the same answer
-        \item For a very small dataset – you would probably have to do 10-fold or leave-one-out to get good results
-    \end{itemize}
+    \onslide<2->{
+        \begin{itemize}
+            \item For a very big dataset – all will probably give you the same answer
+            \item For a very small dataset – you would probably have to do 10-fold or leave-one-out to get good results
+        \end{itemize}
+    }
 
     \begin{block}{Question 4}
         Which will be the fastest in terms of computation?
     \end{block}
 
-    \begin{itemize}
-        \item Leave-one-out is the most expensive, you have to learn N models.
-        \item 10-fold CV means you need to learn 10 models and 2-fold means you have to learn 2 models.
-    \end{itemize}
+    \onslide<3->{
+        \begin{itemize}
+            \item Leave-one-out is the most expensive, you have to learn N models.
+            \item 10-fold CV means you need to learn 10 models and 2-fold means you have to learn 2 models.
+        \end{itemize}
+    }
 
 \end{frame}
 
@@ -439,35 +446,53 @@
         What are the two key factors an ensemble must have?
     \end{block}
 
-    \begin{itemize}
-        \item Each tree must perform better than random guess/ average.
-        \item Must be uncorrelated.
-    \end{itemize}
+    \onslide<2->{
+        \begin{itemize}
+            \item Each tree must perform better than random guess/ average.
+            \item Must be uncorrelated.
+        \end{itemize}
+    }
 
     \begin{block}{Question 2}
-        Which will be the fastest in terms of computation?
+        Bagging changes two things in the dataset, what are they?
     \end{block}
 
-    \begin{itemize}
-        \item Leave-one-out is the most expensive, you have to learn N models.
-        \item 10-fold CV means you need to learn 10 models and 2-fold means you have to learn 2 models.
-    \end{itemize}
+    \onslide<3->{
+        \begin{itemize}
+            \item The choice of data instances
+            \item The distribution over them (With replacement)
+        \end{itemize}
+    }
 
 \end{frame}
 
 \begin{frame}
     \frametitle{Ensemble Questions}
+
+    To apply binary classification method on multi-class data, you need:
+
+    \begin{itemize}
+        \item One-Vs-Rest (OVR)
+        \item One-Vs-One (OVO)
+        \item Error-Correcting Output Code (ECOC)
+    \end{itemize}
+
     \begin{block}{Question 3}
-        Does Error Correcting code work better when there are many classes or when there are few? Why? 
+        Does Error-Correcting Output Code (ECOC) work better when there are many classes or when there are few? Why? 
     \end{block}
 
-    It will work better with many classes with 3 classes there are very few codes.
+    \onslide<2->{
+        It will work better with many classes with 3 classes there are very few codes.\\
+        \textbf{Basic concept}: Encode the $N$-output classes with number of bits.
+    }
 
     \begin{block}{Question 4}
-        4.	If you are going to choose with replacement can you then make your training set as big as you want? Will this work? 
+        If you are going to choose with replacement can you then make your training set as big as you want? Will this work? 
     \end{block}
 
-    You cannot make a million instances out of 100, but if you are short on data you can use this to try and bolster your results – especially in ensembles.
+    \onslide<3->{
+        You cannot make a million instances out of 100, but if you are short on data you can use this to try and bolster your results – especially in ensembles.
+    }
 
 \end{frame}
 
@@ -499,36 +524,37 @@
     \end{block}
 
     \onslide<2->{
-        No because if you have correlated attributes Random forest will say neither are important even if they are the most important.  This is because it randomizes the variables one at a time, thereby relying on the correlated variable when each is randomized.
-    }
-
-    \onslide<3->{
-        \begin{block}{Question 7}
-            Which of the “methods for constructing ensembles” does random forest use? 
-        \end{block}
-    }
-
-    \onslide<4->{
-        Manipulating the training set, Manipulating the input features (columns), Injecting Randomness
+        No because if you have correlated attributes Random forest will say neither are important even if they are the most important.\\
+        This is because it randomizes the variables one at a time, thereby relying on the correlated variable when each is randomized.\\
+        \textbf{Example} Logic Function: $A \lor (B \land C)$ - B and C are correlated. If we train a tree with only A and B, or A and C, we will not have the correct logic.
     }
 
 \end{frame}
 
 \begin{frame}
     \frametitle{Ensemble Questions}
-    \begin{block}{Question 8}
-        Which of the “methods for constructing ensembles” does XGBoost use?
+
+    \begin{block}{Question 7}
+        Which of the “methods for constructing ensembles” does random forest use? 
     \end{block}
+    
 
     \onslide<2->{
         Manipulating the training set, Manipulating the input features (columns), Injecting Randomness
     }
 
+    \begin{block}{Question 8}
+        Which of the “methods for constructing ensembles” does XGBoost use?
+    \end{block}
+    
+
     \onslide<3->{
-        \begin{block}{Question 9}
-            What is one of the main differences between XG Boost and Random Forests? 
-        \end{block}
+        Manipulating the training set, Manipulating the input features (columns), Injecting Randomness
     }
+
+    \begin{block}{Question 9}
+        What is one of the main differences between XG Boost and Random Forests? 
+    \end{block}
 
     \onslide<4->{
         XG Boost chooses without replacement so does not change the distribution of the dataset – also Boosting will have to use a smaller training set by definition; also RF uses democratic voting and XG Boost uses weighted voting
@@ -538,6 +564,7 @@
 
 \begin{frame}
     \frametitle{Ensemble Questions}
+
     \begin{block}{Question 10}
         What is the difference between attribute error and class error and does it have a major effect in ensembles? 
     \end{block}
@@ -546,17 +573,34 @@
         Attribute error is when noises is added to an input variable X and class error is when noise is added to the class Y
     }
 
-    \onslide<3->{        
-        \medskip
-        \textbf{Boosting algorithm} increases the weights of miss-classified data points over time, so that the next classifier will pay extra attention to get them right.
-        \begin{block}{Question 11}
-            What is the main difference between AdaBoost and XGBoost? 
-        \end{block}
-    }
+    \begin{block}{Question 10a}
+        Are some ensemble methods more sensitive to this? 
+    \end{block}
 
-    \onslide<4->{
-        AdaBoost weights the data instances, and XGBoost weights the trees added into the ensemble – non-democratic voting.
+    \onslide<2->{
+        All ensemble methods should work will with attribute error to a point.\\ 
+        But AdaBoost is very sensitive to class errors because it weights instances, whereas XGBoost weights trees.
     }
 
 \end{frame}
+
+\begin{frame}
+    \frametitle{Ensemble Questions}
+
+    \textbf{Boosting algorithm} increases the weights of miss-classified data points over time, so that the next classifier will pay extra attention to get them right.
+
+    \begin{block}{Question 11}
+        What is the main difference between AdaBoost and XGBoost? 
+    \end{block}
+    
+    \onslide<2->{
+        \begin{itemize}
+            \item AdaBoost weights the data instances, and XGBoost weights the trees added into the ensemble – non-democratic voting.
+            \item AdaBoost uses ``Weak learner''. Each tree has only 1 node and 2 leaves (a stump).
+            \item XGBoost uses larger tree similar to Random Forest, and uses \texttt{max\_depth} as a hyperparameter.
+        \end{itemize}
+    }
+
+\end{frame}
+
 \end{document}
