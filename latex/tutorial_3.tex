@@ -344,14 +344,218 @@
 \begin{frame}
     \frametitle{Regression and Least Square Problem}
     
+    There are $n$ samples, each sample has $d$ features
+    \[
+        w = \begin{bmatrix}
+            w_1 \\ \vdots \\ w_d
+        \end{bmatrix},
+        y = \begin{bmatrix}
+            y_1  \\ \vdots \\ y_n
+        \end{bmatrix},
+        x_i = \begin{bmatrix}
+            x_1  \\ \vdots \\ x_d
+        \end{bmatrix}
+    \]
     
+    $X$ is a matrix which represents all samples. Such that:
+
+    \[
+        \hat{y} = X w = 
+        \begin{bmatrix}
+            x^T_1 \\ \vdots \\ x^T_n
+        \end{bmatrix} 
+        \begin{bmatrix}
+            w_1 \\ \vdots \\ w_d
+        \end{bmatrix}
+        = 
+        \begin{bmatrix}
+            x_{11} & \cdots & x_{1d} \\
+            \vdots & \ddots & \vdots \\
+            x_{n1} & \cdots & x_{nd}
+        \end{bmatrix}
+        \begin{bmatrix}
+            w_1 \\ \vdots \\ w_d
+        \end{bmatrix}
+        = 
+        \begin{bmatrix}
+            \hat{y}_1 \\ \vdots \\ \hat{y}_n
+        \end{bmatrix}
+    \]
+
+    Mean Squared Error:
+    \[
+        \text{MSE} = \frac{1}{n} \sum^{n}_{i=1}(y_i - \hat{y}_i)^2
+    \]
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \begin{frame}
-    \frametitle{Ensemble Methods}
+    \frametitle{Cross Validation Questions}
+    \begin{block}{Question 1}
+        If you do 2-fold cross validation, 10-fold cross validation or leave-one-out, or use a 70/30 percent train/validation single split.  What effect will this have on your results?
+    \end{block}
     
-    
+    \begin{itemize}
+        \item Leave-one-out means that you have a bigger training set and a bigger validation set. Also you have N repetitions where N is the size of your dataset.
+        \item 2-fold gives you a much smaller training set but a bigger validation set.  A bigger validation set is good but a smaller training set is not – high bias.
+        \item 10-fold validation gives you a bigger training set but an even smaller validation set than 2-fold – high variance.
+    \end{itemize}
+
+    \begin{block}{Question 2}
+        Which will give you the best representative value to the “unseen test set”?
+    \end{block}
+
+    Probably leave-one-out, with 2-fold the training set might be too small and with 10-fold then validation set might be too small, but tenfold is typically better than 2-fold.
+
 \end{frame}
 
+%-------------------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Cross Validation Questions}
+    \begin{block}{Question 3}
+        Does it matter how large your original dataset is?\\
+        Will you get a different answer for a very big or a very small dataset?
+    \end{block}
+
+    \begin{itemize}
+        \item For a very big dataset – all will probably give you the same answer
+        \item For a very small dataset – you would probably have to do 10-fold or leave-one-out to get good results
+    \end{itemize}
+
+    \begin{block}{Question 4}
+        Which will be the fastest in terms of computation?
+    \end{block}
+
+    \begin{itemize}
+        \item Leave-one-out is the most expensive, you have to learn N models.
+        \item 10-fold CV means you need to learn 10 models and 2-fold means you have to learn 2 models.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Ensemble Questions}
+    \begin{block}{Question 1}
+        What are the two key factors an ensemble must have?
+    \end{block}
+
+    \begin{itemize}
+        \item Each tree must perform better than random guess/ average.
+        \item Must be uncorrelated.
+    \end{itemize}
+
+    \begin{block}{Question 2}
+        Which will be the fastest in terms of computation?
+    \end{block}
+
+    \begin{itemize}
+        \item Leave-one-out is the most expensive, you have to learn N models.
+        \item 10-fold CV means you need to learn 10 models and 2-fold means you have to learn 2 models.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Ensemble Questions}
+    \begin{block}{Question 3}
+        Does Error Correcting code work better when there are many classes or when there are few? Why? 
+    \end{block}
+
+    It will work better with many classes with 3 classes there are very few codes.
+
+    \begin{block}{Question 4}
+        4.	If you are going to choose with replacement can you then make your training set as big as you want? Will this work? 
+    \end{block}
+
+    You cannot make a million instances out of 100, but if you are short on data you can use this to try and bolster your results – especially in ensembles.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Ensemble Questions}
+    \begin{block}{Question 5}
+        What is one of the main differences between random forest and bagging?
+        \onslide<2->{
+            Random forest samples the features.
+            }
+        \begin{itemize}
+            \item What will the effect be of having a dataset with a larger or smaller number of instances?\\
+            \onslide<2->{
+                The effect on bagging and random forest will be the same – they both sample the instance space with replacement.
+            }
+            \item What will the effect be of having a dataset with a larger or smaller number of features?\\
+            \onslide<2->{
+                Since random forests sample the features you might get better results when there are a lot of features because you got rid of a lot of noise – but with a data set with only a few features you might do worse because you are not left with enough features to make a good classifier
+            }
+        \end{itemize}
+    \end{block}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Ensemble Questions}
+    \begin{block}{Question 6}
+        Will variable importance in Random Forest always give you the “correct” answer? Why or why not? 
+    \end{block}
+
+    \onslide<2->{
+        No because if you have correlated attributes Random forest will say neither are important even if they are the most important.  This is because it randomizes the variables one at a time, thereby relying on the correlated variable when each is randomized.
+    }
+
+    \onslide<3->{
+        \begin{block}{Question 7}
+            Which of the “methods for constructing ensembles” does random forest use? 
+        \end{block}
+    }
+
+    \onslide<4->{
+        Manipulating the training set, Manipulating the input features (columns), Injecting Randomness
+    }
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Ensemble Questions}
+    \begin{block}{Question 8}
+        Which of the “methods for constructing ensembles” does XGBoost use?
+    \end{block}
+
+    \onslide<2->{
+        Manipulating the training set, Manipulating the input features (columns), Injecting Randomness
+    }
+
+    \onslide<3->{
+        \begin{block}{Question 9}
+            What is one of the main differences between XG Boost and Random Forests? 
+        \end{block}
+    }
+
+    \onslide<4->{
+        XG Boost chooses without replacement so does not change the distribution of the dataset – also Boosting will have to use a smaller training set by definition; also RF uses democratic voting and XG Boost uses weighted voting
+    }
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Ensemble Questions}
+    \begin{block}{Question 10}
+        10.	What is the difference between attribute error and class error and does it have a major effect in ensembles? 
+    \end{block}
+
+    \onslide<2->{
+        Attribute error is when noises is added to an input variable X and class error is when noise is added to the class Y
+    }
+
+    \onslide<3->{
+        Boosting algorithm increases the weights of miss-classified data points over time, so that the next classifier will pay extra attention to get them right.
+        \begin{block}{Question 11}
+            What is the main difference between AdaBoost and XGBoost? 
+        \end{block}
+    }
+
+    \onslide<4->{
+        AdaBoost weights the data instances, and XGBoost weights the trees added into the ensemble – non-democratic voting.
+    }
+
+\end{frame}
 \end{document}
