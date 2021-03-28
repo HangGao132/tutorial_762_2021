@@ -432,7 +432,7 @@
 %-------------------------------------------------------------------------------
 \section{Different Types of Layers}
 \begin{frame}
-    \frametitle{Different Types of Layers - Convolutional Layers}
+    \frametitle{Convolutional Neural Network (CNN) - Convolutional Layers}
     
     \begin{itemize}
         \item Convolutional Neural Network (CNN) is commonly applied to image datasets.
@@ -449,32 +449,97 @@
 
     The height of the output is:
     \[
-        H_{\text{out}} = 
+        H_{\text{out}} = \lfloor \frac{H_{\text{in}} - K + 2P}{S} + 1 \rfloor
     \]
+    Where $K$ is kernel size, $S$ is stride, and $P$ is zero padding.\\
     The same formula is also applied to the output width.
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \begin{frame}
-    \frametitle{Pooling Layers}
-    
+    \frametitle{Convolutional Neural Network (CNN) - Pooling Layers}
+    \small
+    Pooling layers of a CNN implement a spatial dimensionality reduction operation designed to reduce the number of trainable parameters for the next layers.\break
+
+    Different types of pooling layer:
+    \begin{itemize}
+        \item Average pooling
+        \item Max. pooling
+        \item Adaptive max. pooling: Similar to Max. pooling, but define \texttt{output\_size} instead of kernel size.
+    \end{itemize}
+
     \begin{figure}
         \centering
-        \includegraphics[width=0.2\columnwidth]{../imgs/image_nn.jpg}
+        \includegraphics[width=0.27\columnwidth]{../imgs/max_pool.jpg}
     \end{figure}
-\end{frame}
 
-%-------------------------------------------------------------------------------
-\begin{frame}
-    \frametitle{Recurrent Layers}
-        
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.37\columnwidth]{../imgs/image_nn.jpg}
+    \end{figure}
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \section{Tutorial Questions}
 \begin{frame}
-    \frametitle{Tutorial Questions}
-        
+    \frametitle{Tutorial Questions for Neural Networks}
+
+    \begin{block}{Question 1}
+        Suppose you have a fully connected Neural Network with 2 variable inputs, 1 hidden layer with 3 nodes and an output layer with 4 nodes.
+    \end{block}
+
+    \begin{itemize}
+        \item How many weights will you learn?
+        \item What will be the hypothesis returned by this neural network?
+        \item What will be the hypothesis space?
+        \item If you add a second hidden layer to the neural network above, also with 3 nodes, how many weights will we learn?
+        \item Which NN will be more apt to over fit?
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Tutorial Questions for Genetic Algorithms}
+
+    \begin{block}{Question 1}
+        Suppose you have a population of two individuals 111111 and 101010.    
+    \end{block}
+
+    How many applications of:
+    \begin{itemize}
+        \item single-point mutation would it take to get to 101111?
+        \item single-point crossover would it take to get to  101111?
+        \item two-point crossover would it take to get to  101111?
+        \item single-point mutation would it take to get to  111011?
+        \item single-point crossover would it take to get to  111011?
+        \item two-point crossover would it take to get to  111011?
+        \item single-point mutation would it take to get to  010101?
+        \item single-point crossover would it take to get to  010101?
+        \item two-point crossover would it take to get to  010101?
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Tutorial Questions for Genetic Algorithms}
+
+    \begin{block}{Question 2}
+        A population of two individuals 111111 and 101010. 
+        And the probability of choosing each parent is $1/2$ and the probability of choosing mutation, 
+        single-point crossover or two-point crossover is $1/3$. 
+        The mutation flips the bit and has a uniform chance of being applied to each bit. 
+        Single-point and two-point crossover have a uniform chance of choosing each location. 
+        Once crossover or mutation is done there is a 50\% of replacing each parent randomly.
+    \end{block}
+
+    Given $x \in \{101111, 111011, 010101\}$:
+    \begin{itemize}
+        \item What is the probability of getting $x$ by an application of mutation?
+        \item What is the probability of getting $x$ by an application of single-point crossover?
+        \item What is the probability of getting $x$ by an application of two-point crossover?
+        \item What is the combined probability?
+    \end{itemize}
+    
 \end{frame}
 
 \end{document}
