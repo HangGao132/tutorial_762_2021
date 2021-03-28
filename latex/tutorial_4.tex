@@ -11,7 +11,7 @@
 \usepackage{amssymb}
 \usepackage{array}
 \usepackage{bookmark}
-\usepackage{boondox-cal}
+% \usepackage{boondox-cal}
 \usepackage{caption}
 \usepackage{colortbl}
 \usepackage{csquotes}
@@ -26,7 +26,7 @@
 \usepackage{svg}
 \usepackage{xcolor}
 
-\pgfplotsset{compat=1.17}
+% \pgfplotsset{compat=1.17}
 \usetikzlibrary{calc}
 
 \hypersetup{
@@ -85,9 +85,9 @@
     \begin{itemize}
         \item The data has $n$ features, and the outputs have $m$ classes.
         \item $k$ hidden neurons in the hidden layer.
-        \item Let $x$ be the input vector where $x \in \rm^n$, hidden layer $h$ is a vector where $h \in \rm^k$ and output $o$ is a vector where $o \in \rm^m$.
-        \item Nodes are connected by weights. These weights are learnt during the training. The weight matrices for the hidden layer is $W_0 \in \rm^{k \times n}$, and for the output layer is $W_1 \in \rm^{m \times k}$.
-        \item Biases are $b_0 \in \rm^k$ and $b_1 \in \rm^m$, where $x_0 = h_0 = 1$.
+        \item Let $x$ be the input vector where $x \in \mathbb{R}^n$, hidden layer $h$ is a vector where $h \in \mathbb{R}^k$ and output $o$ is a vector where $o \in \mathbb{R}^m$.
+        \item Nodes are connected by weights. These weights are learnt during the training. The weight matrices for the hidden layer is $W_0 \in \mathbb{R}^{k \times n}$, and for the output layer is $W_1 \in \mathbb{R}^{m \times k}$.
+        \item Biases are $b_0 \in \mathbb{R}^k$ and $b_1 \in \mathbb{R}^m$, where $x_0 = h_0 = 1$.
     \end{itemize}
 
     \begin{figure}
@@ -284,7 +284,7 @@
             \epsilon \times x,& \text{otherwise}
         \end{cases}
     \]
-    Where $f(x) \in \rm$, and $\epsilon \in [0, 1)$ The derivative is equal to ($x = 0$ is not differentiable):
+    Where $f(x) \in \mathbb{R}$, and $\epsilon \in [0, 1)$ The derivative is equal to ($x = 0$ is not differentiable):
     \[
         f'(x) = \begin{cases}
             \epsilon,& \text{if } x < 0 \\
