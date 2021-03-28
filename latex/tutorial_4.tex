@@ -11,6 +11,7 @@
 \usepackage{amssymb}
 \usepackage{array}
 \usepackage{bookmark}
+\usepackage{boondox-cal}
 \usepackage{caption}
 \usepackage{colortbl}
 \usepackage{csquotes}
@@ -296,7 +297,93 @@
 %-------------------------------------------------------------------------------
 \section{Loss Functions}
 \begin{frame}
-    \frametitle{Loss Functions / Cost Function}
+    \frametitle{Loss/Cost Functions - MSE}
+    
+    The goal of training is to minimize a loss function. 
+    An objective function is a loss function.\break
+
+    \textbf{Mean Squared Error (MSE)}
+    \[
+        \mathcal{l}(X, y| W) = \text{MSE} = \frac{1}{N} \sum_{i=1}^{N}(y_i - \hat{y_i})^2
+    \]
+
+    \begin{itemize}
+        \item Squared L2-norm error;
+        \item Loss is computed forward,
+        \item $W$ are the weights.
+        \item $X$ are the data.
+        \item $y$ are the target labels.
+        \item Minimizing $\mathcal{l}$ using backpropagation with stochastic gradient descent (SGD) algorithm.
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Mean Absolute Error (MAE)}
+    
+    \[
+        \mathcal{l}(X, y| W) = \text{MAE} = \frac{1}{N} \sum_{i=1}^{N}|y_i - \hat{y_i}|
+    \]
+
+    \begin{itemize}
+        \item Minimizing L1-norm error
+        \item Compare with MSE, L1-norm is more robust to outliers.
+        \item Compare with MSE, the solution from L1-norm is unstable, so it is harder to optimize.
+    \end{itemize}
+
+    When use as regularization:
+    \begin{itemize}
+        \item L1-regularization prefers sparse outputs.
+        \item L2-regularization prefers smaller weights and distributes the weights more evenly.
+    \end{itemize}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Softmax Function}
+    Softmax function is defined as:
+    \[
+        \text{Softmax}(x_i) = \frac{\exp(x_i)}{ \sum_j \exp(x_j)}
+    \]
+
+    \begin{itemize}
+        \item The outputs from a NN can be negative or above 1.
+        \item Softmax function rescales them so that the elements of a n-dimensional output lie in the range $[0, 1]$ and sum to 1.
+    \end{itemize}
+        
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Negative Log Likelihood (NLL) Loss}
+
+    NLL Loss is useful to train a classification problem with multiple output classes.\break
+
+    Let $p$ be a vector of probabilities (after Softmax function). 
+    \[
+        p_k = \frac{\exp(f_k)}{\sum_j \exp(f_j)}
+    \]
+
+    The Loss for one example is:
+    \[
+        L_i = - \log(p_{y_i})
+    \]
+
+    The partial derivative is extremely simple:
+    \[
+        \frac{\partial L_i}{\partial f_k} = p_k - 1(y_i = k)
+    \]
+
+    Example:
+    \begin{table}[]
+        \begin{tabular}{ccc|c}
+         & \textbf{Class} & \textbf{Prediction} & \textbf{df} \\ \hline
+        Alpaca & 0 & 0.2 & \textbf{0.2} \\
+        Cat & 1 & 0.3 & \textbf{-0.7} \\
+        Dog & 0 & 0.5 & \textbf{0.5} \\       
+        \end{tabular}
+    \end{table}
         
 \end{frame}
 
@@ -304,13 +391,6 @@
 \section{Optimization}
 \begin{frame}
     \frametitle{Optimization}
-        
-\end{frame}
-
-%-------------------------------------------------------------------------------
-\section{Regularization}
-\begin{frame}
-    \frametitle{Dropout Layers}
         
 \end{frame}
 
@@ -330,12 +410,6 @@
 %-------------------------------------------------------------------------------
 \begin{frame}
     \frametitle{Recurrent Layers}
-        
-\end{frame}
-
-%-------------------------------------------------------------------------------
-\begin{frame}
-    \frametitle{Transformer Layers}
         
 \end{frame}
 
