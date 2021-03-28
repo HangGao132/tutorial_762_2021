@@ -390,21 +390,78 @@
 %-------------------------------------------------------------------------------
 \section{Optimization}
 \begin{frame}
-    \frametitle{Optimization}
-        
+    \frametitle{Optimization - Stochastic Gradient Descent (SGD)}
+    \small
+    
+    \begin{itemize}
+        \item Gradient Descent: Minimizing the loss function by computing the gradient of the error and adjust the weights to descend the landscape into an error minima.
+        \item Iterative algorithm
+        \item Starts from a random point and travels down its slope with \textbf{learning rate $\lambda$} until it reaches the lowest point.
+        \item Stochastic Gradient Descent (SGD) - Stochastic means \textbf{random}; Randomly select one instance at each iteration to reduce the computation cost;
+        \item SGD works well with \textbf{mini-batch}, where the entire training data is divided into multiple random batches (without replacement, usually between 32 and 256).
+    \end{itemize}
+    
+    \begin{figure}
+        \centering
+        \resizebox{0.2\columnwidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}
+                \addplot3[
+                    surf,
+                ]
+                {x^2+0.5*y^2};
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{figure}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \[
+                \text{step\_size} = \text{gradient} \times \lambda
+            \]
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \[
+                W^{[i+1]} = W^{[i]} - \text{step\_size}
+            \]
+        \end{column}
+    \end{columns}
+
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \section{Different Types of Layers}
 \begin{frame}
-    \frametitle{Convolution Layers}
-        
+    \frametitle{Different Types of Layers - Convolutional Layers}
+    
+    \begin{itemize}
+        \item Convolutional Neural Network (CNN) is commonly applied to image datasets.
+        \item CNN is a type of DNN.
+        \item Convolutional layers is the fundamental building blocks for CNN.
+        \item Convolutional layers convolve the input and pass its result to the next layer. (Convolution operation: $f*g$)
+        \item Similar to apply an image filter, but all weights in the kernel are learnt during the training.
+    \end{itemize}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.3\columnwidth]{../imgs/conv.jpg}
+    \end{figure}
+
+    The height of the output is:
+    \[
+        H_{\text{out}} = 
+    \]
+    The same formula is also applied to the output width.
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \begin{frame}
     \frametitle{Pooling Layers}
-        
+    
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.2\columnwidth]{../imgs/image_nn.jpg}
+    \end{figure}
 \end{frame}
 
 %-------------------------------------------------------------------------------
