@@ -304,7 +304,7 @@
 
     \textbf{Mean Squared Error (MSE)}
     \[
-        \mathcal{l}(X, y| W) = \text{MSE} = \frac{1}{N} \sum_{i=1}^{N}(y_i - \hat{y_i})^2
+        l(X, y| W) = \text{MSE} = \frac{1}{N} \sum_{i=1}^{N}(y_i - \hat{y_i})^2
     \]
 
     \begin{itemize}
@@ -313,7 +313,7 @@
         \item $W$ are the weights.
         \item $X$ are the data.
         \item $y$ are the target labels.
-        \item Minimizing $\mathcal{l}$ using backpropagation with stochastic gradient descent (SGD) algorithm.
+        \item Minimizing $l$ using backpropagation with stochastic gradient descent (SGD) algorithm.
     \end{itemize}
 \end{frame}
 
@@ -322,7 +322,7 @@
     \frametitle{Mean Absolute Error (MAE)}
     
     \[
-        \mathcal{l}(X, y| W) = \text{MAE} = \frac{1}{N} \sum_{i=1}^{N}|y_i - \hat{y_i}|
+        l(X, y| W) = \text{MAE} = \frac{1}{N} \sum_{i=1}^{N}|y_i - \hat{y_i}|
     \]
 
     \begin{itemize}
