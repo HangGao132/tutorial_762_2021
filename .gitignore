@@ -425,3 +425,4 @@ TSWLatexianTemp*
 .vscode
 
 latex/__latexindent_temp.tex
+data/openml
