@@ -14563,12 +14563,12 @@ Source: Chawla, N. V., Bowyer, K. W., Hall, L. O., &amp; Kegelmeyer, W. P. (2002
     <span class="c1"># Find k nearest neighbours for all X. </span>
     <span class="n">tree</span> <span class="o">=</span> <span class="n">KDTree</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
     <span class="n">k_indices</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
+    <span class="n">gaps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n_out</span><span class="p">)</span>
+    
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">i_x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">indices_outputs</span><span class="p">):</span>
         <span class="n">nn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">k_indices</span><span class="p">[</span><span class="n">i_x</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">dif</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i_x</span><span class="p">]</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">nn</span><span class="p">]</span>
-        <span class="n">gap</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span>
-        <span class="n">outputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">nn</span><span class="p">]</span> <span class="o">+</span> <span class="n">gap</span> <span class="o">*</span> <span class="n">dif</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">nn</span><span class="p">]</span> <span class="o">+</span> <span class="n">gaps</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">dif</span>
     
     <span class="k">return</span> <span class="n">outputs</span>
 </pre></div>
@@ -14734,7 +14734,11 @@ Accuracy on test set: 97.78%
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X0_smote</span> <span class="o">=</span> <span class="n">smote</span><span class="p">(</span><span class="n">X0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Generate 200% of synthetic data, with k = 5</span>
+
+<span class="c1"># If the value of an attribute is the same between the targeted point and its neighbour,</span>
+<span class="c1"># the difference for that attribute will be 0.</span>
+<span class="n">X0_smote</span> <span class="o">=</span> <span class="n">smote</span><span class="p">(</span><span class="n">X0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">X0_smote</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
@@ -14762,16 +14766,16 @@ Accuracy on test set: 97.78%
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>(72, 4)
-[[5.20852699 3.50852699 1.5        0.2       ]
- [5.16204993 3.46204993 1.5        0.2       ]
- [5.7        3.93459782 1.65513406 0.32243297]
- [4.87495348 3.1        1.52504652 0.12504652]
- [5.37425964 3.89141988 1.71716024 0.4       ]
+[[5.15969776 3.78010075 1.5        0.28010075]
+ [5.1042635  3.5        1.4042635  0.2       ]
+ [5.51435389 4.09058981 1.62376408 0.4       ]
+ [4.83795007 3.1        1.56204993 0.2       ]
+ [5.37358708 3.89119569 1.71760861 0.4       ]
  [5.1        3.7        1.5        0.4       ]
- [5.17496291 3.77501236 1.57501236 0.2       ]
- [4.93015091 3.53969818 1.43015091 0.13015091]
- [4.4082553  2.85046819 1.3917447  0.2082553 ]
- [4.81117612 3.08882388 1.57764777 0.2       ]]
+ [5.21254359 3.76248547 1.56248547 0.2       ]
+ [5.04990696 3.52504652 1.4        0.24990696]
+ [4.5        2.3        1.3        0.3       ]
+ [4.86709413 3.03290587 1.46581175 0.2       ]]
 [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 </pre>
@@ -14788,7 +14792,13 @@ Accuracy on test set: 97.78%
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X0_smote</span> <span class="o">=</span> <span class="n">smote</span><span class="p">(</span><span class="n">X0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Generate 50% of synthetic data, with k = 3</span>
+
+<span class="c1"># k-neighbours include the targeted point itself,</span>
+<span class="c1"># so k =3 means the target and 2 of its neighbours.</span>
+<span class="c1"># The smaller k gets, the more likely to resample from </span>
+<span class="c1"># the real data.</span>
+<span class="n">X0_smote</span> <span class="o">=</span> <span class="n">smote</span><span class="p">(</span><span class="n">X0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">X0_smote</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
@@ -14816,16 +14826,16 @@ Accuracy on test set: 97.78%
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>(18, 4)
-[[5.4        3.81501458 1.61501458 0.31501458]
- [4.4        3.01930985 1.3        0.2       ]
- [5.1        3.8        1.54839572 0.25160428]
- [5.1        3.8        1.50323009 0.29676991]
- [5.3151677  3.7        1.5        0.2       ]
- [5.7        3.8        1.7        0.3       ]
- [4.9530067  3.6        1.4        0.1530067 ]
- [4.9        3.1        1.5        0.1       ]
- [5.1        3.5        1.4        0.26962305]
- [5.31687644 3.73375288 1.46624712 0.23375288]]
+[[5.57003184 3.84332272 1.7        0.34332272]
+ [4.4        2.98507207 1.31492793 0.2       ]
+ [5.1        3.79034507 1.59034507 0.21930985]
+ [5.1        3.8        1.5620414  0.2379586 ]
+ [5.25188632 3.55188632 1.5        0.2       ]
+ [5.40969028 3.70323009 1.50646019 0.20323009]
+ [4.95038597 3.6        1.4        0.15038597]
+ [4.9        3.1        1.5        0.1728397 ]
+ [5.1        3.5        1.4        0.2       ]
+ [5.4        3.9        1.3        0.4       ]]
 [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 </pre>
 </div>
@@ -14841,7 +14851,12 @@ Accuracy on test set: 97.78%
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X0_smote</span> <span class="o">=</span> <span class="n">smote</span><span class="p">(</span><span class="n">X0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Generate 100% of synthetic data, with k = 1</span>
+
+<span class="c1"># When k = 1, the difference should be always 0. </span>
+<span class="c1"># Thus SMOTE is equivalent to resampling </span>
+<span class="c1"># (random choose n samples with replacement).</span>
+<span class="n">X0_smote</span> <span class="o">=</span> <span class="n">smote</span><span class="p">(</span><span class="n">X0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">X0_smote</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
