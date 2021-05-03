@@ -9,13 +9,8 @@
 
 
 <style type="text/css">
-    pre { line-height: 125%; }
-td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
-span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
-td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
-span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
-.highlight .hll { background-color: var(--jp-cell-editor-active-background) }
-.highlight { background: var(--jp-cell-editor-background); color: var(--jp-mirror-editor-variable-color) }
+    .highlight .hll { background-color: var(--jp-cell-editor-active-background) }
+.highlight  { background: var(--jp-cell-editor-background); color: var(--jp-mirror-editor-variable-color) }
 .highlight .c { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment */
 .highlight .err { color: var(--jp-mirror-editor-error-color) } /* Error */
 .highlight .k { color: var(--jp-mirror-editor-keyword-color); font-weight: bold } /* Keyword */
@@ -56,6 +51,19 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .s1 { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Single */
 .highlight .ss { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Symbol */
 .highlight .il { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Integer.Long */
+  </style>
+<style type="text/css">
+    /*This file contains any manual css for this page that needs to override the global styles.
+This is only required when different pages style the same element differently. This is just
+a hack to deal with our current css styles and no new styling should be added in this file.*/
+
+#ipython-main-app {
+    position: relative;
+}
+#jupyter-main-app {
+    position: relative;
+}
+
   </style>
 
 
@@ -14412,8 +14420,8 @@ Print the top 5 data points:
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>array([2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 1, 1])</pre>
+<pre>array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 2, 2], dtype=int32)</pre>
 </div>
 
 </div>
@@ -14457,7 +14465,7 @@ Print the top 5 data points:
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>array([37, 61, 20])</pre>
+<pre>array([37, 20, 61], dtype=int32)</pre>
 </div>
 
 </div>
@@ -14498,7 +14506,7 @@ Print the top 5 data points:
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
 <pre>array([20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 37, 37, 37,
-       37, 37, 37, 37, 37, 37, 37, 37, 61, 61])</pre>
+       37, 37, 37, 37, 37, 37, 37, 37, 61, 61], dtype=int32)</pre>
 </div>
 
 </div>
@@ -14556,7 +14564,7 @@ Source: Chawla, N. V., Bowyer, K. W., Hall, L. O., &amp; Kegelmeyer, W. P. (2002
     <span class="n">n_X</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
     <span class="n">n_out</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_X</span> <span class="o">*</span> <span class="n">p</span><span class="p">)</span>
     <span class="n">n_attributes</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="c1"># randomly choose n_X samples from X with replacement.</span>
+    <span class="c1"># randomly choose n_out samples from X with replacement (only records indices).</span>
     <span class="n">indices_outputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">n_X</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_out</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()[</span><span class="n">indices_outputs</span><span class="p">]</span>
 
