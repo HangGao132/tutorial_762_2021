@@ -1,0 +1,309 @@
+\documentclass[aspectratio=169, 10pt]{beamer}
+\usetheme{Madrid}
+\usefonttheme{professionalfonts}
+
+\usepackage[english]{babel}
+\usepackage[linguistics]{forest}
+\usepackage[utf8]{inputenc}
+\usepackage{algorithmic}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{bookmark}
+% \usepackage{boondox-cal}
+\usepackage{caption}
+\usepackage{colortbl}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage{lmodern}
+\usepackage{mathptmx}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\usepackage{svg}
+\usepackage{xcolor}
+
+% \pgfplotsset{compat=1.17}
+\usetikzlibrary{calc}
+
+\DeclareMathOperator*{\argmax}{argmax}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,      
+    urlcolor=blue,
+}
+
+\title{Tutorial 7}
+\subtitle{Tutorial on Naive Bayes}
+\author{Ben Halstead, Luke Chang}
+\institute{The University of Auckland}
+\date{May 2021}
+
+
+\begin{document}
+
+\frame{\titlepage}
+
+% %-------------------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Topics}
+
+    \tableofcontents
+        
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\section{Multinomial Naive Bayes Classifier}
+\begin{frame}[t]
+\frametitle{Example 1 - Multinomial Naive Bayes Classifier}
+    \begin{example}
+        You come to Fiji for a holiday. 10 days later, you realise the weather forecast here isn't very accurate.
+        Based on the information you gettered so far and today's weather report, you want to know ``Will it rain this afternoon?''
+    \end{example}
+
+    \begin{table}[]
+        \small
+        \begin{tabular}{l|llll|l}
+        \textbf{Day} & \textbf{Outlook} ($O$) & \textbf{Temperature} ($T$) & \textbf{Humidity} ($H$) & \textbf{Wind} ($W$) & \textbf{Rain} ($R$) \\ \hline
+        1            & Sunny            & Hot                  & High              & Weak          & True           \\
+        2            & Sunny            & Hot                  & High              & Strong        & False            \\
+        3            & Overcast         & Hot                  & High              & Weak          & True           \\
+        4            & Rain             & Mild                 & High              & Weak          & True           \\
+        5            & Rain             & Cool                 & Normal            & Weak          & True           \\
+        6            & Rain             & Cool                 & Normal            & Strong        & False            \\
+        7            & Overcast         & Cool                 & Normal            & Strong        & False            \\
+        8            & Overcast         & Mild                 & High              & Strong        & True           \\
+        9            & Sunny            & Cool                 & Normal            & Weak          & False            \\
+        10           & Rain             & Mild                 & Normal            & Weak          & False            \\ \hline
+        11           & Sunny            & Mild                 & Normal            & Strong        & ?            
+        \end{tabular}
+    \end{table}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+\frametitle{Example 1 - Formulate the Problem}
+    \begin{itemize}
+        \item Attribute: \textit{Outlook} ($O$), \textit{Temperature} ($T$), \textit{Humidity} ($H$), \textit{Wind} ($W$).
+        \item Output: \textit{Rain} ($R$) - Binary classification problem
+        \item How can we formulate this task?
+        \pause
+            \begin{itemize}
+                \item The probability of a given output $r \in \{\text{True}, \text{False}\}$ is:
+                    $$P(R=r| O,T,H,W)$$
+                \pause
+                \item We want to predict the label with the highest probability.
+                    $$R = \argmax_{r \in \{\text{T}, \text{F}\}} P(R=r| O,T,H,W)$$
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Example 1 - Formulate the Problem}
+        \begin{itemize}
+            \item Bayes Theorem: 
+            \[ P(Y|X) = \frac{P(X|Y) P(Y)}{P(X)} \]
+            \item Terminology -- Prior: $P(Y)$, Likelihood: $P(X|Y)$, Posterior: $P(Y|X)$, Marginal Probability: $P(X)$.
+            \item How to rewrite this expression using Bayes Theorem?
+            \pause
+            \[ R = \argmax_{r \in \{\text{T}, \text{F}\}} P(R=r| O,T,H,W) \]
+            \[ R = \argmax_{r \in \{\text{T}, \text{F}\}} \frac{P(O,T,H,W| R=r) P(R=r)}{P(O,T,H,W)} \]
+            \item How can we simplify this problem?
+            \pause
+            \\ $P(Y|X)$ is proportional to: $P(Y|X) \propto P(X|Y) P(Y)$
+            \[ R = \argmax_{r \in \{\text{T}, \text{F}\}} P(O,T,H,W| R=r) P(R=r) \]
+            \item The marginal Probability $P(O,T,H,W)$ is omitted. If we want to know the probability, we can normalise all possible outcomes.
+        \end{itemize}
+    \end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Example 1 - Calculate the Prior $P(R)$}
+        \begin{itemize}
+            \item 10 observations
+            \item 5 days was raining.
+            \item 5 days wasn't.
+            \pause
+            \item $P(R=\text{True}) = \frac{5}{10} = 0.5$
+            \item $P(R=\text{False}) = \frac{5}{10} = 0.5$
+        \end{itemize}
+    
+    \pause
+    \begin{example}
+        \textbf{Gambler's fallacy:} Toss a coin, I see 20 head showed up in a row.
+        The next time it must land on tail, since the probability of a coin landing 21 times is too low, $0.5^{21}$.
+    \end{example}
+    \pause
+    Problem:
+    \begin{itemize}
+        \item Frequentist Statistics: Each tail is independent.
+        \item $P(Y) \neq P(Y|X)$
+        \item Bayes Theorem: If the same coin is used, the more evidence you collect, the more likely the coin is loaded.
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Example 1 - Calculate the Likelihood}
+    \begin{itemize}
+        \item The first part of the formula, $P(O,T,H,W|R=r)$, is the \textit{likelihood}.
+        \item It describes how \textit{likely} an event occurs, given the outcome.
+        \item How do we calculate the \textit{likelihood}?
+        \pause
+        \item We could try to calculate $P(O,T,H,W|R=r)$ directly. What is the problem with this approach?
+            \begin{itemize}
+                \item We need to compute all possible combinations.
+                \item We have: $3\times3\times2\times2 = 36$ different combinations of $O,T,H,W$ \textit{per label}.
+                \item We only have 10 observations -- not enough to calculate probabilities for all combinations.
+            \end{itemize}
+        \item Naive Bayes makes the assumption that all attributes are independent: allowing us to calculate the likelihood as:
+            \[
+                P(O,T,H,W|R=r) = P(O|R=r)p(T|R=r)p(H|R=r)p(W|R=r)
+            \]    
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Example 1 - Calculate the Likelihood}
+    \begin{table}[]
+        \small
+        \begin{tabular}{l|llll|l}
+        \textbf{Day} & \textbf{Outlook} ($O$) & \textbf{Temperature} ($T$) & \textbf{Humidity} ($H$) & \textbf{Wind} ($W$) & \textbf{Rain} ($R$) \\ \hline
+        1            & Sunny            & Hot                  & High              & Weak          & True           \\
+        3            & Overcast         & Hot                  & High              & Weak          & True           \\
+        4            & Rain             & Mild                 & High              & Weak          & True           \\
+        5            & Rain             & Cool                 & Normal            & Weak          & True           \\
+        8            & Overcast         & Mild                 & High              & Strong        & True           \\
+        \end{tabular}
+    \end{table}
+
+    $$\sum P(X=x_i| R=r) = 1$$
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+           \begin{itemize}
+               \item $P(O=\text{Sunny} | R=\text{T}) = \frac{1}{5}$
+               \item $P(O=\text{Overcast} | R=\text{T}) = \frac{2}{5}$
+               \item $P(O=\text{Rain} | R=\text{T}) = \frac{2}{5}$
+           \end{itemize}
+           \vspace{0.5em}
+           \begin{itemize}
+            \item $P(T=\text{Hot} | R=\text{T}) = \frac{2}{5}$
+            \item $P(T=\text{Mild} | R=\text{T}) = \frac{2}{5}$
+            \item $P(T=\text{Cool} | R=\text{T}) = \frac{1}{5}$
+        \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}  %%<--- here
+            \begin{itemize}
+                \item $P(H=\text{High} | R=\text{T}) = \frac{4}{5}$
+                \item $P(H=\text{Normal} | R=\text{T}) = \frac{1}{5}$
+            \end{itemize}
+            \vspace{0.5em}
+            \begin{itemize}
+                \item $P(T=\text{Strong} | R=\text{T}) = \frac{1}{5}$
+                \item $P(T=\text{Weak} | R=\text{T}) = \frac{4}{5}$
+            \end{itemize}        
+        \end{column}
+    \end{columns}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Example 1 - Calculate the Likelihood}
+    \begin{table}[]
+        \small
+        \begin{tabular}{l|llll|l}
+        \textbf{Day} & \textbf{Outlook} ($O$) & \textbf{Temperature} ($T$) & \textbf{Humidity} ($H$) & \textbf{Wind} ($W$) & \textbf{Rain} ($R$) \\ \hline
+        2            & Sunny            & Hot                  & High              & Strong        & False            \\
+        6            & Rain             & Cool                 & Normal            & Strong        & False            \\
+        7            & Overcast         & Cool                 & Normal            & Strong        & False            \\
+        9            & Sunny            & Cool                 & Normal            & Weak          & False            \\
+        10           & Rain             & Mild                 & Normal            & Weak          & False            \\
+        \end{tabular}
+    \end{table}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+           \begin{itemize}
+               \item $P(O=\text{Sunny} | R=\text{F}) = \frac{2}{5}$
+               \item $P(O=\text{Overcast} | R=\text{F}) = \frac{1}{5}$
+               \item $P(O=\text{Rain} | R=\text{F}) = \frac{2}{5}$
+           \end{itemize}
+           \vspace{0.5em}
+           \begin{itemize}
+            \item $P(T=\text{Hot} | R=\text{F}) = \frac{1}{5}$
+            \item $P(T=\text{Mild} | R=\text{F}) = \frac{1}{5}$
+            \item $P(T=\text{Cool} | R=\text{F}) = \frac{3}{5}$
+        \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}  %%<--- here
+            \begin{itemize}
+                \item $P(H=\text{High} | R=\text{F}) = \frac{1}{5}$
+                \item $P(H=\text{Normal} | R=\text{F}) = \frac{4}{5}$
+            \end{itemize}
+            \vspace{0.5em}
+            \begin{itemize}
+                \item $P(T=\text{Strong} | R=\text{F}) = \frac{3}{5}$
+                \item $P(T=\text{Weak} | R=\text{F}) = \frac{2}{5}$
+            \end{itemize}        
+        \end{column}
+    \end{columns}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Example 1 - Calculate the Posterior}
+    \begin{table}[]
+        \small
+        \begin{tabular}{l|llll|l}
+        \textbf{Day} & \textbf{Outlook} ($O$) & \textbf{Temperature} ($T$) & \textbf{Humidity} ($H$) & \textbf{Wind} ($W$) & \textbf{Rain} ($R$) \\ \hline
+        11           & Sunny            & Mild                 & Normal            & Strong        & ?            
+        \end{tabular}
+    \end{table}
+
+    Now we have:
+    \[ R = \argmax_{r \in \{\text{T}, \text{F}\}} P(O| R=r)P(T| R=r)P(H| R=r)P(W| R=r) P(R=r) \]
+
+    \begin{align*}
+        P(R=\text{T}|O,T,H,W) & \propto P(O=\text{S}| R=\text{T})P(T=\text{M}| R=\text{T})P(H=\text{N}| R=\text{T})P(W=\text{S}| R=\text{T}) P(R=\text{T}) \\
+        & \propto \frac{1}{5} \cdot \frac{2}{5} \cdot \frac{1}{5} \cdot \frac{1}{5} = 0.0032\\
+    \end{align*}
+
+    \begin{align*}
+        P(R=\text{F}|O,T,H,W) & \propto P(O=\text{S}| R=\text{F})P(T=\text{M}| R=\text{F})P(H=\text{N}| R=\text{F})P(W=\text{S}| R=\text{F}) P(R=\text{F}) \\
+        & \propto \frac{2}{5} \cdot \frac{1}{5} \cdot \frac{4}{5} \cdot \frac{3}{5} = 0.0384\\
+    \end{align*}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Example 1 - How Likely?}
+    \begin{table}[]
+        \small
+        \begin{tabular}{l|llll|l}
+        \textbf{Day} & \textbf{Outlook} ($O$) & \textbf{Temperature} ($T$) & \textbf{Humidity} ($H$) & \textbf{Wind} ($W$) & \textbf{Rain} ($R$) \\ \hline
+        11           & Sunny            & Mild                 & Normal            & Strong        & ?            
+        \end{tabular}
+    \end{table}
+
+    \begin{align*}
+        P(R=\text{T}|O,T,H,W) & = \frac{0.0032}{P(O,T,H,W)}\\
+        P(R=\text{F}|O,T,H,W) & = \frac{0.0384}{P(O,T,H,W)}\\
+        P(R=\text{T}|O,T,H,W) & = \frac{0.0032}{0.0032 + 0.0384} = 0.08\\
+        P(R=\text{F}|O,T,H,W) & = \frac{0.0384}{0.0032 + 0.0384} = 0.92\\
+    \end{align*}
+
+    Given the information, there is $92\%$ to not rain.
+\end{frame}
+
+\end{document}
+
+
