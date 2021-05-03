@@ -305,7 +305,7 @@
 \end{frame}
 
 %-------------------------------------------------------------------------------
-\section{Text Preprocessing}
+\section{Naive Bayes for Text Classification}
 \begin{frame}{Text Representation - Bag of Words (BoW)}
     \begin{itemize}
         \item \textit{Bag of Words} represents a document as an unordered collection of words and their frequencies.
@@ -548,7 +548,7 @@
 \end{frame}
     
 %-------------------------------------------------------------------------------
-\section{Extensions}
+\section{Language Models}
 \begin{frame}{N-grams}
 \begin{itemize}
     \item One problem we encounter with Naive Bayes is that we lose all interactions between features.
@@ -563,7 +563,7 @@
 \begin{itemize}
     \item What are the Bigrams of the sentence "Auckland is in the north of the North Island"? (including stop words)
     \pause
-    \item \{"Auckland is", "is in", "in the", "the north", "north of", "of the", "the North", "North Island\}
+    \item $\{$"Auckland is", "is in", "in the", "the north", "north of", "of the", "the North", "North Island$\}$
     \item We have now captured the phrase "North Island" which is much more informative than "North" and "Island" separately!
 \end{itemize}
 \end{frame}
