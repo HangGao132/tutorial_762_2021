@@ -368,26 +368,44 @@
         \item For each word in this collection, the likelihood under class $v_j$, $p(w_i|v_j)$, is the probability of  selecting $w_i$ if you picked a random word out of all words in the training set labeled with class $v_j$.
         \item $p(w_i|v_j) = \frac{n_{ij}}{n_j}$, the number of times word $w_i$ appears in the training set in sentences labeled with class $v_j$, divided by the number of all words in sentences labeled with class $v_j$.
     \end{itemize}
-    \end{frame}
-
-%-------------------------------------------------------------------------------
-\begin{frame}{BoW Example}
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.8\textwidth]{../imgs/sentence_example.png}
-        \caption{Six training observations in the format (sentence, label).}
-    \end{figure}
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \begin{frame}{BoW Example}
- What does the training data look like after the stop words have been removed?
- \pause
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.8\textwidth]{../imgs/sentence_nostop.png}
-        \caption{Training data with stop words removed.}
-    \end{figure}
+    Six training observations in the format (sentence, label).
+
+    \begin{table}[]
+        \small
+        \begin{tabular}{l|l|l}
+        \textbf{Index} & \textbf{Sentence}                                                                     & \textbf{Label} \\ \hline
+        1              & Auckland is in the North Island of New Zealand.                                       & Auckland       \\
+        2              & Auckland has a large population.                                                      & Auckland       \\
+        3              & It is in the Auckland Region, governed by Auckland Council.                           & Auckland       \\
+        4              & Dunedin is in the South Island of New Zealand.                                        & Dunedin        \\
+        5              & Dunedin has the sixth highest population in New Zealand.                              & Dunedin        \\
+        6              & It was the largest city in New Zealand until the formation of the   Auckland Council. & Dunedin       
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}{BoW Example}
+    What does the training data look like after  transforming to lower case, and removing the stop words and punctuations?
+    \pause
+
+    \begin{table}[]
+        \small
+        \begin{tabular}{c|l|c|c}
+        \textbf{Index} & \textbf{Sentence}                                   & \textbf{Word Count} & \textbf{Label} \\ \hline
+        1              & auckland north island new zealand                   & 5                   & Auckland       \\
+        2              & auckland large population                           & 3                   & Auckland       \\
+        3              & auckland region governed auckland concil            & 5                   & Auckland       \\
+        4              & dunedin south island new zealand                    & 5                   & Dunedin        \\
+        5              & dunedin sixth highest population new zealand        & 6                   & Dunedin        \\
+        6              & largest city new zealand formation auckland council & 7                   & Dunedin       
+        \end{tabular}
+    \end{table}
+
 \end{frame}
 
 %-------------------------------------------------------------------------------
