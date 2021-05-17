@@ -26,6 +26,7 @@
 \usepackage{tabularx}
 \usepackage{textcomp}
 \usepackage{xcolor}
+\usepackage{bm}
 
 \addbibresource{references.bib}
 
@@ -952,13 +953,27 @@ where $\alpha$ is the learning rate. (In a fully deterministic environment, a le
         \end{tikzpicture}
     \end{figure}
     
-    Note: The initial Q-value does not affect $V(s)$.
+    Note: The initial value of $Q$ does not affect $V(s)$.
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \section{Association Rule Mining}
 \begin{frame}[t]
-\frametitle{Association Rule Mining}
+\frametitle{Terminology}
+\small
+
+\begin{itemize}
+    \item \textbf{Itemset:} A collection of one or more items, e.g. $X = \{A, B\}$, $Y =\{ B \}$ Note: Single item can be an itemset.
+    \item \textbf{$\bm{N = |T|}$:} is the number of transactions (instances)
+    \item \textbf{$\bm{d = |I|}$:} is the number of distinct (unique) items. There are \textcolor{red}{$2^d$} possible itemsets.
+    \item \textbf{Width $\bm{w}$:} The transaction width is the number of items present in a transaction.
+    \item \textbf{Support count $\bm{\sigma}$:} Frequency of occurrence of an itemset, e.g. $\sigma(\{A, B\})=2$ means 2 transactions contain the itemset $\{A, B\}$.
+    \item \textbf{Frequent Itemset:} An itemset whose support is greater than or equal to the \textcolor{red}{\textit{minsup}} threshold
+    \item \textbf{Support $s(X \to Y)$:} Fraction of transactions that contain an itemset
+        \[ s(X \to Y) = \frac{\sigma(X \cup Y)}{|T|} \] 
+    \item \textbf{Confidence $\bm{c \to Y}$:} Measures how often items in $Y$ appear in transactions that contain $X$
+        \[ c(X \to Y) = \frac{\sigma(X \cup Y)}{\sigma(X)} \] 
+\end{itemize}
 
 
 \end{frame}
@@ -967,7 +982,103 @@ where $\alpha$ is the learning rate. (In a fully deterministic environment, a le
 \begin{frame}[t]
 \frametitle{Apriori Algorithm}
 
+\begin{itemize}
+    \item \textbf{Goal:} Reducing the number of candidates
+    \item \textbf{Apriori principle:} ``If an itemset is frequent, then all of its subsets must also be frequent.'' -- \textcolor{red}{anti-monotone} property of support
+        \[ \forall X, Y:(X \subseteq Y) \Rightarrow s(X) \geq s(Y) \]
+    \item \textbf{Maximal Frequent Itemset:} If none of its immediate supersets is frequent
+    \item \textbf{Closed Frequent Itemset:} An itemset X is closed, if none of its immediate supersets has the same support as the itemset $X$.
+        \[ \text{Maximal Frequent Itemset} \subseteq \text{Closed Frequent Itemset} \subseteq \text{Frequent Itemset} \]
+\end{itemize}
 
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+\frametitle{Review Question 1 - Apriori Algorithms}
+\small
+
+Given the following transaction database, considering using Apriori algorithm to find all frequent itemsets a support threshold of 30\%.
+
+\begin{columns}
+    \begin{column}{0.5\textwidth} 
+        \begin{table}[]
+            \begin{tabular}{c|l}
+            TID & \textbf{Items}      \\ \hline
+            T1   & \textbf{1, 2, 5}    \\
+            T2   & \textbf{2, 4}       \\
+            T3   & \textbf{2, 3}       \\
+            T4   & \textbf{1, 2, 4}    \\
+            T5   & \textbf{1, 3}       \\
+            T6   & \textbf{2, 3}       \\
+            T7   & \textbf{1, 3}       \\
+            T8   & \textbf{1, 2, 3, 5} \\
+            T9   & \textbf{1, 2, 3}    \\
+            T10  & \textbf{1, 2, 5, 6}
+            \end{tabular}
+        \end{table}
+    \end{column}
+    \begin{column}{0.5\textwidth} % Right
+
+        \begin{table}[]
+            \caption{Candidate 1-itemsets}
+            \begin{tabular}{c|c}
+            Item                     & Support Count $\sigma$           \\ \hline
+            1                        & 7                        \\
+            2                        & 8                        \\
+            3                        & 6                        \\
+            {\color[HTML]{FE0000} 4} & {\color[HTML]{FE0000} 2} \\
+            5                        & 3                        \\
+            {\color[HTML]{FE0000} 6} & {\color[HTML]{FE0000} 1}
+            \end{tabular}
+        \end{table}
+        
+        \begin{itemize}
+            \item 10 transactions. The frequent itemset must occur in at least 3 transactions.
+            \item \{1\}, \{2\}, \{3\} and \{5\} are frequent 1-itemsets.
+        \end{itemize}
+    \end{column}
+\end{columns}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+\frametitle{Review Question 1 - Frequent itemsets}
+\small
+
+\begin{columns}
+    \begin{column}{0.5\textwidth} 
+        \begin{table}[]
+            \caption{Candidate 2-itemsets}
+            \begin{tabular}{c|c}
+            Item                       &  $\sigma$                \\ \hline
+            1, 2                       & 7                        \\
+            1, 3                       & 4                        \\
+            1, 5                       & 3                        \\
+            2, 3                       & 4                        \\
+            2, 5                       & 3                        \\
+            {\color[HTML]{FE0000} 3, 5} & {\color[HTML]{FE0000} 1}
+            \end{tabular}
+        \end{table}
+
+        \begin{itemize}
+            \item $\{3, 5\}$ is not a frequent 2-itemset.
+        \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth} % Right
+
+
+    \end{column}
+\end{columns}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{}
+        
+        
 \end{frame}
 
 %-------------------------------------------------------------------------------
