@@ -100,7 +100,20 @@
 %-------------------------------------------------------------------------------
 \section{Reinforcement Learning}
 \begin{frame}[t]
-\frametitle{Reinforcement Learning}
+\frametitle{Terminology}
+
+\begin{itemize}
+    \item \textbf{Agent:} A hypothetical entity which performs actions in an environment to gain some reward.
+    \item \textbf{Environment:} A scenario the agent has to face.
+    \item \textbf{Action $a_t \in A$:} All the possible moves that the agent can take.
+    \item \textbf{State $s_t \in S$:} Current situation returned by the environment.
+    \item \textbf{Reward $R(s_t, a_t)$:} An immediate return sent back from the environment to evaluate the last action by the agent.
+    \item \textbf{Policy $\pi: S \to A$:} The strategy that the agent employs to determine next action based on the current state.
+    \item \textbf{Value $V^\pi(s)$:} The expected long-term return with discount $\gamma$, as opposed to the short term reward $R$. 
+        $V^\pi(s)$ is defined as the expected long term return of the current state $s$ under policy $\pi$.
+    \item \textbf{Q-value, action-value $Q^\pi(s, a)$:} is similar to \textbf{Value}, except it takes the current action $a$.
+        $Q^\pi(s, a)$ refers to the long term return of the current state $s$, taking action $a$ under policy $\pi$.
+\end{itemize}
 
 
 \end{frame}
@@ -108,14 +121,610 @@
 %-------------------------------------------------------------------------------
 \begin{frame}[t]
 \frametitle{Markov Decision Process (MDP)}
+MDP is defined by $(S, A, R, \mathbb{P}, \gamma)$
+\begin{itemize}
+    \item $S$: Set of possible states $s_t \in S$
+    \item $A$: Set of possible actions $a_t \in A$
+    \item $R$: Immediate reward given by the state and action pair $R(s_t, a_t)$
+    \item $\mathbb{P}$: Transition probability at state $s$ if an action $a$ is taken
+    \item $\gamma$: Discount factor with $0 \leq \gamma < 1$; The weight of future rewards
+\end{itemize}
+
+\textbf{Markov Property:} 
+\[
+    P(s_{t+1}|s_t, a_t, s_{t-1}, a_{t-1}, s_{t-2}, a_{t-2}, \ldots) = P(s_{t+1}|s_t, a_t)
+\]
+
+A \textit{stochastic process}, where the future is solely determined by the current state and action. The past and the future are independent.
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+\frametitle{Markov Decision Process}
+
+\begin{itemize}
+    \item Assume the reward $r_t$ the Markov property:
+    \[
+        P(r_t|<s_t, a_t>, <s_{t-1}, a_{t-1}>, <s_{t-2}, a_{t-2}>, \ldots) = P(r_t|s_t, a_t)
+    \]
+    Immediate reward $r_t$ is solely based on the current state and action pair $R(s_t, a_t)$.
+    \item \textbf{The task:} Learn a policy $\pi: S \to A$ to maximizes the expected current and future rewards
+    \[
+        \mathbb{E}[r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \ldots]
+    \]
+    for every possible starting state $s_0$.
+    \item \textbf{Intuition:} How we got here doesn’t matter, what is the current best move?
+\end{itemize}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+\frametitle{Escape the grid-world: Solving an MDP - Value Iteration}
+
+Your task is to design the AI to help a robot to escape the room. The door is at right top corner. The actions are $\{ \text{Left}, \text{Up}, \text{Right}, \text{Down}\}$.
+
+\begin{figure}
+    \begin{tikzpicture}
+        \draw[step=1cm,color=black] (0, 0) grid (3, 2);
+        \node at (2.5, 2.5) {+10};
+
+        \node at (0.5, 0.5) {0};
+        \node at (1.5, 0.5) {0};
+        \node at (2.5, 0.5) {0};
+
+        \node at (0.5, 1.5) {0};
+        \node at (1.5, 1.5) {0};
+        \node at (2.5, 1.5) {0};
+        
+        \draw [-stealth](2.5, 2) -- (2.5, 2.25);
+    \end{tikzpicture}
+\end{figure}
+
+Initially, no action is taken, we set the value to 0 for all states.
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Value Iteration - 1 Action}
+    
+    If we can only take 1 action in the game.
+
+    \begin{figure}
+        \begin{tikzpicture}
+            \draw[step=1cm,color=black] (0, 0) grid (3, 2);
+            \node at (2.5, 2.5) {+10};
+    
+            \node at (0.5, 0.5) {0};
+            \node at (1.5, 0.5) {0};
+            \node at (2.5, 0.5) {0};
+    
+            \node at (0.5, 1.5) {0};
+            \node at (1.5, 1.5) {0};
+            \node at (2.5, 1.5) {\textcolor{red}{10}};
+            
+            \draw [-stealth](2.5, 2) -- (2.5, 2.25);
+        \end{tikzpicture}
+    \end{figure}
+    
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Value Iteration - 2 Actions}
+    
+    When we take more than one action, we have to balance immediate reward and future reward.
+    $\gamma$ controls the importance of future rewards.
+
+    \vspace{1em}
+    Let $\gamma = 0.5$, state values with 2 actions:
+
+    \begin{equation*}
+        \begin{array} {rcl}
+            V^\pi(s) & =  \mathbb{E}[\sum_{t \geq 0} \gamma ^t r_t] = r_0 + \gamma r_{1} + \gamma^2 r_{2} + \ldots \\
+                     & =  0 + 0.5 \times 10 = 5
+        \end{array}
+    \end{equation*}
+
+    \begin{figure}
+        \begin{tikzpicture}
+            \draw[step=1cm,color=black] (0, 0) grid (3, 2);
+            \node at (2.5, 2.5) {+10};
+    
+            \node at (0.5, 0.5) {0};
+            \node at (1.5, 0.5) {0};
+            \node at (2.5, 0.5) {\textcolor{red}{5}};
+    
+            \node at (0.5, 1.5) {0};
+            \node at (1.5, 1.5) {\textcolor{red}{5}};
+            \node at (2.5, 1.5) {10};
+            
+            \draw [-stealth](2.5, 2) -- (2.5, 2.25);
+        \end{tikzpicture}
+    \end{figure}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Value Iteration - 3 Actions}
+
+    Let $\gamma = 0.5$, state values with 3 actions:
+
+    \begin{equation*}
+            V^\pi(s) = 0 + 0 + 0.5^2 \times 10 = 2.5
+    \end{equation*}
+
+    \begin{figure}
+        \begin{tikzpicture}
+            \draw[step=1cm,color=black] (0, 0) grid (3, 2);
+            \node at (2.5, 2.5) {+10};
+    
+            \node at (0.5, 0.5) {0};
+            \node at (1.5, 0.5) {\textcolor{red}{2.5}};
+            \node at (2.5, 0.5) {5};
+    
+            \node at (0.5, 1.5) {\textcolor{red}{2.5}};
+            \node at (1.5, 1.5) {5};
+            \node at (2.5, 1.5) {10};
+            
+            \draw [-stealth](2.5, 2) -- (2.5, 2.25);
+        \end{tikzpicture}
+    \end{figure}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Value Iteration}
+
+    Let $\gamma = 0.5$, state values with 4 actions:
+
+    \begin{equation*}
+            V^\pi(s) = 0 + 0 + 0 + 0.5^3 \times 10 = 1.25
+    \end{equation*}
+
+    \begin{figure}
+        \begin{tikzpicture}
+            \draw[step=1cm,color=black] (0, 0) grid (3, 2);
+            \node at (2.5, 2.5) {+10};
+    
+            \node at (0.5, 0.5) {\textcolor{red}{1.25}};
+            \node at (1.5, 0.5) {2.5};
+            \node at (2.5, 0.5) {5};
+    
+            \node at (0.5, 1.5) {2.5};
+            \node at (1.5, 1.5) {5};
+            \node at (2.5, 1.5) {10};
+            
+            \draw [-stealth](2.5, 2) -- (2.5, 2.25);
+        \end{tikzpicture}
+    \end{figure}
+
+    \textbf{Caveat:} Do not mix value $V^\pi(s)$ and reward $R(s_t, a_t)$.
+\end{frame}
 
 
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{361 Exam Question 8, 2020}
+    
+    \begin{example}
+        \small
+        \begin{itemize}
+            \item The black cell cannot be entered.
+            % \item For the transitions into non-existing cell the next state, $s'$, is equal to the current state, $s$.
+            \item The actions are $\{ \text{Left}, \text{Up}, \text{Right}, \text{Down}\}$.
+            % \item For each action, the agent gets a reward of $-1$. The reward for actions that bring it into the target is $0$, and the black state is $-2$.
+            \item The reward for actions that bring it into the target is $0$. Other actions get a reward of $-1$.
+            \item The partial policy, $\pi$, is given by the arrows in the grid. 
+            \item Discount factor, $\gamma = 0.5$
+        \end{itemize}
+    
+        \begin{figure}
+            \begin{tikzpicture}
+                \draw[step=1cm,color=black] (0, 0) grid (3, 3);
+                \node[rectangle,draw,fill = black,minimum width = 1cm,minimum height = 1cm] at (1.5, 1.5) {};
+                \node[rectangle,draw,fill = gray,opacity = 0.6,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
+        
+                \node at (0.5, 0.5) {F};
+                \node at (1.5, 0.5) {G};
+                \node at (2.5, 0.5) {H};
+        
+                \node at (0.5, 1.5) {D};
+                \node at (1.5, 1.5) {};
+                \node at (2.5, 1.5) {E};
+                
+                \node at (0.5, 2.5) {A};
+                \node at (1.5, 2.5) {B};
+                \node at (2.5, 2.5) {C};
+    
+                \draw [-stealth](1.5, 2.75) -- (0.75, 2.75);
+                \draw [-stealth](0.25, 2.5) -- (0.25, 1.75);
+                \draw [-stealth](0.25, 1.5) -- (0.25, 0.75);
+                \draw [-stealth](0.5, 0.25) -- (1.25, 0.25);
+                \draw [-stealth](1.5, 0.25) -- (2.25, 0.25);
+                
+            \end{tikzpicture}
+        \end{figure}
+    \end{example}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{361 Exam Question 8, 2020}
+    \small
+
+    \begin{itemize}
+        % \item The black cell cannot be entered.
+        % \item For the transitions into non-existing cell the next state, $s'$, is equal to the current state, $s$.
+        % \item The actions are $\{ \text{Left}, \text{Up}, \text{Right}, \text{Down}\}$.
+        % \item For each action, the agent gets a reward of $-1$. The reward for actions that bring it into the target is $0$, and the black state is $-2$.
+        \item The reward for actions that bring it into the target is $0$. Other actions get a reward of $-1$.
+        \item The partial policy, $\pi$, is given by the arrows in the grid. 
+        \item $\gamma = 0.5$
+    \end{itemize}
+
+    Give for each state the value of the value function, $V$, for the given policy. 
+    You can ignore states for which no policy is defined.
+
+    \begin{figure}
+        \begin{tikzpicture}
+            \draw[step=1cm,color=black] (0, 0) grid (3, 3);
+            \node[rectangle,draw,fill = black,minimum width = 1cm,minimum height = 1cm] at (1.5, 1.5) {};
+            \node[rectangle,draw,fill = gray,opacity = 0.6,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
+    
+            \node at (0.5, 0.5) {F};
+            \node at (1.5, 0.5) {\textcolor{red}{0}};
+            \node at (2.5, 0.5) {\textcolor{red}{0}};
+    
+            \node at (0.5, 1.5) {D};
+            \node at (1.5, 1.5) {};
+            \node at (2.5, 1.5) {E};
+            
+            \node at (0.5, 2.5) {A};
+            \node at (1.5, 2.5) {B};
+            \node at (2.5, 2.5) {C};
+
+            \draw [-stealth](1.5, 2.75) -- (0.75, 2.75);
+            \draw [-stealth](0.25, 2.5) -- (0.25, 1.75);
+            \draw [-stealth](0.25, 1.5) -- (0.25, 0.75);
+            \draw [-stealth](0.5, 0.25) -- (1.25, 0.25);
+            \draw [-stealth](1.5, 0.25) -- (2.25, 0.25);
+            
+        \end{tikzpicture}
+    \end{figure}
+
+    \begin{itemize}
+        \item The target state, H, requires 0 action, $V^\pi(s=H) = 0$. Note: There is no action called ``stay''.
+        \item State G requires 1 action, $V^\pi(s=G) = 0$
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{361 Exam Question 8, 2020}
+    \small
+
+    \begin{itemize}
+        % \item The black cell cannot be entered.
+        % \item For the transitions into non-existing cell the next state, $s'$, is equal to the current state, $s$.
+        % \item The actions are $\{ \text{Left}, \text{Up}, \text{Right}, \text{Down}\}$.
+        % \item For each action, the agent gets a reward of $-1$. The reward for actions that bring it into the target is $0$, and the black state is $-2$.
+        \item The reward for actions that bring it into the target is $0$. Other actions get a reward of $-1$.
+        \item The partial policy, $\pi$, is given by the arrows in the grid. 
+        \item $\gamma = 0.5$
+    \end{itemize}
+
+    \begin{figure}
+        \begin{tikzpicture}
+            \draw[step=1cm,color=black] (0, 0) grid (3, 3);
+            \node[rectangle,draw,fill = black,minimum width = 1cm,minimum height = 1cm] at (1.5, 1.5) {};
+            \node[rectangle,draw,fill = gray,opacity = 0.6,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
+    
+            \node at (0.5, 0.5) {\textcolor{red}{-1}};
+            \node at (1.5, 0.5) {0};
+            \node at (2.5, 0.5) {0};
+    
+            \node at (0.5, 1.5) {D};
+            \node at (1.5, 1.5) {};
+            \node at (2.5, 1.5) {E};
+            
+            \node at (0.5, 2.5) {A};
+            \node at (1.5, 2.5) {B};
+            \node at (2.5, 2.5) {C};
+
+            \draw [-stealth](1.5, 2.75) -- (0.75, 2.75);
+            \draw [-stealth](0.25, 2.5) -- (0.25, 1.75);
+            \draw [-stealth](0.25, 1.5) -- (0.25, 0.75);
+            \draw [-stealth](0.5, 0.25) -- (1.25, 0.25);
+            \draw [-stealth](1.5, 0.25) -- (2.25, 0.25);
+            
+        \end{tikzpicture}
+    \end{figure}
+
+    \begin{itemize}
+        \item State F requires 2 action, $V^\pi(s=F) = -1 + 0.5 \times 0 = -1 $
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{361 Exam Question 8, 2020}
+    \small
+
+    \begin{itemize}
+        % \item The black cell cannot be entered.
+        % \item For the transitions into non-existing cell the next state, $s'$, is equal to the current state, $s$.
+        % \item The actions are $\{ \text{Left}, \text{Up}, \text{Right}, \text{Down}\}$.
+        % \item For each action, the agent gets a reward of $-1$. The reward for actions that bring it into the target is $0$, and the black state is $-2$.
+        \item The reward for actions that bring it into the target is $0$. Other actions get a reward of $-1$.
+        \item The partial policy, $\pi$, is given by the arrows in the grid. 
+        \item $\gamma = 0.5$
+    \end{itemize}
+
+    \begin{figure}
+        \begin{tikzpicture}
+            \draw[step=1cm,color=black] (0, 0) grid (3, 3);
+            \node[rectangle,draw,fill = black,minimum width = 1cm,minimum height = 1cm] at (1.5, 1.5) {};
+            \node[rectangle,draw,fill = gray,opacity = 0.6,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
+    
+            \node at (0.5, 0.5) {-1};
+            \node at (1.5, 0.5) {0};
+            \node at (2.5, 0.5) {0};
+    
+            \node at (0.5, 1.5) {\textcolor{red}{-1.5}};
+            \node at (1.5, 1.5) {};
+            \node at (2.5, 1.5) {E};
+            
+            \node at (0.5, 2.5) {A};
+            \node at (1.5, 2.5) {B};
+            \node at (2.5, 2.5) {C};
+
+            \draw [-stealth](1.5, 2.75) -- (0.75, 2.75);
+            \draw [-stealth](0.25, 2.5) -- (0.25, 1.75);
+            \draw [-stealth](0.25, 1.5) -- (0.25, 0.75);
+            \draw [-stealth](0.5, 0.25) -- (1.25, 0.25);
+            \draw [-stealth](1.5, 0.25) -- (2.25, 0.25);
+            
+        \end{tikzpicture}
+    \end{figure}
+
+    \begin{itemize}
+        \item State D requires 3 action, $V^\pi(s=D) = -1 + 0.5 \times (-1) + 0.5^2 \times 0 = -1.5 $
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{361 Exam Question 8, 2020}
+    \small
+
+    \begin{itemize}
+        % \item The black cell cannot be entered.
+        % \item For the transitions into non-existing cell the next state, $s'$, is equal to the current state, $s$.
+        % \item The actions are $\{ \text{Left}, \text{Up}, \text{Right}, \text{Down}\}$.
+        % \item For each action, the agent gets a reward of $-1$. The reward for actions that bring it into the target is $0$, and the black state is $-2$.
+        \item The reward for actions that bring it into the target is $0$. Other actions get a reward of $-1$.
+        \item The partial policy, $\pi$, is given by the arrows in the grid. 
+        \item $\gamma = 0.5$
+    \end{itemize}
+
+    \begin{figure}
+        \begin{tikzpicture}
+            \draw[step=1cm,color=black] (0, 0) grid (3, 3);
+            \node[rectangle,draw,fill = black,minimum width = 1cm,minimum height = 1cm] at (1.5, 1.5) {};
+            \node[rectangle,draw,fill = gray,opacity = 0.6,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
+    
+            \node at (0.5, 0.5) {-1};
+            \node at (1.5, 0.5) {0};
+            \node at (2.5, 0.5) {0};
+    
+            \node at (0.5, 1.5) {-1.5};
+            \node at (1.5, 1.5) {};
+            \node at (2.5, 1.5) {E};
+            
+            \node at (0.5, 2.5) {\textcolor{red}{-1.75}};
+            \node at (1.5, 2.5) {B};
+            \node at (2.5, 2.5) {C};
+
+            \draw [-stealth](1.5, 2.75) -- (0.75, 2.75);
+            \draw [-stealth](0.25, 2.5) -- (0.25, 1.75);
+            \draw [-stealth](0.25, 1.5) -- (0.25, 0.75);
+            \draw [-stealth](0.5, 0.25) -- (1.25, 0.25);
+            \draw [-stealth](1.5, 0.25) -- (2.25, 0.25);
+            
+        \end{tikzpicture}
+    \end{figure}
+
+    \begin{itemize}
+        \item State A requires 4 action, $V^\pi(s=A) = -1 + 0.5 \times (-1) + 0.5^2 \times (-1) + 0.5^3 \times 0 = -1.75 $
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{361 Exam Question 8, 2020}
+    \small
+
+    \begin{itemize}
+        % \item The black cell cannot be entered.
+        % \item For the transitions into non-existing cell the next state, $s'$, is equal to the current state, $s$.
+        % \item The actions are $\{ \text{Left}, \text{Up}, \text{Right}, \text{Down}\}$.
+        % \item For each action, the agent gets a reward of $-1$. The reward for actions that bring it into the target is $0$, and the black state is $-2$.
+        \item The reward for actions that bring it into the target is $0$. Other actions get a reward of $-1$.
+        \item The partial policy, $\pi$, is given by the arrows in the grid. 
+        \item $\gamma = 0.5$
+    \end{itemize}
+
+    \begin{figure}
+        \begin{tikzpicture}
+            \draw[step=1cm,color=black] (0, 0) grid (3, 3);
+            \node[rectangle,draw,fill = black,minimum width = 1cm,minimum height = 1cm] at (1.5, 1.5) {};
+            \node[rectangle,draw,fill = gray,opacity = 0.6,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
+    
+            \node at (0.5, 0.5) {-1};
+            \node at (1.5, 0.5) {0};
+            \node at (2.5, 0.5) {0};
+    
+            \node at (0.5, 1.5) {-1.5};
+            \node at (1.5, 1.5) {};
+            \node at (2.5, 1.5) {E};
+            
+            \node at (0.5, 2.5) {-1.75};
+            \node at (1.5, 2.5) {\textcolor{red}{-1.875}};
+            \node at (2.5, 2.5) {C};
+
+            \draw [-stealth](1.5, 2.75) -- (0.75, 2.75);
+            \draw [-stealth](0.25, 2.5) -- (0.25, 1.75);
+            \draw [-stealth](0.25, 1.5) -- (0.25, 0.75);
+            \draw [-stealth](0.5, 0.25) -- (1.25, 0.25);
+            \draw [-stealth](1.5, 0.25) -- (2.25, 0.25);
+            
+        \end{tikzpicture}
+    \end{figure}
+
+    \begin{itemize}
+        \item State B requires 5 action, $V^\pi(s=A)=-1+0.5\times (-1)+0.5^2\times (-1)+0.5^3\times (-1)+0.5^4\times 0 = -1.875 $
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+\frametitle{Limitations on MDP - The Cliff Sernario}
+
+\begin{itemize}
+    \item The value of a state is the expected reward from taking the best action in the state.
+    \item Accumulating rewards from random actions would calculate the expected reward from \underline{random actions} in the state.
+    \item E.g.: We would learn that any state near a cliff is bad, because you get a negative score if you jump off, even though you don't have to jump off.
+\end{itemize}
+
+\begin{figure}
+    \begin{tikzpicture}
+        \draw[step=1cm,color=black] (0, 0) grid (3, 2);
+        \node at (2.5, 2.5) {+10};
+        \node at (3.75, 1.5) {\textcolor{red}{-100}};
+
+        \node at (0.5, 0.5) {};
+        \node at (1.5, 0.5) {};
+        \node at (2.5, 0.5) {};
+
+        \node at (0.5, 1.5) {};
+        \node at (1.5, 1.5) {};
+        \node at (2.5, 1.5) {\textcolor{red}{-45}};
+        
+        \draw [-stealth](2.5, 2) -- (2.5, 2.25);
+        \draw [-stealth,draw=red](3, 1.5) -- (3.25, 1.5);
+    \end{tikzpicture}
+\end{figure}
+    
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \begin{frame}[t]
 \frametitle{Q-Learning}
 
+\textbf{Intuition:} 
+Instead of computing value $V^\pi(s)$, we learn \textbf{Q-value}, $Q^\pi(s, a)$, which considers the state $s$ and the action $a$ as a pair.
+
+\begin{itemize}
+    \item Q-learning can identify an \textbf{optimal action-selection policy} for any given a finite Markov decision process (FMDP).
+    \item $Q: S \times A \to \mathbb{R}$, calculating the quality of a state–action combination
+    \item Iterative method, $Q$ is initialized to an arbitrary fixed value. At each time $t$, the agent selects an action $a_t$, observes a reword $r_t$, enters a new state $s_{t+1}$, and $Q$ is updated.
+\end{itemize}
+
+\vspace{0.5em}
+The Q-value is updated by:
+
+\begin{equation*}
+    Q^{\text{new}}(s_t, a_t) \gets Q(s_t, a_t) + \alpha \cdot [R(s_t, a_t) + \gamma \cdot \max_{a'}Q(s_{t+1}, a') - Q(s_t, a_t)]
+\end{equation*}
+
+where $\alpha$ is the learning rate. (In a fully deterministic environment, a learning rate of $\alpha = 1$ is optimal.)
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Q-Learning: 361 Exam Question 8, 2020}
+    
+    \begin{example}
+        \small
+        \begin{itemize}
+            \item For the transitions into non-existing cell the next state, $s'$, is equal to the current state, $s$.
+            \item For each action, the agent gets a reward of $-1$. The reward for actions that bring it into the target is $0$, and the black state is $-2$.
+            \item Discount factor, $\gamma = 0.5$
+            \item Let the initial value of Q be $-16$.
+        \end{itemize}  
+        
+        \begin{figure}
+            \begin{tikzpicture}
+                \draw[step=1cm,color=black] (0, 0) grid (3, 3);
+                \node[rectangle,draw,fill = black,minimum width = 1cm,minimum height = 1cm] at (1.5, 1.5) {};
+                \node[rectangle,draw,fill = gray,opacity = 0.6,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
+        
+                \node at (0.5, 0.5) {F};
+                \node at (1.5, 0.5) {G};
+                \node at (2.5, 0.5) {H};
+        
+                \node at (0.5, 1.5) {D};
+                \node at (1.5, 1.5) {};
+                \node at (2.5, 1.5) {E};
+                
+                \node at (0.5, 2.5) {A};
+                \node at (1.5, 2.5) {B};
+                \node at (2.5, 2.5) {C};
+                
+            \end{tikzpicture}
+        \end{figure}
+    \end{example}
+    
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Q-Learning: 361 Exam Question 8, 2020}
+            
+    \begin{figure}
+        \begin{tikzpicture}[scale=1.5, transform shape]
+            \draw[step=1cm,color=black] (0, 0) grid (3, 3);
+            \node[rectangle,draw,fill = black,minimum width = 1cm,minimum height = 1cm] at (1.5, 1.5) {};
+            \node[rectangle,draw,fill = gray,opacity = 0.6,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
+    
+            % \node at (0.5, 0.5) {F};
+            % \node at (1.5, 0.5) {G};
+            \node at (2.5, 0.5) {H};
+    
+            \node at (0.5, 1.5) {D};
+            \node at (1.5, 1.5) {};
+            \node at (2.5, 1.5) {E};
+            
+            \node at (0.5, 2.5) {A};
+            \node at (1.5, 2.5) {B};
+            \node at (2.5, 2.5) {C};
+
+            \node[font=\tiny] at (1.5, 0.5) {-16};
+            \node[font=\tiny] at (1.5, 0.8) {-16};
+            \node[font=\tiny] at (1.5, 0.2) {-16};
+            \node[font=\tiny] at (1.2, 0.5) {-16};
+            \node[font=\tiny] at (1.8, 0.5) {-16};
+
+            \node[font=\tiny] at (0.5, 0.5) {-16};
+            \node[font=\tiny] at (0.5, 0.8) {-16};
+            \node[font=\tiny] at (0.5, 0.2) {-16};
+            \node[font=\tiny] at (0.2, 0.5) {-16};
+            \node[font=\tiny] at (0.8, 0.5) {-16};
+    
+            % \draw [-stealth](1.5, 2.75) -- (0.75, 2.75);
+            % \draw [-stealth](0.25, 2.5) -- (0.25, 1.75);
+            % \draw [-stealth](0.25, 1.5) -- (0.25, 0.75);
+            \draw [-stealth](0.75, 0.25) -- (1.25, 0.25);
+            % \draw [-stealth](1.5, 0.25) -- (2.25, 0.25);
+            
+        \end{tikzpicture}
+    \end{figure}
+    
 \end{frame}
 
 %-------------------------------------------------------------------------------
