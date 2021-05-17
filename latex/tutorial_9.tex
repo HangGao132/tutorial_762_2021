@@ -995,7 +995,7 @@ where $\alpha$ is the learning rate. (In a fully deterministic environment, a le
 
 %-------------------------------------------------------------------------------
 \begin{frame}[t]
-\frametitle{Review Question 1 - Apriori Algorithms}
+\frametitle{Review Question 1 -- Apriori Algorithms}
 \small
 
 Given the following transaction database, considering using Apriori algorithm to find all frequent itemsets a support threshold of 30\%.
@@ -1021,16 +1021,16 @@ Given the following transaction database, considering using Apriori algorithm to
     \begin{column}{0.5\textwidth} % Right
 
         \begin{table}[]
-            \caption{Candidate 1-itemsets}
             \begin{tabular}{c|c}
-            Item                     & Support Count, $\sigma$           \\ \hline
-            1                        & 7                        \\
-            2                        & 8                        \\
-            3                        & 6                        \\
-            {\color[HTML]{FE0000} 4} & {\color[HTML]{FE0000} 2} \\
-            5                        & 3                        \\
-            {\color[HTML]{FE0000} 6} & {\color[HTML]{FE0000} 1}
+                Item                     & Support Count, $\sigma$           \\ \hline
+                1                        & 7                        \\
+                2                        & 8                        \\
+                3                        & 6                        \\
+                {\color[HTML]{FE0000} 4} & {\color[HTML]{FE0000} 2} \\
+                5                        & 3                        \\
+                {\color[HTML]{FE0000} 6} & {\color[HTML]{FE0000} 1}
             \end{tabular}
+            \caption{Candidate 1-itemsets}
         \end{table}
         
         \begin{itemize}
@@ -1044,22 +1044,22 @@ Given the following transaction database, considering using Apriori algorithm to
 
 %-------------------------------------------------------------------------------
 \begin{frame}[t]
-\frametitle{Review Question 1 - Frequent itemsets}
+\frametitle{Review Question 1 -- Frequent itemsets}
 \small
 
 \begin{columns}
     \begin{column}{0.5\textwidth} 
         \begin{table}[]
-            \caption{Candidate 2-itemsets}
             \begin{tabular}{c|c}
-            Item                       &  $\sigma$                \\ \hline
-            1, 2                       & 7                        \\
-            1, 3                       & 4                        \\
-            1, 5                       & 3                        \\
-            2, 3                       & 4                        \\
-            2, 5                       & 3                        \\
-            {\color[HTML]{FE0000} 3, 5} & {\color[HTML]{FE0000} 1}
+                Item                       &  $\sigma$                \\ \hline
+                1, 2                       & 7                        \\
+                1, 3                       & 4                        \\
+                1, 5                       & 3                        \\
+                2, 3                       & 4                        \\
+                2, 5                       & 3                        \\
+                {\color[HTML]{FE0000} 3, 5} & {\color[HTML]{FE0000} 1}
             \end{tabular}
+            \caption{Candidate 2-itemsets}
         \end{table}
 
         \begin{itemize}
@@ -1068,14 +1068,14 @@ Given the following transaction database, considering using Apriori algorithm to
     \end{column}
     \begin{column}{0.5\textwidth} % Right
         \begin{table}[]
-            \caption{Candidate 3-itemsets}
             \begin{tabular}{c|c}
-            Item                           & $\sigma$            \\ \hline
-            {\color[HTML]{FE0000} 1, 2, 3} & {\color[HTML]{FE0000} 2} \\
-            1, 2, 5                        & 3                        \\
-            {\color[HTML]{FE0000} 1, 3, 5} & {\color[HTML]{FE0000} 1} \\
-            {\color[HTML]{FE0000} 2, 3, 5} & {\color[HTML]{FE0000} 1}
+                Item                           & $\sigma$            \\ \hline
+                {\color[HTML]{FE0000} 1, 2, 3} & {\color[HTML]{FE0000} 2} \\
+                1, 2, 5                        & 3                        \\
+                {\color[HTML]{FE0000} 1, 3, 5} & {\color[HTML]{FE0000} 1} \\
+                {\color[HTML]{FE0000} 2, 3, 5} & {\color[HTML]{FE0000} 1}
             \end{tabular}
+            \caption{Candidate 3-itemsets}
         \end{table}
 
         \begin{itemize}
@@ -1089,7 +1089,7 @@ Given the following transaction database, considering using Apriori algorithm to
 
 %-------------------------------------------------------------------------------
 \begin{frame}[t]
-    \frametitle{Review Question 1 - Confidence Threshold}
+    \frametitle{Review Question 1 -- Confidence Threshold}
     \small
 
     Find all association rules from frequent 3-itemset with the confidence threshold of 80\%.
@@ -1114,15 +1114,140 @@ Given the following transaction database, considering using Apriori algorithm to
         \end{tabular}
     \end{table}
 
-    $\{ 5 \} \to \{  1, 2\}$, $\{ 1, 5 \} \to \{  2\}$ and $\{ 2, 5 \} \to \{  1\}$ are the 3-itemsets with a confidence $\geq$ \textit{minconf}.
+    $\{ 5 \} \to \{  1, 2\}$, $\{ 1, 5 \} \to \{  2\}$ and $\{ 2, 5 \} \to \{  1\}$ are the 3-itemsets, such that $c(X \to Y) \geq \textit{minconf}$ .
 
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \begin{frame}[t]
-\frametitle{FP-Tree}
-    
-    
+\frametitle{Review Question 2 -- FP-Tree}
+\small
+
+Considering the same transactions above, use frequent-pattern (FP) growth algorithm to perform frequent itemsets mining with a support threshold of 30\%.
+
+\begin{enumerate}
+    \item What is the item head table? (Hint: keep in mind the support count and sort order.)
+    \item What is the FP-tree corresponding to the transactions above?
+    % \item What is the conditional pattern base corresponding to the transactions above?
+\end{enumerate}
+
+\begin{columns}
+    \begin{column}{0.5\textwidth} 
+        \begin{table}[]
+            \begin{tabular}{c|c|c}
+                Item      & $\sigma$  & Node Link \\ \hline
+                \textbf{2}         & 8         &           \\
+                \textbf{1}         & 7         &           \\
+                \textbf{3}         & 6         &           \\
+                \textbf{5}         & 3         &           \\
+            \end{tabular}
+            \caption{Header Table}
+        \end{table}
+
+        \textit{Node Links} are omitted. They are pointers which point to the node with the corresponding TID.
+
+    \end{column}
+    \begin{column}{0.5\textwidth} % Right
+        \begin{figure}
+            \center
+            \begin{tikzpicture}[node distance={4em}, thick, main/.style = {draw, node distance=3.1em, rectangle, minimum height=1.5em, minimum width=2em}] 
+                \node[main] (1) {\{\}};
+                \pause
+
+                \node[main] (2) [below left of=1] {\textbf{2}:8};
+                \draw[-] (2) -- (1);
+                \pause
+
+                \node[main] (4) [below left of=2] {\textbf{1}:5};
+                \draw[-] (4) -- (2);
+                \node[main] (3) [below right of=1] {\textbf{1}:2};
+                \draw[-] (3) -- (1);
+                \pause
+                
+                \node[main] (5) [below right of=2] {\textbf{3}:2};
+                \draw[-] (5) -- (2);
+                \node[main] (8) [below left of=4] {\textbf{3}:2};
+                \draw[-] (8) -- (4);
+                \node[main] (6) [below of=3] {\textbf{3}:2};
+                \draw[-] (3) -- (6);
+                \pause
+
+                \node[main] (7) [below right of=4] {\textbf{5}:2};
+                \draw[-] (7) -- (4);
+                \node[main] (9) [below of=8] {\textbf{5}:1};
+                \draw[-] (9) -- (8);
+            \end{tikzpicture} 
+        \end{figure}
+    \end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Review Question 2 -- FP-Tree}
+\small
+
+What is the conditional pattern base corresponding to the transactions above?
+
+\begin{columns}
+    \begin{column}{0.5\textwidth} 
+        \begin{table}[]
+            \begin{tabular}{c|c|c}
+                Item      & $\sigma$  & Node Link \\ \hline
+                \textbf{2}         & 8         &           \\
+                \textbf{1}         & 7         &           \\
+                \textbf{3}         & 6         &           \\
+                \textbf{5}         & 3         &           \\
+            \end{tabular}
+            \caption{Header Table}
+        \end{table}
+
+        \begin{table}[]
+            \begin{tabular}{c|l}
+                Item      & Conditional Pattern Base \\ \hline
+                \textbf{5} & \{(\textbf{1}:2, \textbf{2}:2), (\textbf{3}:1, \textbf{1}:1, \textbf{2}:1) \} \\
+                \textbf{3} & \{(\textbf{1}:2, \textbf{2}:2), (\textbf{2}:2), (\textbf{1}:2) \}\\
+                \textbf{1} & \{(\textbf{2}:5) \}\\
+                \textbf{2} & \{\}\\
+            \end{tabular}
+        \end{table}
+    \end{column}
+    \begin{column}{0.5\textwidth} % Right
+        \begin{figure}
+            \center
+            \begin{tikzpicture}[node distance={4em}, thick, main/.style = {draw, node distance=3.1em, rectangle, minimum height=1.5em, minimum width=2em}] 
+                \node[main] (1) {\{\}};
+
+                \node[main] (2) [below left of=1] {\textbf{2}:8};
+                \draw[-] (2) -- (1);
+
+                \node[main] (4) [below left of=2] {\textbf{1}:5};
+                \draw[-] (4) -- (2);
+                \node[main] (3) [below right of=1] {\textbf{1}:2};
+                \draw[-] (3) -- (1);
+                
+                \node[main] (5) [below right of=2] {\textbf{3}:2};
+                \draw[-] (5) -- (2);
+                \node[main] (8) [below left of=4] {\textbf{3}:2};
+                \draw[-] (8) -- (4);
+                \node[main] (6) [below of=3] {\textbf{3}:2};
+                \draw[-] (3) -- (6);
+
+                \node[main] (7) [below right of=4] {\textbf{5}:2};
+                \draw[-] (7) -- (4);
+                \node[main] (9) [below of=8] {\textbf{5}:1};
+                \draw[-] (9) -- (8);
+            \end{tikzpicture} 
+        \end{figure}
+
+        \begin{itemize}
+            \item anti-monotone holds true.
+            \item For each item, the sum of frequency count in all nodes is equal to $\sigma(X)$.
+            \item In conditional pattern base, items in the same itemset should have the same frequency count.
+        \end{itemize}
+    \end{column}
+\end{columns}
+
 \end{frame}
 
 \end{document}
