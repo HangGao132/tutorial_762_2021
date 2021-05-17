@@ -913,6 +913,40 @@ where $\alpha$ is the learning rate. (In a fully deterministic environment, a le
     \end{figure}
     
     \[ V(G) = 0 \]
+
+    Note: The initial value of $Q$ does not affect $V(s)$.
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Q-Learning: 361 Exam Question 8, 2020}
+    % \small
+    
+    Create an optimal policy $\pi^*$, and draw it on the given diagram.
+    What are the corresponding values of $V^*$?
+    What is the most desirable state for the agent?
+
+    \begin{figure}
+        \begin{tikzpicture}[scale=1.3, transform shape]
+            \draw[step=1cm,color=black] (0, 0) grid (3, 3);
+            \node[rectangle,draw,fill = black,minimum width = 1cm,minimum height = 1cm] at (1.5, 1.5) {};
+            \node[rectangle,draw,fill = gray,opacity = 0.6,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
+    
+            \node at (0.5, 0.5) {F};
+            \node at (1.5, 0.5) {G};
+            \node at (2.5, 0.5) {H};
+    
+            \node at (0.5, 1.5) {D};
+            \node at (1.5, 1.5) {};
+            \node at (2.5, 1.5) {E};
+            
+            \node at (0.5, 2.5) {A};
+            \node at (1.5, 2.5) {B};
+            \node at (2.5, 2.5) {C};
+            
+        \end{tikzpicture}
+    \end{figure}
+
 \end{frame}
 
 %-------------------------------------------------------------------------------
@@ -952,12 +986,26 @@ where $\alpha$ is the learning rate. (In a fully deterministic environment, a le
             \draw [-stealth](2.75, 1.25) -- (2.75, 0.75);
         \end{tikzpicture}
     \end{figure}
-    
-    Note: The initial value of $Q$ does not affect $V(s)$.
+
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \section{Association Rule Mining}
+\begin{frame}
+\frametitle{Association Rule Mining}
+
+\textbf{Objective:} Given a set of transactions, find rules that predict the occurrence of an item based on the occurrences of other items in a transaction.
+\vspace{1em}
+
+E.g. Given you like ``Doctor Strange'' and ``Captain Marvel'', a recommendation system predicts you will also like ``Avengers:Endgame''.
+
+\vspace*{2em}
+\textbf{Association Rule:} An implication expression of the form $X \to Y$, where $X$ and $Y$ are itemsets.
+
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
 \begin{frame}[t]
 \frametitle{Terminology}
 \small
@@ -969,9 +1017,9 @@ where $\alpha$ is the learning rate. (In a fully deterministic environment, a le
     \item \textbf{Width $\bm{w}$:} The transaction width is the number of items present in a transaction.
     \item \textbf{Support count $\bm{\sigma}$:} Frequency of occurrence of an itemset, e.g. $\sigma(\{A, B\})=2$ means 2 transactions contain the itemset $\{A, B\}$.
     \item \textbf{Frequent Itemset:} An itemset whose support is greater than or equal to the \textcolor{red}{\textit{minsup}} threshold
-    \item \textbf{Support $s(X \to Y)$:} Fraction of transactions that contain an itemset
+    \item \textbf{Support $\bm{s(X \to Y)}$:} Fraction of transactions that contain an itemset
         \[ s(X \to Y) = \frac{\sigma(X \cup Y)}{|T|} \] 
-    \item \textbf{Confidence $\bm{c \to Y}$:} Measures how often items in $Y$ appear in transactions that contain $X$
+    \item \textbf{Confidence $\bm{c(X \to Y)}$:} Measures how often items in $Y$ appear in transactions that contain $X$
         \[ c(X \to Y) = \frac{\sigma(X \cup Y)}{\sigma(X)} \] 
 \end{itemize}
 
@@ -980,7 +1028,7 @@ where $\alpha$ is the learning rate. (In a fully deterministic environment, a le
 
 %-------------------------------------------------------------------------------
 \begin{frame}[t]
-\frametitle{Apriori Algorithm}
+\frametitle{Frequent Itemset Generation -- Apriori Algorithm}
 
 \begin{itemize}
     \item \textbf{Goal:} Reducing the number of candidates
@@ -1089,7 +1137,7 @@ Given the following transaction database, considering using Apriori algorithm to
 
 %-------------------------------------------------------------------------------
 \begin{frame}[t]
-    \frametitle{Review Question 1 -- Confidence Threshold}
+    \frametitle{Review Question 1 -- Rule Generation}
     \small
 
     Find all association rules from frequent 3-itemset with the confidence threshold of 80\%.
