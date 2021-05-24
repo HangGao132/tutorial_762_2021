@@ -190,10 +190,7 @@
 \begin{frame}
     \frametitle{Solve the Initial Centroids Problem}
     
-    \textbf{Problem:} 
-    \begin{itemize}
-        \item Stuck in the local minimal 
-    \end{itemize}
+    \textbf{Problem:} Stuck in the local minimal 
 
     \begin{example}
         \href{https://scikit-learn.org/stable/auto\_examples/cluster/plot\_kmeans\_assumptions.html}{Demonstration of k-means assumptions from \textit{sklearn}}
@@ -214,6 +211,116 @@
         \item Improved k-means algorithms: Bisecting K-means, Mini Batch K-Means
     \end{itemize}
  
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 1: K-means}
+    \small
+    
+    The distance matrix based on the Euclidean distance is given below:
+    
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\textwidth]{../imgs/k-mean_review_q1.png}
+    \end{figure}
+
+    Suppose that the initial seeds (centers of each cluster) are \textbf{A1}, \textbf{A4} and \textbf{A7}. 
+    Run the k-means algorithm for 1 epoch only. At the end of this epoch show:
+    \begin{itemize}
+        \item The new clusters (i.e. the examples belonging to each cluster)
+        \item The centers of the new clusters
+    \end{itemize}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 1: K-means}
+    \small
+    
+    \begin{columns}[]
+        \begin{column}{0.5\textwidth} 
+            \textbf{C1} is centred at \textbf{A1}, \textbf{C2} is centred at \textbf{A4}, and \textbf{C3} is centred at \textbf{A7}.\\
+            For each point:\\
+            \begin{itemize}
+                \item $\textbf{A1} \rightarrow \textbf{C1}$
+                \begin{table}[]
+                    \scriptsize
+                    \begin{tabular}{ccc}
+                    Item & Centroid & Dist \\ \hline
+                    A2   & A1       & $\sqrt{45}$ \\
+                    A2   & A4       & $\sqrt{49}$ \\
+                    A2   & A7       & $\sqrt{5}$
+                    \end{tabular}
+                \end{table}
+                \item $\textbf{A2} \rightarrow \textbf{C3}$
+                \begin{table}[]
+                    \scriptsize
+                    \begin{tabular}{ccc}
+                    Item & Centroid & Dist \\ \hline
+                    A3   & A1       & $\sqrt{63}$ \\
+                    A3   & A4       & $\sqrt{11}$ \\
+                    A3   & A7       & $\sqrt{47}$
+                    \end{tabular}
+                \end{table}
+                \item $\textbf{A3} \rightarrow \textbf{C2}$
+                \item $\textbf{A4} \rightarrow \textbf{C2}$
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth} 
+            \begin{table}[]
+                \scriptsize
+                \begin{tabular}{ccc}
+                Item & Centroid & Dist \\ \hline
+                A5   & A1       & $\sqrt{41}$ \\
+                A5   & A4       & $\sqrt{2}$ \\
+                A5   & A7       & $\sqrt{21}$
+                \end{tabular}
+            \end{table}
+            \begin{itemize}
+                \item $\textbf{A5} \rightarrow \textbf{C2}$
+                \begin{table}[]
+                    \scriptsize
+                    \begin{tabular}{ccc}
+                    Item & Centroid & Dist \\ \hline
+                    A6   & A1       & $\sqrt{28}$ \\
+                    A6   & A4       & $\sqrt{7}$ \\
+                    A6   & A7       & $\sqrt{13}$
+                    \end{tabular}
+                \end{table}
+                \item $\textbf{A6} \rightarrow \textbf{C2}$
+                \item $\textbf{A7} \rightarrow \textbf{C3}$
+                \begin{table}[]
+                    \scriptsize
+                    \begin{tabular}{ccc}
+                    Item & Centroid & Dist \\ \hline
+                    A8   & A1       & $\sqrt{6}$ \\
+                    A8   & A4       & $\sqrt{5}$ \\
+                    A8   & A7       & $\sqrt{53}$
+                    \end{tabular}
+                \end{table}
+                \item $\textbf{A8} \rightarrow \textbf{C2}$
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Review Question 1: K-means}
+    \small
+    
+    The new clusters: $C1=\{A1\},C2=\{A3, A4, A5, A6, A8\}, C3=\{A2, A7\}$
+    \vspace{1em}
+
+    Given $A1=(2,10), A2=(2,5), A3=(8,4), A4=(5,8), A5=(7,5), A6=(6,4), A7=(1,2), A8=(4,9)$.\\
+    The centroids of the new clusters are:
+    \begin{itemize}
+        \item $C1 = (2, 10)$
+        \item $C2 = ((8+5+7+6+4)/5,(4+8+5+4+9)/5)=(6,6)$
+        \item $C3 = ((2+1)/2,(5+2)/2) = (1.5, 3.5)$
+    \end{itemize}
 \end{frame}
 
 %-------------------------------------------------------------------------------
@@ -304,6 +411,192 @@
     \begin{example}
         \href{https://scikit-learn.org/stable/modules/clustering.html\#hierarchical-clustering}{Hierarchical clustering from \textit{sklearn}}
     \end{example}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+    Use single-linkage (MIN) agglomerative clustering to group the data described in Exercise 1. Show the dendrogram.
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|cccccccc}
+           & A1 & A2 & A3 & A4 & A5 & A6 & A7 & A8 \\ \hline
+        A1 & $0$  & $\sqrt{45}$ & $\sqrt{63}$ & $\sqrt{57}$ & $\sqrt{41}$ & $\sqrt{28}$ & $\sqrt{95}$ & $\sqrt{6}$ \\
+        A2 &    & $0$  & $\sqrt{55}$ & $\sqrt{49}$ & $\sqrt{35}$ & $\sqrt{11}$ & $\sqrt{5}$  & $\sqrt{25}$ \\
+        A3 &    &    & $0$  & $\sqrt{11}$ & $\sqrt{23}$ & $\sqrt{54}$ & $\sqrt{47}$ & $\sqrt{65}$ \\
+        A4 &    &    &    & $0$  & $\sqrt{2}$  & $\sqrt{7}$  & $\sqrt{26}$ & $\sqrt{5}$  \\
+        A5 &    &    &    &    & $0$  & $\sqrt{5}$  & $\sqrt{21}$ & $\sqrt{35}$ \\
+        A6 &    &    &    &    &    & $0$  & $\sqrt{13}$ & $\sqrt{27}$ \\
+        A7 &    &    &    &    &    &    & $0$  & $\sqrt{53}$ \\
+        A8 &    &    &    &    &    &    &    & $0$ \\
+        \end{tabular}
+        \end{table}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+    Use single-linkage (MIN) agglomerative clustering to group the data described in Exercise 1. Show the dendrogram.
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|cccc|c|ccc}
+           & A1 & A2 & A3 & A4 & A5 & A6 & A7 & A8 \\ \hline
+        A1 & $0$  & $\sqrt{45}$ & $\sqrt{63}$ & $\sqrt{57}$ & $\sqrt{41}$ & $\sqrt{28}$ & $\sqrt{95}$ & $\sqrt{6}$ \\
+        A2 &    & $0$  & $\sqrt{55}$ & $\sqrt{49}$ & $\sqrt{35}$ & $\sqrt{11}$ & $\sqrt{5}$  & $\sqrt{25}$ \\
+        A3 &    &    & $0$  & $\sqrt{11}$ & $\sqrt{23}$ & $\sqrt{54}$ & $\sqrt{47}$ & $\sqrt{65}$ \\ \hline
+        A4 &    &    &    & $0$  & \textcolor{red}{$\sqrt{2}$} & $\sqrt{7}$  & $\sqrt{26}$ & $\sqrt{5}$  \\ \hline
+        A5 &    &    &    &    & $0$  & $\sqrt{5}$  & $\sqrt{21}$ & $\sqrt{35}$ \\
+        A6 &    &    &    &    &    & $0$  & $\sqrt{13}$ & $\sqrt{27}$ \\
+        A7 &    &    &    &    &    &    & $0$  & $\sqrt{53}$ \\
+        A8 &    &    &    &    &    &    &    & $0$ \\
+        \end{tabular}
+    \end{table}
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|c|c}
+        Level & \# Clusters & Clusters \\ \hline
+        0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \textcolor{red}{\{A4, A5\}}, \{A6\}, \{A7\}, \{A8\}$\\
+        % 2     & 4           & \\
+        % 3     & 3           & \\
+        % 4     & 1           &   
+        \end{tabular}
+    \end{table}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+    Use single-linkage (MIN) agglomerative clustering to group the data described in Exercise 1. Show the dendrogram.
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|cccccccc}
+           & A1 & A2 & A3 & A4 & A5 & A6 & A7 & A8 \\ \hline
+        A1 & $0$  & $\sqrt{45}$ & $\sqrt{63}$ & $\sqrt{57}$ & $\sqrt{41}$ & $\sqrt{28}$ & $\sqrt{95}$ & $\sqrt{6}$ \\
+        A2 &    & $0$  & $\sqrt{55}$ & $\sqrt{49}$ & $\sqrt{35}$ & $\sqrt{11}$ & \textcolor{red}{$\sqrt{5}$}  & $\sqrt{25}$ \\
+        A3 &    &    & $0$  & $\sqrt{11}$ & $\sqrt{23}$ & $\sqrt{54}$ & $\sqrt{47}$ & $\sqrt{65}$ \\ 
+        A4 &    &    &    & $0$  & \textcolor{gray}{$\sqrt{2}$} & $\sqrt{7}$  & $\sqrt{26}$ & \textcolor{red}{$\sqrt{5}$}  \\
+        A5 &    &    &    &    & $0$  & \textcolor{red}{$\sqrt{5}$}  & $\sqrt{21}$ & $\sqrt{35}$ \\
+        A6 &    &    &    &    &    & $0$  & $\sqrt{13}$ & $\sqrt{27}$ \\
+        A7 &    &    &    &    &    &    & $0$  & $\sqrt{53}$ \\
+        A8 &    &    &    &    &    &    &    & $0$ \\
+        \end{tabular}
+    \end{table}
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|c|c}
+        Level & \# Clusters & Clusters \\ \hline
+        0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        2     & 4           & $\{A1\}, \textcolor{red}{\{A2, A7\}}, \{A3\}, \textcolor{red}{\{A4, A5, A6,A8\}}$\\
+        % 3     & 3           & \\
+        % 4     & 1           &   
+        \end{tabular}
+    \end{table}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+    Use single-linkage (MIN) agglomerative clustering to group the data described in Exercise 1. Show the dendrogram.
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|cccccccc}
+           & A1 & A2 & A3 & A4 & A5 & A6 & A7 & A8 \\ \hline
+        A1 & $0$  & $\sqrt{45}$ & $\sqrt{63}$ & $\sqrt{57}$ & $\sqrt{41}$ & $\sqrt{28}$ & $\sqrt{95}$ & \textcolor{red}{$\sqrt{6}$} \\
+        A2 &    & $0$  & $\sqrt{55}$ & $\sqrt{49}$ & $\sqrt{35}$ & $\sqrt{11}$ & \textcolor{gray}{$\sqrt{5}$}  & $\sqrt{25}$ \\
+        A3 &    &    & $0$  & $\sqrt{11}$ & $\sqrt{23}$ & $\sqrt{54}$ & $\sqrt{47}$ & $\sqrt{65}$ \\ 
+        A4 &    &    &    & $0$  & \textcolor{gray}{$\sqrt{2}$} & $\sqrt{7}$  & $\sqrt{26}$ & \textcolor{gray}{$\sqrt{5}$}  \\
+        A5 &    &    &    &    & $0$  & \textcolor{gray}{$\sqrt{5}$}  & $\sqrt{21}$ & $\sqrt{35}$ \\
+        A6 &    &    &    &    &    & $0$  & $\sqrt{13}$ & $\sqrt{27}$ \\
+        A7 &    &    &    &    &    &    & $0$  & $\sqrt{53}$ \\
+        A8 &    &    &    &    &    &    &    & $0$ \\
+        \end{tabular}
+    \end{table}
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|c|c}
+        Level & \# Clusters & Clusters \\ \hline
+        0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        2     & 4           & $\{A1\}, \{A2, A7\}, \{A3\}, \{A4, A5, A6,A8\}$\\
+        3     & 3           & $\textcolor{red}{\{A1, A4, A5, A6,A8\}}, \{A2, A7\}, \{A3\}$\\
+        % 4     & 1           &   
+        \end{tabular}
+    \end{table}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+    Use single-linkage (MIN) agglomerative clustering to group the data described in Exercise 1. Show the dendrogram.
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|cccccccc}
+           & A1 & A2 & A3 & A4 & A5 & A6 & A7 & A8 \\ \hline
+        A1 & $0$  & $\sqrt{45}$ & $\sqrt{63}$ & $\sqrt{57}$ & $\sqrt{41}$ & $\sqrt{28}$ & $\sqrt{95}$ & \textcolor{gray}{$\sqrt{6}$} \\
+        A2 &    & $0$  & $\sqrt{55}$ & $\sqrt{49}$ & $\sqrt{35}$ & \textcolor{red}{$\sqrt{11}$} & \textcolor{gray}{$\sqrt{5}$}  & $\sqrt{25}$ \\
+        A3 &    &    & $0$  & \textcolor{red}{$\sqrt{11}$} & $\sqrt{23}$ & $\sqrt{54}$ & $\sqrt{47}$ & $\sqrt{65}$ \\ 
+        A4 &    &    &    & $0$  & \textcolor{gray}{$\sqrt{2}$} & \textcolor{blue}{$\sqrt{7}$}  & $\sqrt{26}$ & \textcolor{gray}{$\sqrt{5}$}  \\
+        A5 &    &    &    &    & $0$  & \textcolor{gray}{$\sqrt{5}$}  & $\sqrt{21}$ & $\sqrt{35}$ \\
+        A6 &    &    &    &    &    & $0$  & $\sqrt{13}$ & $\sqrt{27}$ \\
+        A7 &    &    &    &    &    &    & $0$  & $\sqrt{53}$ \\
+        A8 &    &    &    &    &    &    &    & $0$ \\
+        \end{tabular}
+    \end{table}
+
+    A4 and A6 are already in one cluster.
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|c|c}
+        Level & \# Clusters & Clusters \\ \hline
+        0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        2     & 4           & $\{A1\}, \{A2, A7\}, \{A3\}, \{A4, A5, A6,A8\}$\\
+        3     & 3           & $\{A1, A4, A5, A6,A8\}, \{A2, A7\}, \{A3\}$\\
+        4     & 1           & $\{A1, A2, A3, A4, A5, A6, A7, A8\}$
+        \end{tabular}
+    \end{table}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+    Use single-linkage (MIN) agglomerative clustering to group the data described in Exercise 1. Show the dendrogram.
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|c|c}
+        Level & \# Clusters & Clusters \\ \hline
+        0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        2     & 4           & $\{A1\}, \{A2, A7\}, \{A3\}, \{A4, A5, A6,A8\}$\\
+        3     & 3           & \textcolor{blue}{$\{A1, A4, A5, A6,A8\}, \{A2, A7\}, \{A3\}$}\\
+        4     & 1           & $\{A1, A2, A3, A4, A5, A6, A7, A8\}$
+        \end{tabular}
+    \end{table}
+
+    Use the sequence from the second last level
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.45\textwidth]{../imgs/dendrogram.png}
+    \end{figure}
 \end{frame}
 
 %-------------------------------------------------------------------------------
