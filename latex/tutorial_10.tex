@@ -362,22 +362,23 @@
 %-------------------------------------------------------------------------------
 \begin{frame}
     \frametitle{Proximity Matrix}
+    \small
 
     The linkage criteria determines the metric used for the merge strategy:
 
     \begin{itemize}
-        \item \textbf{Min -- Single-linkage:} uses the minimum of the distances between all observations of the two sets
+        \item \textbf{Min (Single-linkage):} The minimum of the distances between all observations of the two sets
             \begin{itemize}
                 \item Can handle non-elliptical shapes
                 \item Sensitive to noise and outliers
             \end{itemize}
-        \item \textbf{Max -- Complete-linkage:} uses the maximum distances between all observations of the two sets
+        \item \textbf{Max (Complete-linkage):} The maximum distances between all observations of the two sets
             \begin{itemize}
                 \item Less susceptible to noise and outliers
                 \item Tends to break large clusters
                 \item Biased towards globular clusters
             \end{itemize}
-        \item \textbf{Group average -- Average-linkage:} The average of the distances between all observations of pairs of clusters
+        \item \textbf{Group average (Average-linkage):} The average of the distances between all observations of pairs of clusters
             \begin{itemize}
                 \item Less susceptible to noise and outliers
                 \item Biased towards globular clusters
@@ -385,6 +386,7 @@
             \begin{equation*}
                 \frac{1}{|C_i| \cdot |C_j|} \sum_{i \in C_i} \sum_{j \in C_j} d(i, j)
             \end{equation*}
+            where $|C_i|$ is the \textbf{cardinality} (number of elements) of the cluster $C_i$.
     \end{itemize}
     
 \end{frame}
