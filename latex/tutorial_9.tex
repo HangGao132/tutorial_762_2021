@@ -680,7 +680,7 @@ where $\alpha$ is the learning rate. (In a fully deterministic environment, a le
 %-------------------------------------------------------------------------------
 \begin{frame}[t]
     \frametitle{Q-Learning: 361 Exam Question 8, 2020}
-    % \small
+    \small
 
     Let the agent walks the path (F, right) $\to$ (G, up) $\to$ (G, right). 
     Calculate values for the Q-table after every step of the path.
@@ -690,108 +690,112 @@ where $\alpha$ is the learning rate. (In a fully deterministic environment, a le
         \begin{tikzpicture}[scale=1.3, transform shape]
             \draw[step=1cm,color=black] (0, 0) grid (3, 3);
             \node[rectangle,draw,fill = black,minimum width = 1cm,minimum height = 1cm] at (1.5, 1.5) {};
-            \node[rectangle,draw,fill = gray,opacity = 0.6,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
+            \node[rectangle,draw,fill = gray,opacity = 0.3,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
     
-            % \node at (0.5, 0.5) {F};
-            % \node at (1.5, 0.5) {G};
-            \node at (2.5, 0.5) {H};
+            \node[opacity=0.5] at (0.5, 0.5) {F};
+            \node[opacity=0.5] at (1.5, 0.5) {G};
+            \node[opacity=0.5] at (2.5, 0.5) {H};
     
             \node at (0.5, 1.5) {D};
-            \node at (1.5, 1.5) {};
             \node at (2.5, 1.5) {E};
             
             \node at (0.5, 2.5) {A};
             \node at (1.5, 2.5) {B};
             \node at (2.5, 2.5) {C};
 
-            \node[font=\tiny] at (1.5, 0.5) {-16};
             \node[font=\tiny] at (1.5, 0.8) {-16};
             \node[font=\tiny] at (1.5, 0.2) {-16};
             \node[font=\tiny] at (1.2, 0.5) {-16};
             \node[font=\tiny] at (1.8, 0.5) {-16};
 
-            \node[font=\tiny] at (0.5, 0.5) {-16};
             \node[font=\tiny] at (0.5, 0.8) {-16};
             \node[font=\tiny] at (0.5, 0.2) {-16};
             \node[font=\tiny] at (0.2, 0.5) {-16};
             \node[font=\tiny] at (0.8, 0.5) {-16};
     
-            % \draw [-stealth](1.5, 2.75) -- (0.75, 2.75);
-            % \draw [-stealth](0.25, 2.5) -- (0.25, 1.75);
-            % \draw [-stealth](0.25, 1.5) -- (0.25, 0.75);
-            % \draw [-stealth](0.75, 0.25) -- (1.25, 0.25);
-            % \draw [-stealth](1.5, 0.25) -- (2.25, 0.25);
+            \node[font=\tiny] at (2.5, 0.8) {-16};
+            \node[font=\tiny] at (2.5, 0.2) {-16};
+            \node[font=\tiny] at (2.2, 0.5) {-16};
+            \node[font=\tiny] at (2.8, 0.5) {-16};
             
         \end{tikzpicture}
     \end{figure}
-    
+
+    The initial Q-value is $-16$ for all states.
+
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \begin{frame}[t]
     \frametitle{Q-Learning: 361 Exam Question 8, 2020}
-    % \small
+    \small
     
-    Let the agent walks the path (F, right) $\to$ (G, up) $\to$ (G, right). 
-    Calculate values for the Q-table after every step of the path.
-    What is the value of $V(G)$ after the last step?
+    The agent at $F$ moves to the right.
 
     \begin{figure}
         \begin{tikzpicture}[scale=1.3, transform shape]
             \draw[step=1cm,color=black] (0, 0) grid (3, 3);
             \node[rectangle,draw,fill = black,minimum width = 1cm,minimum height = 1cm] at (1.5, 1.5) {};
-            \node[rectangle,draw,fill = gray,opacity = 0.6,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
-
-            \node at (2.5, 0.5) {H};
+            \node[rectangle,draw,fill = gray,opacity = 0.3,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
+    
+            \node[opacity=0.5] at (0.5, 0.5) {F};
+            \node[opacity=0.5] at (1.5, 0.5) {G};
+            \node[opacity=0.5] at (2.5, 0.5) {H};
     
             \node at (0.5, 1.5) {D};
-            \node at (1.5, 1.5) {};
             \node at (2.5, 1.5) {E};
             
             \node at (0.5, 2.5) {A};
             \node at (1.5, 2.5) {B};
             \node at (2.5, 2.5) {C};
-
-            \node[font=\tiny] at (1.5, 0.5) {-16};
-            \node[font=\tiny] at (1.5, 0.8) {-16};
-            \node[font=\tiny] at (1.5, 0.2) {-16};
-            \node[font=\tiny] at (1.2, 0.5) {-16};
-            \node[font=\tiny] at (1.8, 0.5) {-16};
 
             \node[font=\tiny] at (0.5, 0.5) {\textcolor{red}{-9}};
             \node[font=\tiny] at (0.5, 0.8) {-16};
             \node[font=\tiny] at (0.5, 0.2) {-16};
             \node[font=\tiny] at (0.2, 0.5) {-16};
             \node[font=\tiny] at (0.8, 0.5) {\textcolor{red}{-9}};
+
+            \node[font=\tiny] at (1.5, 0.8) {-16};
+            \node[font=\tiny] at (1.5, 0.2) {-16};
+            \node[font=\tiny] at (1.2, 0.5) {\textcolor{blue}{-16}};
+            \node[font=\tiny] at (1.8, 0.5) {-16};
+
+            \node[font=\tiny] at (2.5, 0.8) {-16};
+            \node[font=\tiny] at (2.5, 0.2) {-16};
+            \node[font=\tiny] at (2.2, 0.5) {-16};
+            \node[font=\tiny] at (2.8, 0.5) {-16};
     
             \draw [-stealth](0.75, 0.25) -- (1.25, 0.25);
         \end{tikzpicture}
     \end{figure}
     
-    Given $\gamma = 0.5$, $Q(s=F, a=\text{right}) = -1 + 0.5 \times (-16) = -9$
+    Given $\gamma = 0.5$, the reward $r$ for moving to any non-target valid state is $-1$, and the maximum value of $Q(G, a')$ is $-16$,
+    \[
+        Q(F, \text{right}) = r + \gamma \cdot \max_{a'}Q(s', a') = -1 + 0.5 \times (\textcolor{blue}{-16}) = -9
+    \]
+    \[
+        V(F) = \max_{a}Q(F,a) = -9
+    \]
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \begin{frame}[t]
     \frametitle{Q-Learning: 361 Exam Question 8, 2020}
-    % \small
+    \small
     
-    Let the agent walks the path (F, right) $\to$ (G, up) $\to$ (G, right). 
-    Calculate values for the Q-table after every step of the path.
-    What is the value of $V(G)$ after the last step?
+    The agent at $G$ moves to the top.
 
     \begin{figure}
         \begin{tikzpicture}[scale=1.3, transform shape]
             \draw[step=1cm,color=black] (0, 0) grid (3, 3);
             \node[rectangle,draw,fill = black,minimum width = 1cm,minimum height = 1cm] at (1.5, 1.5) {};
-            \node[rectangle,draw,fill = gray,opacity = 0.6,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
+            \node[rectangle,draw,fill = gray,opacity = 0.3,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
     
-            % \node at (0.5, 0.5) {F};
-            % \node at (1.5, 0.5) {G};
-            \node at (2.5, 0.5) {H};
+            \node[opacity=0.5] at (0.5, 0.5) {F};
+            \node[opacity=0.5] at (1.5, 0.5) {G};
+            \node[opacity=0.5] at (2.5, 0.5) {H};
     
             \node at (0.5, 1.5) {D};
-            \node at (1.5, 1.5) {};
             \node at (2.5, 1.5) {E};
             
             \node at (0.5, 2.5) {A};
@@ -809,112 +813,79 @@ where $\alpha$ is the learning rate. (In a fully deterministic environment, a le
             \node[font=\tiny] at (0.5, 0.2) {-16};
             \node[font=\tiny] at (0.2, 0.5) {-16};
             \node[font=\tiny] at (0.8, 0.5) {-9};
+
+            \node[font=\tiny] at (2.5, 0.8) {-16};
+            \node[font=\tiny] at (2.5, 0.2) {-16};
+            \node[font=\tiny] at (2.2, 0.5) {-16};
+            \node[font=\tiny] at (2.8, 0.5) {-16};
     
             \draw [-stealth](1.1, 0.25) -- (1.1, 0.75);
             
         \end{tikzpicture}
     \end{figure}
     
+    Given $\gamma = 0.5$, the reward $r$ for blocked state is $-2$, and the agent cannot move to blocked state, it will stay at $G$, then maximum value of $Q(G, a)$ is $-16$,
     \[
-        Q(G, \text{up}) = -2 + 0.5 \times (-16) = -10
+        Q(G, \text{up}) = r + \gamma \cdot \max_{a'}Q(s', a') = -2 + 0.5 \times (\textcolor{blue}{-16}) = -10
+    \]
+    \[
+        V(G) = \max_{a}Q(F,a) = -10
     \]
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \begin{frame}[t]
     \frametitle{Q-Learning: 361 Exam Question 8, 2020}
-    % \small
+    \small
     
-    Let the agent walks the path (F, right) $\to$ (G, up) $\to$ (G, right). 
-    Calculate values for the Q-table after every step of the path.
-    What is the value of $V(G)$ after the last step?
+    The agent at $G$ moves to the right.
 
     \begin{figure}
         \begin{tikzpicture}[scale=1.3, transform shape]
             \draw[step=1cm,color=black] (0, 0) grid (3, 3);
             \node[rectangle,draw,fill = black,minimum width = 1cm,minimum height = 1cm] at (1.5, 1.5) {};
-            \node[rectangle,draw,fill = gray,opacity = 0.6,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
+            \node[rectangle,draw,fill = gray,opacity = 0.3,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
     
-            % \node at (0.5, 0.5) {F};
-            % \node at (1.5, 0.5) {G};
-            \node at (2.5, 0.5) {H};
+            \node[opacity=0.5] at (0.5, 0.5) {F};
+            \node[opacity=0.5] at (1.5, 0.5) {G};
+            \node[opacity=0.5] at (2.5, 0.5) {H};
     
             \node at (0.5, 1.5) {D};
-            \node at (1.5, 1.5) {};
             \node at (2.5, 1.5) {E};
             
             \node at (0.5, 2.5) {A};
             \node at (1.5, 2.5) {B};
             \node at (2.5, 2.5) {C};
 
-            \node[font=\tiny] at (1.5, 0.5) {-10};
+            \node[font=\tiny] at (1.5, 0.5) {\textcolor{red}{-8}};
             \node[font=\tiny] at (1.5, 0.8) {-10};
             \node[font=\tiny] at (1.5, 0.2) {-16};
             \node[font=\tiny] at (1.2, 0.5) {-16};
-            \node[font=\tiny] at (1.8, 0.5) {\textcolor{red}{0}};
+            \node[font=\tiny] at (1.8, 0.5) {\textcolor{red}{-8}};
 
             \node[font=\tiny] at (0.5, 0.5) {-9};
             \node[font=\tiny] at (0.5, 0.8) {-16};
             \node[font=\tiny] at (0.5, 0.2) {-16};
             \node[font=\tiny] at (0.2, 0.5) {-16};
             \node[font=\tiny] at (0.8, 0.5) {-9};
+
+            \node[font=\tiny] at (2.5, 0.8) {-16};
+            \node[font=\tiny] at (2.5, 0.2) {-16};
+            \node[font=\tiny] at (2.2, 0.5) {\textcolor{blue}{-16}};
+            \node[font=\tiny] at (2.8, 0.5) {-16};
     
             \draw [-stealth](1.75, 0.25) -- (2.25, 0.25);
             
         \end{tikzpicture}
     \end{figure}
     
+    Given $\gamma = 0.5$, the reward $r$ for moving to the target state is $0$, and the maximum value of $Q(H, a)$ is $-16$,
     \[
-        Q(G, \text{right}) = 0 + 0.5 \times 0 = 0
+        Q(G, \text{right}) = r + \gamma \cdot \max_{a'}Q(s', a') = 0 + 0.5 \times (\textcolor{blue}{-16}) = -8
     \]
-\end{frame}
-
-%-------------------------------------------------------------------------------
-\begin{frame}[t]
-    \frametitle{Q-Learning: 361 Exam Question 8, 2020}
-    % \small
-    
-    Let the agent walks the path (F, right) $\to$ (G, up) $\to$ (G, right). 
-    Calculate values for the Q-table after every step of the path.
-    What is the value of $V(G)$ after the last step?
-
-    \begin{figure}
-        \begin{tikzpicture}[scale=1.3, transform shape]
-            \draw[step=1cm,color=black] (0, 0) grid (3, 3);
-            \node[rectangle,draw,fill = black,minimum width = 1cm,minimum height = 1cm] at (1.5, 1.5) {};
-            \node[rectangle,draw,fill = gray,opacity = 0.6,minimum width = 1cm,minimum height = 1cm] at (2.5, 0.5) {};
-    
-            % \node at (0.5, 0.5) {F};
-            % \node at (1.5, 0.5) {G};
-            \node at (2.5, 0.5) {H};
-    
-            \node at (0.5, 1.5) {D};
-            \node at (1.5, 1.5) {};
-            \node at (2.5, 1.5) {E};
-            
-            \node at (0.5, 2.5) {A};
-            \node at (1.5, 2.5) {B};
-            \node at (2.5, 2.5) {C};
-
-            \node[font=\tiny] at (1.5, 0.5) {\textcolor{red}{0}};
-            \node[font=\tiny] at (1.5, 0.8) {-10};
-            \node[font=\tiny] at (1.5, 0.2) {-16};
-            \node[font=\tiny] at (1.2, 0.5) {-16};
-            \node[font=\tiny] at (1.8, 0.5) {0};
-
-            \node[font=\tiny] at (0.5, 0.5) {-9};
-            \node[font=\tiny] at (0.5, 0.8) {-16};
-            \node[font=\tiny] at (0.5, 0.2) {-16};
-            \node[font=\tiny] at (0.2, 0.5) {-16};
-            \node[font=\tiny] at (0.8, 0.5) {-9};
-    
-            % \draw [-stealth](1.75, 0.25) -- (2.25, 0.25);
-        \end{tikzpicture}
-    \end{figure}
-    
-    \[ V(G) = 0 \]
-
-    Note: The initial value of $Q$ does not affect $V(s)$.
+    \[
+        V(G) = \max_{a}Q(G,a) = -8
+    \]
 \end{frame}
 
 %-------------------------------------------------------------------------------
