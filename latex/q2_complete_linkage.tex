@@ -1,0 +1,513 @@
+\documentclass[aspectratio=169, 10pt]{beamer}
+\usetheme{metropolis}
+% \usefonttheme{professionalfonts}
+
+\usepackage[english]{babel}
+\usepackage[style=authortitle,backend=biber]{biblatex}
+\usepackage[utf8]{inputenc}
+\usepackage{algorithmic}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{colortbl}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{heuristica}
+\usepackage{hyperref}
+\usepackage{mathptmx}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\usepackage{siunitx}
+\usepackage{subcaption}
+\usepackage{svg}
+\usepackage{tabularx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{bm}
+
+\addbibresource{references.bib}
+
+\usetikzlibrary{calc}
+
+% \pgfplotsset{compat=1.17}
+\usepgfplotslibrary{statistics}
+
+\definecolor{uniblue}{HTML}{00467f}
+\definecolor{uniblueDark}{HTML}{002052}
+\definecolor{uniblueLight}{HTML}{4671af}
+\definecolor{blueGrey}{HTML}{cfd8dc}
+\definecolor{red800Dark}{HTML}{8e0000}
+\definecolor{green800Dark}{HTML}{005005}
+
+\setbeamercolor{background canvas}{bg=white}
+% \setbeamertemplate{frame footer}{\insertshortauthor}
+\setbeamerfont{page number in head/foot}{size=\tiny}
+% \setbeamercolor{footline}{fg=white, bg=uniblue}
+\setbeamercolor{footline}{fg=uniblue}
+\setbeamercolor{title}{fg=uniblueDark, bg=white}
+\setbeamercolor{frametitle}{fg=white, bg=uniblue}
+\setbeamercolor{progress bar}{fg=uniblueLight, bg=white}
+\setbeamercolor{block title}{use=structure,fg=white,bg=uniblue}
+\setbeamercolor{block body}{use=structure,fg=black,bg=blueGrey}
+\setbeamercolor{block title alerted}{fg=white,bg=red800Dark}
+\setbeamercolor*{block title example}{fg=white, bg=green800Dark}
+\setbeamercolor{alerted text}{fg=red800Dark}
+\setbeamercolor{footnote}{fg=black}
+\setbeamertemplate{frametitle continuation}[from second]
+\setbeamercolor*{bibliography entry title}{fg=black}
+\setbeamercolor*{bibliography entry author}{fg=black}
+\setbeamercolor*{bibliography entry location}{fg=black}
+\setbeamercolor*{bibliography entry note}{fg=black}
+% \setbeamertemplate{bibliography item}{}
+
+\setbeamerfont{author}{size=\normalsize}
+\setbeamerfont{institute}{size=\small}
+\setbeamerfont{date}{size=\normalsize}
+
+\newcommand{\vect}{\mathbf}
+
+\DeclareMathOperator*{\argmax}{argmax}
+
+\hypersetup{
+    % colorlinks=false,
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,
+    urlcolor=blue,
+}
+
+\title{COMPSCI 762 Tutorial 10}
+% \subtitle{Tutorial on Bayesian Networks, kNN, SVM, MDP and Q-Learning}
+\subtitle{Solution for Week 10 Review Question 2 Part 2 -- Complete Linkage Agglomerative Clustering}
+\author{Luke Chang}
+\institute{The University of Auckland}
+\date{May 2021}
+
+
+\begin{document}
+
+\frame{\titlepage}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+    Use complete-linkage (MAX) agglomerative clustering to group the data described in Exercise 1. Show the dendrogram.
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|cccccccc}
+           & A1 & A2 & A3 & A4 & A5 & A6 & A7 & A8 \\ \hline
+        A1 & $0$  & $\sqrt{45}$ & $\sqrt{63}$ & $\sqrt{57}$ & $\sqrt{41}$ & $\sqrt{28}$ & $\sqrt{95}$ & $\sqrt{6}$ \\
+        A2 &    & $0$  & $\sqrt{55}$ & $\sqrt{49}$ & $\sqrt{35}$ & $\sqrt{11}$ & $\sqrt{5}$  & $\sqrt{25}$ \\
+        A3 &    &    & $0$  & $\sqrt{11}$ & $\sqrt{23}$ & $\sqrt{54}$ & $\sqrt{47}$ & $\sqrt{65}$ \\
+        A4 &    &    &    & $0$  & $\sqrt{2}$  & $\sqrt{7}$  & $\sqrt{26}$ & $\sqrt{5}$  \\
+        A5 &    &    &    &    & $0$  & $\sqrt{5}$  & $\sqrt{21}$ & $\sqrt{35}$ \\
+        A6 &    &    &    &    &    & $0$  & $\sqrt{13}$ & $\sqrt{27}$ \\
+        A7 &    &    &    &    &    &    & $0$  & $\sqrt{53}$ \\
+        A8 &    &    &    &    &    &    &    & $0$ \\
+        \end{tabular}
+    \end{table}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+    Use complete-linkage (MAX) agglomerative clustering to group the data described in Exercise 1. Show the dendrogram.
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|cccccccc}
+           & A1 & A2 & A3 & A4 & A5 & A6 & A7 & A8 \\ \hline
+        A1 & $0$  & $\sqrt{45}$ & $\sqrt{63}$ & $\sqrt{57}$ & $\sqrt{41}$ & $\sqrt{28}$ & $\sqrt{95}$ & $\sqrt{6}$ \\
+        A2 &    & $0$  & $\sqrt{55}$ & $\sqrt{49}$ & $\sqrt{35}$ & $\sqrt{11}$ & $\sqrt{5}$  & $\sqrt{25}$ \\
+        A3 &    &    & $0$  & $\sqrt{11}$ & $\sqrt{23}$ & $\sqrt{54}$ & $\sqrt{47}$ & $\sqrt{65}$ \\
+        A4 &    &    &    & $0$  & $\sqrt{2}$  & $\sqrt{7}$  & $\sqrt{26}$ & $\sqrt{5}$  \\
+        A5 &    &    &    &    & $0$  & $\sqrt{5}$  & $\sqrt{21}$ & $\sqrt{35}$ \\
+        A6 &    &    &    &    &    & $0$  & $\sqrt{13}$ & $\sqrt{27}$ \\
+        A7 &    &    &    &    &    &    & $0$  & $\sqrt{53}$ \\
+        A8 &    &    &    &    &    &    &    & $0$ \\
+        \end{tabular}
+    \end{table}
+
+    \begin{itemize}
+        \item Agglomerative clustering starts with considering each data point as a cluster.
+        \item Complete-linkage uses the maximum distances between all observations of the two sets.
+    \end{itemize}
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|c|c}
+        Level & \# Clusters & Clusters \\ \hline
+        0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+
+    \begin{itemize}
+        \item Complete-linkage uses the maximum distances between all observations of the two sets.
+        \item Since each point is a cluster, we simply merge the two cluster with minimum distance.
+    \end{itemize}
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|cccccccc}
+           & A1 & A2 & A3 & A4 & A5 & A6 & A7 & A8 \\ \hline
+        A1 & $0$  & $\sqrt{45}$ & $\sqrt{63}$ & $\sqrt{57}$ & $\sqrt{41}$ & $\sqrt{28}$ & $\sqrt{95}$ & $\sqrt{6}$ \\
+        A2 &    & $0$  & $\sqrt{55}$ & $\sqrt{49}$ & $\sqrt{35}$ & $\sqrt{11}$ & $\sqrt{5}$  & $\sqrt{25}$ \\
+        A3 &    &    & $0$  & $\sqrt{11}$ & $\sqrt{23}$ & $\sqrt{54}$ & $\sqrt{47}$ & $\sqrt{65}$ \\
+        A4 &    &    &    & $0$  & \textcolor{red}{$\sqrt{2}$} & $\sqrt{7}$  & $\sqrt{26}$ & $\sqrt{5}$  \\
+        A5 &    &    &    &    & $0$  & $\sqrt{5}$  & $\sqrt{21}$ & $\sqrt{35}$ \\
+        A6 &    &    &    &    &    & $0$  & $\sqrt{13}$ & $\sqrt{27}$ \\
+        A7 &    &    &    &    &    &    & $0$  & $\sqrt{53}$ \\
+        A8 &    &    &    &    &    &    &    & $0$ \\
+        \end{tabular}
+    \end{table}
+
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|c|l}
+        Level & \# Clusters & Clusters \\ \hline
+        0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \textcolor{red}{\{A4, A5\}}, \{A6\}, \{A7\}, \{A8\}$\\
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+
+    Complete-linkage Proximity Matrix
+
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|ccc|cc|ccc}
+                                                        & A1  & A2          & A3          & A4                                 & A5                                 & A6                                & A7                                 & A8                                 \\ \hline
+        A1                                              & $0$ & $\sqrt{45}$ & $\sqrt{63}$ & {\color[HTML]{3531FF} $\sqrt{57}$} & \textcolor{gray}{$\sqrt{41}$} & $\sqrt{28}$                       & $\sqrt{95}$                        & $\sqrt{6}$                         \\
+        A2                                              &     & $0$         & $\sqrt{55}$ & {\color[HTML]{3531FF} $\sqrt{49}$} & \textcolor{gray}{$\sqrt{35}$} & $\sqrt{11}$                       & $\sqrt{5}$                         & $\sqrt{25}$                        \\
+        A3                                              &     &             & $0$         & \textcolor{gray}{$\sqrt{11}$} & {\color[HTML]{3531FF} $\sqrt{23}$} & $\sqrt{54}$                       & $\sqrt{47}$                        & $\sqrt{65}$                        \\ \hline
+        A4                                              &     &             &             & {\color[HTML]{3531FF} $0$}         & \textcolor{gray}{$\sqrt{2}$}  & {\color[HTML]{3531FF} $\sqrt{7}$} & {\color[HTML]{3531FF} $\sqrt{26}$} & \textcolor{gray}{$\sqrt{5}$}  \\
+        A5                                              &     &             &             &                                    & {\color[HTML]{3531FF} $0$}         & \textcolor{gray}{$\sqrt{5}$} & \textcolor{gray}{$\sqrt{21}$} & {\color[HTML]{3531FF} $\sqrt{35}$} \\ \hline
+        A6                                              &     &             &             &                                    &                                    & $0$                               & $\sqrt{13}$                        & $\sqrt{27}$                        \\
+        A7                                              &     &             &             &                                    &                                    &                                   & $0$                                & $\sqrt{53}$                        \\
+        A8                                              &     &             &             &                                    &                                    &                                   &                                    & $0$                               
+        \end{tabular}
+    \end{table}
+
+    \begin{itemize}
+        \item A4 and A5 are in one cluster now, therefore we want to update our proximity matrix.
+        \item We merge the columns and rows which contain A4, A5 by only keeping the maximum value (complete-linkage).
+        \item The distance within the same cluster is alway 0 (trivial). 
+    \end{itemize}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+
+    Complete-linkage Proximity Matrix at Level 1
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|ccccccc}
+                & A1  & A2          & A3          & A4, A5                             & A6                                & A7                                 & A8                                 \\ \hline
+        A1      & $0$ & $\sqrt{45}$ & $\sqrt{63}$ & {\color[HTML]{000000} $\sqrt{57}$} & $\sqrt{28}$                       & $\sqrt{95}$                        & $\sqrt{6}$                         \\
+        A2      &     & $0$         & $\sqrt{55}$ & {\color[HTML]{000000} $\sqrt{49}$} & $\sqrt{11}$                       & \textcolor{red}{$\sqrt{5}$}                         & $\sqrt{25}$                        \\
+        A3      &     &             & $0$         & {\color[HTML]{000000} $\sqrt{23}$} & $\sqrt{54}$                       & $\sqrt{47}$                        & $\sqrt{65}$                        \\
+        A4, A5  &     &             &             & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{7}$} & {\color[HTML]{000000} $\sqrt{26}$} & {\color[HTML]{000000} $\sqrt{35}$} \\
+        A6      &     &             &             &                                    & $0$                               & $\sqrt{13}$                        & $\sqrt{27}$                        \\
+        A7      &     &             &             &                                    &                                   & $0$                                & $\sqrt{53}$                        \\
+        A8      &     &             &             &                                    &                                   &                                    & $0$                               
+        \end{tabular}
+    \end{table}
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|c|l}
+        Level & \# Clusters & Clusters \\ \hline
+        0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \textcolor{red}{\{A4, A5\}}, \{A6\}, \{A7\}, \{A8\}$\\
+        \end{tabular}
+    \end{table}
+
+    \begin{itemize}
+        \item $\sqrt{5}$ is the next minimum distance between clusters when using complete-linkage, so we merge A2 and A7.
+    \end{itemize}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+
+    Complete-linkage Proximity Matrix at Level 1 -- Merge A2 and A7
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|ccccccc}
+                & A1          & A2                                 & A3          & A4, A5      & A6          & \cellcolor[HTML]{9B9B9B}A7                                 & A8          \\ \hline
+        A1      & $0$         & {\color[HTML]{9b9b9b} $\sqrt{45}$} & $\sqrt{63}$ & $\sqrt{57}$ & $\sqrt{28}$ & {\color[HTML]{3531FF} $\sqrt{95}$} & $\sqrt{6}$  \\
+        A2      & {\color[HTML]{9b9b9b} $\sqrt{45}$} & {\color[HTML]{3531FF} $0        $} & {\color[HTML]{3531FF} $\sqrt{55}$} & {\color[HTML]{3531FF} $\sqrt{49}$} & {\color[HTML]{9b9b9b} $\sqrt{11}$} & {\color[HTML]{9b9b9b} $\sqrt{5}$ } & {\color[HTML]{9b9b9b} $\sqrt{25}$} \\
+        A3      &             & {\color[HTML]{3531FF} $\sqrt{55}$} & 0           & $\sqrt{23}$ & $\sqrt{54}$ & {\color[HTML]{9b9b9b} $\sqrt{47}$} & $\sqrt{65}$ \\
+        A4, A5  &             & {\color[HTML]{3531FF} $\sqrt{49}$} &             & $0        $ & $\sqrt{7 }$ & {\color[HTML]{9b9b9b} $\sqrt{26}$} & $\sqrt{35}$ \\
+        A6      &             & {\color[HTML]{9b9b9b} $\sqrt{11}$} &             &             & $0        $ & {\color[HTML]{3531FF} $\sqrt{13}$} & $\sqrt{27}$ \\
+        \cellcolor[HTML]{9B9B9B}A7      & {\color[HTML]{3531FF} $\sqrt{95}$} & {\color[HTML]{9b9b9b} $\sqrt{5 }$} & {\color[HTML]{9b9b9b} $\sqrt{47}$} & {\color[HTML]{9b9b9b} $\sqrt{26}$} & {\color[HTML]{3531FF} $\sqrt{13}$} & {\color[HTML]{3531FF} $0        $} & {\color[HTML]{3531FF} $\sqrt{53}$} \\
+        A8      &             & {\color[HTML]{9b9b9b} $\sqrt{25}$} &             &             &             & {\color[HTML]{3531FF} $\sqrt{53}$} & $0        $
+        \end{tabular}
+    \end{table}
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|c|l}
+        Level & \# Clusters & Clusters \\ \hline
+        0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        2     & 6           & $\{A1\}, \textcolor{red}{\{A2, A7\}}, \{A3\}, \{A4, A5\}, \{A6\}, \{A8\}$\\
+        \end{tabular}
+    \end{table}
+
+    \begin{itemize}
+        \item Complete the rows and column which contain A2 and A7
+        \item Merge A2 and A7 into one cluster to replace A2, and then remove A7
+    \end{itemize}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+
+    Complete-linkage Proximity Matrix at Level 2
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|cccccc}
+                                                        & {\color[HTML]{000000} A1}  & {\color[HTML]{000000} A2, A7}      & {\color[HTML]{000000} A3}          & {\color[HTML]{000000} A4, A5}      & {\color[HTML]{000000} A6}          & {\color[HTML]{000000} A8}          \\ \hline
+        {\color[HTML]{000000} A1}                       & {\color[HTML]{000000} $0$} & {\color[HTML]{000000} $\sqrt{95}$} & {\color[HTML]{000000} $\sqrt{63}$} & {\color[HTML]{000000} $\sqrt{57}$} & {\color[HTML]{000000} $\sqrt{28}$} & {\color[HTML]{fe0000} $\sqrt{6}$}  \\
+        {\color[HTML]{000000} A2, A7}                   & {\color[HTML]{000000} }    & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{55}$} & {\color[HTML]{000000} $\sqrt{49}$} & {\color[HTML]{000000} $\sqrt{13}$} & {\color[HTML]{000000} $\sqrt{53}$} \\
+        {\color[HTML]{000000} A3}                       & {\color[HTML]{000000} }    & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{23}$} & {\color[HTML]{000000} $\sqrt{54}$} & {\color[HTML]{000000} $\sqrt{65}$} \\
+        {\color[HTML]{000000} A4, A5}                   & {\color[HTML]{000000} }    & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{7}$}  & {\color[HTML]{000000} $\sqrt{35}$} \\
+        {\color[HTML]{000000} A6}                       & {\color[HTML]{000000} }    & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{27}$} \\
+        {\color[HTML]{000000} A8}                       & {\color[HTML]{000000} }    & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}        
+        \end{tabular}
+    \end{table}
+
+    \begin{itemize}
+        \item $\sqrt{6}$ is the next minimum distance between clusters when using complete-linkage, so we merge A1 and A8.
+    \end{itemize}
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|c|l}
+        Level & \# Clusters & Clusters \\ \hline
+        0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        2     & 6           & $\{A1\}, \{A2, A7\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A8\}$\\
+        3     & 5           & $\{A1, A8\}, \{A2, A7\}, \{A3\}, \{A4, A5\}, \{A6\}$\\
+        \end{tabular}
+    \end{table}
+
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+
+    Complete-linkage Proximity Matrix at Level 2 -- Merge A1 and A8
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|cccccc}
+        \cellcolor[HTML]{FFFFFF}{\color[HTML]{000000} } & {\color[HTML]{000000} A1}  & {\color[HTML]{000000} A2, A7}      & {\color[HTML]{000000} A3}          & {\color[HTML]{000000} A4, A5}      & {\color[HTML]{000000} A6}          & \cellcolor[HTML]{9B9B9B}{\color[HTML]{000000} A8}          \\ \hline
+        {\color[HTML]{000000} A1}                       & {\color[HTML]{000000} $0 $} & {\color[HTML]{3531FF} $\sqrt{95}$} & {\color[HTML]{9b9b9b} $\sqrt{63}$} & {\color[HTML]{3531FF} $\sqrt{57}$} & {\color[HTML]{3531FF} $\sqrt{28}$} & {\color[HTML]{9b9b9b} $\sqrt{6}$}  \\
+        {\color[HTML]{000000} A2, A7}                   & {\color[HTML]{3531FF} $\sqrt{95}$} & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{55}$} & {\color[HTML]{000000} $\sqrt{49}$} & {\color[HTML]{000000} $\sqrt{13}$} & {\color[HTML]{9b9b9b} $\sqrt{53}$} \\
+        {\color[HTML]{000000} A3}                       & {\color[HTML]{9b9b9b} $\sqrt{63}$} & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{23}$} & {\color[HTML]{000000} $\sqrt{54}$} & {\color[HTML]{3531FF} $\sqrt{65}$} \\
+        {\color[HTML]{000000} A4, A5}                   & {\color[HTML]{3531FF} $\sqrt{57}$} & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{7}$}  & {\color[HTML]{9b9b9b} $\sqrt{35}$} \\
+        {\color[HTML]{000000} A6}                       & {\color[HTML]{3531FF} $\sqrt{28}$} & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{9b9b9b} $\sqrt{27}$} \\
+        \cellcolor[HTML]{9B9B9B}{\color[HTML]{000000} A8}                       & {\color[HTML]{9b9b9b} $\sqrt{6 }$} & {\color[HTML]{9b9b9b} $\sqrt{53}$}            & {\color[HTML]{3531FF} $\sqrt{65}$}            & {\color[HTML]{9b9b9b} $\sqrt{35}$}            & {\color[HTML]{9b9b9b} $\sqrt{27}$}            & {\color[HTML]{9b9b9b} $0$}        
+        \end{tabular}
+    \end{table}
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|c|l}
+        Level & \# Clusters & Clusters \\ \hline
+        0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        2     & 6           & $\{A1\}, \{A2, A7\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A8\}$\\
+        3     & 5           & $\{A1, A8\}, \{A2, A7\}, \{A3\}, \{A4, A5\}, \{A6\}$\\
+        \end{tabular}
+    \end{table}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+
+    Complete-linkage Proximity Matrix at Level 3
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|ccccc}
+        \cellcolor[HTML]{FFFFFF}{\color[HTML]{000000} } & {\color[HTML]{000000} A1, A8} & {\color[HTML]{000000} A2, A7}      & {\color[HTML]{000000} A3}          & {\color[HTML]{000000} A4, A5}      & {\color[HTML]{000000} A6}          \\ \hline
+        {\color[HTML]{000000} A1, A8}                   & {\color[HTML]{000000} $0$}    & {\color[HTML]{000000} $\sqrt{95}$} & {\color[HTML]{000000} $\sqrt{65}$} & {\color[HTML]{000000} $\sqrt{57}$} & {\color[HTML]{000000} $\sqrt{28}$} \\
+        {\color[HTML]{000000} A2, A7}                   & {\color[HTML]{000000} }       & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{55}$} & {\color[HTML]{000000} $\sqrt{49}$} & {\color[HTML]{000000} $\sqrt{13}$} \\
+        {\color[HTML]{000000} A3}                       & {\color[HTML]{000000} }       & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{23}$} & {\color[HTML]{000000} $\sqrt{54}$} \\
+        {\color[HTML]{000000} A4, A5}                   & {\color[HTML]{000000} }       & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{fe0000} $\sqrt{7}$}  \\
+        {\color[HTML]{000000} A6}                       & {\color[HTML]{000000} }       & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}        
+        \end{tabular}
+    \end{table}
+
+    \begin{itemize}
+        \item $\sqrt{7}$ is the next minimum distance between clusters when using complete-linkage, so we merge \{A4, A5\} and \{A6\}.
+    \end{itemize}
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|c|l}
+        Level & \# Clusters & Clusters \\ \hline
+        0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        2     & 6           & $\{A1\}, \{A2, A7\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A8\}$\\
+        3     & 5           & $\{A1, A8\}, \{A2, A7\}, \{A3\}, \{A4, A5\}, \{A6\}$\\
+        4     & 4           & $\{A1, A8\}, \{A2, A7\}, \{A3\}, \{A4, A5, A6\}$\\
+        \end{tabular}
+    \end{table}
+
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+
+    Complete-linkage Proximity Matrix at Level 3 -- Merge \{A4, A5\} and \{A6\}
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|ccccc}
+        \cellcolor[HTML]{FFFFFF}{\color[HTML]{000000} } & {\color[HTML]{000000} A1, A8} & {\color[HTML]{000000} A2, A7}      & {\color[HTML]{000000} A3}          & {\color[HTML]{000000} A4, A5}      & \cellcolor[HTML]{9B9B9B}{\color[HTML]{000000} A6}          \\ \hline
+        {\color[HTML]{000000} A1, A8}                   & {\color[HTML]{000000} $0$}    & {\color[HTML]{000000} $\sqrt{95}$} & {\color[HTML]{000000} $\sqrt{65}$} & {\color[HTML]{3531FF} $\sqrt{57}$} & {\color[HTML]{9b9b9b} $\sqrt{28}$} \\
+        {\color[HTML]{000000} A2, A7}                   & {\color[HTML]{000000} }       & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{55}$} & {\color[HTML]{3531FF} $\sqrt{49}$} & {\color[HTML]{9b9b9b} $\sqrt{13}$} \\
+        {\color[HTML]{000000} A3}                       & {\color[HTML]{000000} }       & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{9b9b9b} $\sqrt{23}$} & {\color[HTML]{3531FF} $\sqrt{54}$} \\
+        {\color[HTML]{000000} A4, A5}                   & {\color[HTML]{000000} }       & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{9b9b9b} $\sqrt{7}$}  \\
+        \cellcolor[HTML]{9B9B9B}{\color[HTML]{000000} A6}                       & {\color[HTML]{000000} }       & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{9b9b9b} $0$}        
+        \end{tabular}
+    \end{table}
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|c|l}
+        Level & \# Clusters & Clusters \\ \hline
+        0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        2     & 6           & $\{A1\}, \{A2, A7\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A8\}$\\
+        3     & 5           & $\{A1, A8\}, \{A2, A7\}, \{A3\}, \{A4, A5\}, \{A6\}$\\
+        4     & 4           & $\{A1, A8\}, \{A2, A7\}, \{A3\}, \{A4, A5, A6\}$\\
+        \end{tabular}
+    \end{table}
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+
+    Complete-linkage Proximity Matrix at Level 4
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|ccccc}
+        \cellcolor[HTML]{FFFFFF}{\color[HTML]{000000} } & {\color[HTML]{000000} A1, A8} & {\color[HTML]{000000} A2, A7}      & {\color[HTML]{000000} A3}          & {\color[HTML]{000000} A4, A5, A6} \\ \hline
+        {\color[HTML]{000000} A1, A8}                   & {\color[HTML]{000000} $0$}    & {\color[HTML]{000000} $\sqrt{95}$} & {\color[HTML]{000000} $\sqrt{65}$} & {\color[HTML]{000000} $\sqrt{57}$} \\
+        {\color[HTML]{000000} A2, A7}                   & {\color[HTML]{000000} }       & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{55}$} & {\color[HTML]{fe0000} $\sqrt{49}$} \\
+        {\color[HTML]{000000} A3}                       & {\color[HTML]{000000} }       & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{54}$} \\
+        {\color[HTML]{000000} A4, A5, A6}                   & {\color[HTML]{000000} }       & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}     \\
+        \end{tabular}
+    \end{table}
+
+    \begin{itemize}
+        \item $\sqrt{7}$ is the next minimum distance between clusters when using complete-linkage, so we merge \{A2, A7\} and \{A4, A5, A6\}.
+    \end{itemize}
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|c|l}
+        Level & \# Clusters & Clusters \\ \hline
+        0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        2     & 6           & $\{A1\}, \{A2, A7\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A8\}$\\
+        3     & 5           & $\{A1, A8\}, \{A2, A7\}, \{A3\}, \{A4, A5\}, \{A6\}$\\
+        4     & 4           & $\{A1, A8\}, \{A2, A7\}, \{A3\}, \{A4, A5, A6\}$\\
+        5     & 3           & $\{A1, A8\}, \{A2, A7, A4, A5, A6\}, \{A3\}$\\
+        \end{tabular}
+    \end{table}
+
+
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Review Question 2: Agglomerative Clustering}
+    \small
+
+    Complete-linkage Proximity Matrix at Level 5
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|cccc}
+        \cellcolor[HTML]{FFFFFF}{\color[HTML]{000000} } & {\color[HTML]{000000} A1, A8} & {\color[HTML]{000000} A2, A7, A4, A5, A6}      & {\color[HTML]{000000} A3}\\ \hline
+        {\color[HTML]{000000} A1, A8}                   & {\color[HTML]{000000} $0$}    & {\color[HTML]{000000} $\sqrt{95}$} & {\color[HTML]{000000} $\sqrt{65}$} \\
+        {\color[HTML]{000000} A2, A7, A4, A5, A6}                   & {\color[HTML]{000000} }       & {\color[HTML]{000000} $0$}         & {\color[HTML]{fe0000} $\sqrt{55}$} \\
+        {\color[HTML]{000000} A3}                       & {\color[HTML]{000000} }       & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$} \\
+        \end{tabular}
+    \end{table}
+
+    \begin{table}[]
+        \scriptsize
+        \begin{tabular}{c|c|l}
+        Level & \# Clusters & Clusters \\ \hline
+        Level & \# Clusters & Clusters \\ \hline
+        0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A7\}, \{A8\}$\\
+        2     & 6           & $\{A1\}, \{A2, A7\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A8\}$\\
+        3     & 5           & $\{A1, A8\}, \{A2, A7\}, \{A3\}, \{A4, A5\}, \{A6\}$\\
+        4     & 4           & $\{A1, A8\}, \{A2, A7\}, \{A3\}, \{A4, A5, A6\}$\\
+        5     & 3           & $\{A1, A8\}, \{A2, A7, A4, A5, A6\}, \{A3\}$\\
+        6     & 2           & {\color[HTML]{3531FF} $\{A1, A8\}, \{A2, A7, A4, A5, A6, A3\}$}\\
+        7     & 1           & $\{A1, A8, A2, A7, A4, A5, A6, A3\}$\\
+        \end{tabular}
+    \end{table}
+
+    Note: Use the sequence from the 2nd last level to draw the dendrogram. 
+
+\end{frame}
+
+\end{document}
+
+
+
+
+
