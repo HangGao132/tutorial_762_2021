@@ -86,6 +86,7 @@
 \institute{The University of Auckland}
 \date{May 2021}
 
+\newcolumntype{g}{>{\columncolor[HTML]{c0c0c0}}c}
 
 \begin{document}
 
@@ -193,13 +194,13 @@
 
     \begin{table}[]
         \scriptsize
-        \begin{tabular}{c|ccc|cc|ccc}
+        \begin{tabular}{c|cccggccc}
                                                         & A1  & A2          & A3          & A4                                 & A5                                 & A6                                & A7                                 & A8                                 \\ \hline
         A1                                              & $0$ & $\sqrt{45}$ & $\sqrt{63}$ & {\color[HTML]{3531FF} $\sqrt{57}$} & \textcolor{gray}{$\sqrt{41}$} & $\sqrt{28}$                       & $\sqrt{95}$                        & $\sqrt{6}$                         \\
         A2                                              &     & $0$         & $\sqrt{55}$ & {\color[HTML]{3531FF} $\sqrt{49}$} & \textcolor{gray}{$\sqrt{35}$} & $\sqrt{11}$                       & $\sqrt{5}$                         & $\sqrt{25}$                        \\
-        A3                                              &     &             & $0$         & \textcolor{gray}{$\sqrt{11}$} & {\color[HTML]{3531FF} $\sqrt{23}$} & $\sqrt{54}$                       & $\sqrt{47}$                        & $\sqrt{65}$                        \\ \hline
-        A4                                              &     &             &             & {\color[HTML]{3531FF} $0$}         & \textcolor{gray}{$\sqrt{2}$}  & {\color[HTML]{3531FF} $\sqrt{7}$} & {\color[HTML]{3531FF} $\sqrt{26}$} & \textcolor{gray}{$\sqrt{5}$}  \\
-        A5                                              &     &             &             &                                    & {\color[HTML]{3531FF} $0$}         & \textcolor{gray}{$\sqrt{5}$} & \textcolor{gray}{$\sqrt{21}$} & {\color[HTML]{3531FF} $\sqrt{35}$} \\ \hline
+        A3                                              &     &             & $0$         & \textcolor{gray}{$\sqrt{11}$} & {\color[HTML]{3531FF} $\sqrt{23}$} & $\sqrt{54}$                       & $\sqrt{47}$                        & $\sqrt{65}$                        \\
+        \rowcolor[HTML]{c0c0c0}A4                       &     &             &             & {\color[HTML]{3531FF} $0$}         & \textcolor{gray}{$\sqrt{2}$}  & {\color[HTML]{3531FF} $\sqrt{7}$} & {\color[HTML]{3531FF} $\sqrt{26}$} & \textcolor{gray}{$\sqrt{5}$}  \\
+        \rowcolor[HTML]{c0c0c0}A5                       &     &             &             &                                    & {\color[HTML]{3531FF} $0$}         & \textcolor{gray}{$\sqrt{5}$} & \textcolor{gray}{$\sqrt{21}$} & {\color[HTML]{3531FF} $\sqrt{35}$} \\
         A6                                              &     &             &             &                                    &                                    & $0$                               & $\sqrt{13}$                        & $\sqrt{27}$                        \\
         A7                                              &     &             &             &                                    &                                    &                                   & $0$                                & $\sqrt{53}$                        \\
         A8                                              &     &             &             &                                    &                                    &                                   &                                    & $0$                               
@@ -259,14 +260,14 @@
 
     \begin{table}[]
         \scriptsize
-        \begin{tabular}{c|ccccccc}
-                & A1          & A2                                 & A3          & A4, A5      & A6          & \cellcolor[HTML]{9B9B9B}A7                                 & A8          \\ \hline
+        \begin{tabular}{c|cgcccgc}
+                & A1          & A2                                 & A3          & A4, A5      & A6          & A7                                 & A8          \\ \hline
         A1      & $0$         & {\color[HTML]{9b9b9b} $\sqrt{45}$} & $\sqrt{63}$ & $\sqrt{57}$ & $\sqrt{28}$ & {\color[HTML]{3531FF} $\sqrt{95}$} & $\sqrt{6}$  \\
-        A2      & {\color[HTML]{9b9b9b} $\sqrt{45}$} & {\color[HTML]{3531FF} $0        $} & {\color[HTML]{3531FF} $\sqrt{55}$} & {\color[HTML]{3531FF} $\sqrt{49}$} & {\color[HTML]{9b9b9b} $\sqrt{11}$} & {\color[HTML]{9b9b9b} $\sqrt{5}$ } & {\color[HTML]{9b9b9b} $\sqrt{25}$} \\
+        \rowcolor[HTML]{c0c0c0}A2      & {\color[HTML]{9b9b9b} $\sqrt{45}$} & {\color[HTML]{3531FF} $0        $} & {\color[HTML]{3531FF} $\sqrt{55}$} & {\color[HTML]{3531FF} $\sqrt{49}$} & {\color[HTML]{9b9b9b} $\sqrt{11}$} & {\color[HTML]{9b9b9b} $\sqrt{5}$ } & {\color[HTML]{9b9b9b} $\sqrt{25}$} \\
         A3      &             & {\color[HTML]{3531FF} $\sqrt{55}$} & 0           & $\sqrt{23}$ & $\sqrt{54}$ & {\color[HTML]{9b9b9b} $\sqrt{47}$} & $\sqrt{65}$ \\
         A4, A5  &             & {\color[HTML]{3531FF} $\sqrt{49}$} &             & $0        $ & $\sqrt{7 }$ & {\color[HTML]{9b9b9b} $\sqrt{26}$} & $\sqrt{35}$ \\
         A6      &             & {\color[HTML]{9b9b9b} $\sqrt{11}$} &             &             & $0        $ & {\color[HTML]{3531FF} $\sqrt{13}$} & $\sqrt{27}$ \\
-        \cellcolor[HTML]{9B9B9B}A7      & {\color[HTML]{3531FF} $\sqrt{95}$} & {\color[HTML]{9b9b9b} $\sqrt{5 }$} & {\color[HTML]{9b9b9b} $\sqrt{47}$} & {\color[HTML]{9b9b9b} $\sqrt{26}$} & {\color[HTML]{3531FF} $\sqrt{13}$} & {\color[HTML]{3531FF} $0        $} & {\color[HTML]{3531FF} $\sqrt{53}$} \\
+        \rowcolor[HTML]{c0c0c0}A7      & {\color[HTML]{3531FF} $\sqrt{95}$} & {\color[HTML]{9b9b9b} $\sqrt{5 }$} & {\color[HTML]{9b9b9b} $\sqrt{47}$} & {\color[HTML]{9b9b9b} $\sqrt{26}$} & {\color[HTML]{3531FF} $\sqrt{13}$} & {\color[HTML]{3531FF} $0        $} & {\color[HTML]{3531FF} $\sqrt{53}$} \\
         A8      &             & {\color[HTML]{9b9b9b} $\sqrt{25}$} &             &             &             & {\color[HTML]{3531FF} $\sqrt{53}$} & $0        $
         \end{tabular}
     \end{table}
@@ -335,14 +336,14 @@
 
     \begin{table}[]
         \scriptsize
-        \begin{tabular}{c|cccccc}
-        \cellcolor[HTML]{FFFFFF}{\color[HTML]{000000} } & {\color[HTML]{000000} A1}  & {\color[HTML]{000000} A2, A7}      & {\color[HTML]{000000} A3}          & {\color[HTML]{000000} A4, A5}      & {\color[HTML]{000000} A6}          & \cellcolor[HTML]{9B9B9B}{\color[HTML]{000000} A8}          \\ \hline
-        {\color[HTML]{000000} A1}                       & {\color[HTML]{000000} $0 $} & {\color[HTML]{3531FF} $\sqrt{95}$} & {\color[HTML]{9b9b9b} $\sqrt{63}$} & {\color[HTML]{3531FF} $\sqrt{57}$} & {\color[HTML]{3531FF} $\sqrt{28}$} & {\color[HTML]{9b9b9b} $\sqrt{6}$}  \\
+        \begin{tabular}{c|gccccg}
+        \cellcolor[HTML]{FFFFFF}{\color[HTML]{000000} } & {\color[HTML]{000000} A1}  & {\color[HTML]{000000} A2, A7}      & {\color[HTML]{000000} A3}          & {\color[HTML]{000000} A4, A5}      & {\color[HTML]{000000} A6}          & {\color[HTML]{000000} A8}          \\ \hline
+        \rowcolor[HTML]{c0c0c0}{\color[HTML]{000000} A1}                       & {\color[HTML]{000000} $0 $} & {\color[HTML]{3531FF} $\sqrt{95}$} & {\color[HTML]{9b9b9b} $\sqrt{63}$} & {\color[HTML]{3531FF} $\sqrt{57}$} & {\color[HTML]{3531FF} $\sqrt{28}$} & {\color[HTML]{9b9b9b} $\sqrt{6}$}  \\
         {\color[HTML]{000000} A2, A7}                   & {\color[HTML]{3531FF} $\sqrt{95}$} & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{55}$} & {\color[HTML]{000000} $\sqrt{49}$} & {\color[HTML]{000000} $\sqrt{13}$} & {\color[HTML]{9b9b9b} $\sqrt{53}$} \\
         {\color[HTML]{000000} A3}                       & {\color[HTML]{9b9b9b} $\sqrt{63}$} & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{23}$} & {\color[HTML]{000000} $\sqrt{54}$} & {\color[HTML]{3531FF} $\sqrt{65}$} \\
         {\color[HTML]{000000} A4, A5}                   & {\color[HTML]{3531FF} $\sqrt{57}$} & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{7}$}  & {\color[HTML]{9b9b9b} $\sqrt{35}$} \\
         {\color[HTML]{000000} A6}                       & {\color[HTML]{3531FF} $\sqrt{28}$} & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{9b9b9b} $\sqrt{27}$} \\
-        \cellcolor[HTML]{9B9B9B}{\color[HTML]{000000} A8}                       & {\color[HTML]{9b9b9b} $\sqrt{6 }$} & {\color[HTML]{9b9b9b} $\sqrt{53}$}            & {\color[HTML]{3531FF} $\sqrt{65}$}            & {\color[HTML]{9b9b9b} $\sqrt{35}$}            & {\color[HTML]{9b9b9b} $\sqrt{27}$}            & {\color[HTML]{9b9b9b} $0$}        
+        \rowcolor[HTML]{c0c0c0}{\color[HTML]{000000} A8}                       & {\color[HTML]{9b9b9b} $\sqrt{6 }$} & {\color[HTML]{9b9b9b} $\sqrt{53}$}            & {\color[HTML]{3531FF} $\sqrt{65}$}            & {\color[HTML]{9b9b9b} $\sqrt{35}$}            & {\color[HTML]{9b9b9b} $\sqrt{27}$}            & {\color[HTML]{9b9b9b} $0$}        
         \end{tabular}
     \end{table}
 
@@ -406,13 +407,13 @@
 
     \begin{table}[]
         \scriptsize
-        \begin{tabular}{c|ccccc}
-        \cellcolor[HTML]{FFFFFF}{\color[HTML]{000000} } & {\color[HTML]{000000} A1, A8} & {\color[HTML]{000000} A2, A7}      & {\color[HTML]{000000} A3}          & {\color[HTML]{000000} A4, A5}      & \cellcolor[HTML]{9B9B9B}{\color[HTML]{000000} A6}          \\ \hline
+        \begin{tabular}{c|cccgg}
+        \cellcolor[HTML]{FFFFFF}{\color[HTML]{000000} } & {\color[HTML]{000000} A1, A8} & {\color[HTML]{000000} A2, A7}      & {\color[HTML]{000000} A3}          & {\color[HTML]{000000} A4, A5}      & {\color[HTML]{000000} A6}          \\ \hline
         {\color[HTML]{000000} A1, A8}                   & {\color[HTML]{000000} $0$}    & {\color[HTML]{000000} $\sqrt{95}$} & {\color[HTML]{000000} $\sqrt{65}$} & {\color[HTML]{3531FF} $\sqrt{57}$} & {\color[HTML]{9b9b9b} $\sqrt{28}$} \\
         {\color[HTML]{000000} A2, A7}                   & {\color[HTML]{000000} }       & {\color[HTML]{000000} $0$}         & {\color[HTML]{000000} $\sqrt{55}$} & {\color[HTML]{3531FF} $\sqrt{49}$} & {\color[HTML]{9b9b9b} $\sqrt{13}$} \\
         {\color[HTML]{000000} A3}                       & {\color[HTML]{000000} }       & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{9b9b9b} $\sqrt{23}$} & {\color[HTML]{3531FF} $\sqrt{54}$} \\
-        {\color[HTML]{000000} A4, A5}                   & {\color[HTML]{000000} }       & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{9b9b9b} $\sqrt{7}$}  \\
-        \cellcolor[HTML]{9B9B9B}{\color[HTML]{000000} A6}                       & {\color[HTML]{000000} }       & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{9b9b9b} $0$}        
+        \rowcolor[HTML]{c0c0c0}{\color[HTML]{000000} A4, A5}                   & {\color[HTML]{000000} }       & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} $0$}         & {\color[HTML]{9b9b9b} $\sqrt{7}$}  \\
+        \rowcolor[HTML]{c0c0c0}{\color[HTML]{000000} A6}                       & {\color[HTML]{000000} }       & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{000000} }            & {\color[HTML]{9b9b9b} $0$}        
         \end{tabular}
     \end{table}
 
@@ -489,7 +490,6 @@
         \scriptsize
         \begin{tabular}{c|c|l}
         Level & \# Clusters & Clusters \\ \hline
-        Level & \# Clusters & Clusters \\ \hline
         0     & 8           & $\{A1\}, \{A2\}, \{A3\}, \{A4\}, \{A5\}, \{A6\}, \{A7\}, \{A8\}$\\
         1     & 7           & $\{A1\}, \{A2\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A7\}, \{A8\}$\\
         2     & 6           & $\{A1\}, \{A2, A7\}, \{A3\}, \{A4, A5\}, \{A6\}, \{A8\}$\\
@@ -501,7 +501,7 @@
         \end{tabular}
     \end{table}
 
-    Note: Use the sequence from the 2nd last level to draw the dendrogram. 
+    Note: Use the sequence from the 2nd last level to draw the dendrogram. (I assume you do not keep the sequence at the last level, since it is one cluster which contains all data points.)
 
 \end{frame}
 
