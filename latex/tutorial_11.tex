@@ -420,7 +420,7 @@
             \text{lrd}_2(d) & = \norm{N_2(d)} / (\text{reachdist}_2(a \leftarrow d) + \text{reachdist}_2(b \leftarrow d))                                      & = 2 / (3 + 2) & = 0.4\\
         \end{array}
     \end{equation*}
-    
+
 \end{frame}
 
 %-------------------------------------------------------------------------------
@@ -486,33 +486,136 @@
 \end{frame}
 
 %-------------------------------------------------------------------------------
+\section{Data Stream Mining}
 \begin{frame}
-    \frametitle{}
+    \frametitle{Tutorial Question 6 -- Data Stream}
     
-    
+    \begin{block}{Question 6}
+        Give examples of three requirements for data stream mining that makes it different from regular data mining.
+    \end{block}
+
+    \begin{itemize}
+        \item Web data, e.g. Amazon web orders, video steaming (real-time decoding)
+        \item IoT sensors, e.g. Real-time temperature monitoring, blood pressure monitors, step monitor on a smartwatch
+        \item Finance, e.g. Real-time stock price data
+        \item Transportation and supply-chain, e.g. traffic information, pack-house logistic
+    \end{itemize}
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \begin{frame}
-    \frametitle{}
+    \frametitle{Tutorial Question 3 -- Sliding Window}
     
-    
+    \begin{block}{Question 3}
+        When would you use a sliding window technique as compared to a reservoir sampling technique.
+    \end{block}
+
+    \textbf{Reservoir Sampling}
+    \begin{itemize}
+        \item A randomized algorithm for choosing a {\em simple random sample} without
+        replacement of $k$ items from a population of unknown size in a single
+        pass over the items.
+        \item No matter how many stream elements $t$ have been read
+        so far, each of them is currently in the reservoir with the same
+        probability, $k/t$.
+        \item Maintains a fixed-size uniform random sample
+    \end{itemize}
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \begin{frame}
-    \frametitle{}
+    \frametitle{Tutorial Question 3 -- Sliding Window}
     
-    
+    \begin{block}{Question 3}
+        When would you use a sliding window technique as compared to a reservoir sampling technique.
+    \end{block}
+
+    \textbf{Sliding Window}
+    \begin{itemize}
+        \item Only  consider the last $n$ samples
+        \item Clear way to bound memory
+        \item Natural in applications: Emphasizes the most recent data
+        \item Do not keep the old samples outside the current window
+    \end{itemize}
 \end{frame}
 
 %-------------------------------------------------------------------------------
 \begin{frame}
-    \frametitle{}
+    \frametitle{Concept Drift}
+    \begin{example}
+        You use a real-time temperature sensor to predict the weather in Wellington.
+        The model is trained from the data which are gathered from Wellington. The model shows high performance, 
+        but there is a dramatic performance drop when using it to predict the weather in New York.
+    \end{example}
+
+    \begin{itemize}
+        \item \textbf{Concept Drift} describes a change in the distribution of input data and labels over time.
+        \item It may cause prediction accuracy to deteriorate over time.
+    \end{itemize}
     
-    
+    Types of concept drift:
+    \begin{itemize}
+        \item \textbf{Real} concept drift: The relationship between the input data and label has changed. e.g. The concept of the keyword -- "Doge" on Twitter.
+        \item \textbf{Virtual} concept drift: The distribution of input data has changed, but not the decision boundary. e.g. School holidays, less sales from the food court, the distribution changes, but the purchase pattern still holds.
+    \end{itemize}
 \end{frame}
 
+%-------------------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Drift Detection Method (DDM)}
+    
+    \begin{itemize}
+        \item DDM monitors the number of errors produces by a model learned on the previous stream items.
+        \item Let $P_t$ denote the error rate of the predictor at time $t$. 
+        Given the number of errors in a sample of $t$ examples, its standard deviation at time t is given by:
+        \[
+            S_t = \sqrt{P_t(1-P_t)/t}
+        \]
+        \item DDM stores the smallest value of the error rates $P_{\text{min}}$ observed up to time $t$, and the standard deviation $S_{\text{min}}$ at that point.
+        \item \textbf{Warning:} If $P_t + S_t \geq P_{\text{min}} + 2 S_{\text{min}}$, \textbf{new samples} are stored in anticipation of a possible change.
+        \item \textbf{Change:} If $P_t + S_t  \geq P_{\text{min}} + 3 S_{\text{min}}$, a \textbf{new model} is built using the examples stored since the warning. Reset $P_{\text{min}}$ and $S_{\text{min}}$.
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+\begin{frame}[t]
+    \frametitle{Tutorial Question 1 -- Drift Detection Method (DDM)}
+
+    \begin{block}{Question 1}
+        DDM has the drawback that it may take a long time to react to changes after a long period without change.
+        Suggest a couple of ways to fix this, possibly at the cost of introducing some parameters.
+    \end{block}
+    
+    \begin{itemize}
+        \item DDM has difficulties when the change is \textbf{slowly} gradual. 
+        \item  The examples will be stored for long time, the drift level can take too much time to trigger and the examples memory can be exceeded.
+        \item {\em Early Drift Detection Method} (EDDM) by Baena-Garcıa, et al. (2006). The idea is to keep track of the \textbf{average distance between two errors} instead of only the error rate.
+        It assumes that the distance between two occurrences of classification errors increases as a stable concept is being learnt.
+    \end{itemize}
+\end{frame}
+
+% %-------------------------------------------------------------------------------
+% \begin{frame}
+%     \frametitle{Adaptive sliding window (ADWIN)}
+    
+%     \begin{itemize}
+%         \item ADWIN keeps a variable-length window of recently seen items.
+%     \end{itemize}
+    
+% \end{frame}
+
+% %-------------------------------------------------------------------------------
+% \begin{frame}
+%     \frametitle{}
+    
+%     \begin{block}{Question 2}
+%         Consider the implementation of ADWIN with the Hoeffding-based test. Discuss how ADWIN will react to:
+% (1) A stream with an abrupt change. After a long stream of bits with average 0, at some time T the average
+% suddenly changes to 1 6= 0.
+% (2) Gradual after a long stream of bits with average 0, at time T the average starts increasing linearly so that
+% the average at time t > T is t+1 = t + , with  a small value.
+%     \end{block}
+% \end{frame}
 
 \end{document}
 
