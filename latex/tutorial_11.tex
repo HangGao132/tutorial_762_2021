@@ -363,15 +363,20 @@
 \begin{frame}
     \frametitle{Tutorial Question 2 -- LOF}
 
-    Let $o'$ be a neighbour of $o$, to avoid $\text{dist}(o, o')$ is too small, we compute the reachability distance from $o'$ to $o$:
+    Let $o'$ be a neighbour of $o$, to avoid $\text{dist}(o, o')$ is too small, we compute the reachability distance from $o$ to $o'$:
     \[
-        \text{reachdist}_k(o \leftarrow o') = \max\{\text{dist}_k(o), \text{dist}(o, o')\}
+        \text{reachdist}_k(o' \leftarrow o) = \max\{\text{dist}_k(o), \text{dist}(o, o')\}
     \]
     
     Note that reachability distance is not symmetric, thus 
     \[
         \text{reachdist}_k(o \leftarrow o') \neq \text{reachdist}_k(o' \leftarrow o)
     \]
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.4\textwidth]{../imgs/reachdist.png}
+    \end{figure}
 
 \end{frame}
 
@@ -382,18 +387,18 @@
 
     \begin{equation*}
         \begin{array}{rlll}
-            \rowcolor[HTML]{34CDF9} \text{reachdist}_2(a \leftarrow b) & = \max\{\text{dist}_2(a), \text{dist}(a, b)\} & = \max\{1, 1\} & = 1\\
-            \text{reachdist}_2(a \leftarrow c) & = \max\{\text{dist}_2(a), \text{dist}(a, c)\} & = \max\{1, 1\} & = 1\\
-            \text{reachdist}_2(a \leftarrow d) & = \max\{\text{dist}_2(a), \text{dist}(a, d)\} & = \max\{1, 3\} & = 3\\
-            \rowcolor[HTML]{34CDF9} \text{reachdist}_2(b \leftarrow a) & = \max\{\text{dist}_2(b), \text{dist}(b, a)\} & = \max\{2, 1\} & = 2\\
-            \text{reachdist}_2(b \leftarrow c) & = \max\{\text{dist}_2(b), \text{dist}(b, c)\} & = \max\{2, 2\} & = 2\\
-            \text{reachdist}_2(b \leftarrow d) & = \max\{\text{dist}_2(b), \text{dist}(b, d)\} & = \max\{2, 2\} & = 2\\
-            \text{reachdist}_2(c \leftarrow a) & = \max\{\text{dist}_2(c), \text{dist}(c, a)\} & = \max\{2, 1\} & = 2\\
-            \text{reachdist}_2(c \leftarrow b) & = \max\{\text{dist}_2(c), \text{dist}(c, b)\} & = \max\{2, 2\} & = 2\\
-            \text{reachdist}_2(c \leftarrow d) & = \max\{\text{dist}_2(c), \text{dist}(c, d)\} & = \max\{2, 4\} & = 4\\
-            \text{reachdist}_2(d \leftarrow a) & = \max\{\text{dist}_2(d), \text{dist}(d, a)\} & = \max\{3, 3\} & = 3\\
-            \text{reachdist}_2(d \leftarrow b) & = \max\{\text{dist}_2(d), \text{dist}(d, b)\} & = \max\{3, 2\} & = 3\\
-            \text{reachdist}_2(d \leftarrow c) & = \max\{\text{dist}_2(d), \text{dist}(d, c)\} & = \max\{3, 4\} & = 4\\
+            \rowcolor[HTML]{34CDF9} \text{reachdist}_2(b \leftarrow a) & = \max\{\text{dist}_2(a), \text{dist}(a, b)\} & = \max\{1, 1\} & = 1\\
+            \text{reachdist}_2(c \leftarrow a) & = \max\{\text{dist}_2(a), \text{dist}(a, c)\} & = \max\{1, 1\} & = 1\\
+            \text{reachdist}_2(d \leftarrow a) & = \max\{\text{dist}_2(a), \text{dist}(a, d)\} & = \max\{1, 3\} & = 3\\
+            \rowcolor[HTML]{34CDF9} \text{reachdist}_2(a \leftarrow b) & = \max\{\text{dist}_2(b), \text{dist}(b, a)\} & = \max\{2, 1\} & = 2\\
+            \text{reachdist}_2(c \leftarrow b) & = \max\{\text{dist}_2(b), \text{dist}(b, c)\} & = \max\{2, 2\} & = 2\\
+            \text{reachdist}_2(d \leftarrow b) & = \max\{\text{dist}_2(b), \text{dist}(b, d)\} & = \max\{2, 2\} & = 2\\
+            \text{reachdist}_2(a \leftarrow c) & = \max\{\text{dist}_2(c), \text{dist}(c, a)\} & = \max\{2, 1\} & = 2\\
+            \text{reachdist}_2(b \leftarrow c) & = \max\{\text{dist}_2(c), \text{dist}(c, b)\} & = \max\{2, 2\} & = 2\\
+            \text{reachdist}_2(d \leftarrow c) & = \max\{\text{dist}_2(c), \text{dist}(c, d)\} & = \max\{2, 4\} & = 4\\
+            \text{reachdist}_2(a \leftarrow d) & = \max\{\text{dist}_2(d), \text{dist}(d, a)\} & = \max\{3, 3\} & = 3\\
+            \text{reachdist}_2(b \leftarrow d) & = \max\{\text{dist}_2(d), \text{dist}(d, b)\} & = \max\{3, 2\} & = 3\\
+            \text{reachdist}_2(c \leftarrow d) & = \max\{\text{dist}_2(d), \text{dist}(d, c)\} & = \max\{3, 4\} & = 4\\
         \end{array}
     \end{equation*}
 
@@ -408,16 +413,16 @@
     
     The {\em Local Reachability Density} (LRD) of an object $o$ is defined as
     \[
-        \text{lrd}_k(o) = \frac{\norm{N_k(o)}}{\sum_{o' \in N_k(o)} \text{reachdist}_k(o' \leftarrow o)}
+        \text{lrd}_k(o) = \frac{\norm{N_k(o)}}{\sum_{o' \in N_k(o)} \text{reachdist}_k(o \leftarrow o')}
         \]
         
     \begin{equation*}
         \footnotesize
         \begin{array}{rlll}
-            \text{lrd}_2(a) & = \norm{N_2(a)} / (\text{reachdist}_2(b \leftarrow a) + \text{reachdist}_2(c \leftarrow a))                                      & = 2 / (2 + 2) & = 0.5\\
-            \text{lrd}_2(b) & = \norm{N_2(b)} / (\text{reachdist}_2(a \leftarrow b) + \text{reachdist}_2(c \leftarrow b) + \text{reachdist}_2(d \leftarrow b)) & = 3 / (1 + 2 + 3)& = 0.5\\
-            \text{lrd}_2(c) & = \norm{N_2(c)} / (\text{reachdist}_2(a \leftarrow c) + \text{reachdist}_2(b \leftarrow c))                                      & = 2 / (1 + 2) & \approx 0.667\\
-            \text{lrd}_2(d) & = \norm{N_2(d)} / (\text{reachdist}_2(a \leftarrow d) + \text{reachdist}_2(b \leftarrow d))                                      & = 2 / (3 + 2) & = 0.4\\
+            \text{lrd}_2(a) & = \norm{N_2(a)} / (\text{reachdist}_2(a \leftarrow b) + \text{reachdist}_2(a \leftarrow c))                                      & = 2 / (2 + 2) & = 0.5\\
+            \text{lrd}_2(b) & = \norm{N_2(b)} / (\text{reachdist}_2(b \leftarrow a) + \text{reachdist}_2(b \leftarrow c) + \text{reachdist}_2(b \leftarrow d)) & = 3 / (1+2+3) & = 0.5\\
+            \text{lrd}_2(c) & = \norm{N_2(c)} / (\text{reachdist}_2(c \leftarrow a) + \text{reachdist}_2(c \leftarrow b))                                      & = 2 / (1 + 2) & = 0.667\\
+            \text{lrd}_2(d) & = \norm{N_2(d)} / (\text{reachdist}_2(d \leftarrow a) + \text{reachdist}_2(d \leftarrow b))                                      & = 2 / (3 + 2) & = 0.4\\
         \end{array}
     \end{equation*}
 
@@ -430,16 +435,16 @@
     The {\em Local Outlier Factor} (LOF) of an object $o$ is
     \[
         \text{LOF}_k(o) = \frac{\sum_{o' \in N_k(o)} \frac{\text{lrd}_k(o')}{\text{lrd}_k(o)}}{\norm{N_k(o)}} 
-        = \sum_{o' \in N_k(o)} \text{lrd}_k(o') \cdot \sum_{o' \in N_k(o)} \text{reachdist}_k(o' \leftarrow o)
+        = \frac{\sum_{o' \in N_k(o)} \text{lrd}_k(o')}{\norm{N_k(o)} \cdot \text{lrd}_k(o)}
         \]
         
         \begin{equation*}
         \footnotesize
         \begin{array}{rlll}
-            \text{LOF}_2(a) & = (\text{lrd}_2(b) + \text{lrd}_2(c)) \cdot \sum_{o' \in N_k(o)} \text{reachdist}_2(o' \leftarrow a) & = (0.5+0.667)\cdot (2+2)& = 4.668\\
-            \text{LOF}_2(b) & = (\text{lrd}_2(a) + \text{lrd}_2(c) + \text{lrd}_2(d)) \cdot \sum_{o' \in N_k(o)} \text{reachdist}_2(o' \leftarrow b) & = (0.5+0.667+0.4) \cdot (1+2+3)& = 9.402\\
-            \text{LOF}_2(c) & = (\text{lrd}_2(a) + \text{lrd}_2(b)) \cdot \sum_{o' \in N_k(o)} \text{reachdist}_2(o' \leftarrow c) & = (0.5+0.5) \cdot (1+2)& = 3 \\
-            \text{LOF}_2(d) & = (\text{lrd}_2(a) + \text{lrd}_2(b)) \cdot \sum_{o' \in N_k(o)} \text{reachdist}_2(o' \leftarrow d) & = (0.5+0.5) \cdot (3+2)& = 5 \\
+            \text{LOF}_2(a) & = (\text{lrd}_2(b) + \text{lrd}_2(c)) / (\norm{N_2(a)} \cdot \text{lrd}_2(a)) & = (0.5+0.667) / (2\times 0.5)& = 1.167\\
+            \text{LOF}_2(b) & = (\text{lrd}_2(a) + \text{lrd}_2(c) + \text{lrd}_2(d)) / (\norm{N_2(b)} \cdot \text{lrd}_2(b))  & = (0.5+0.667+0.4) / (3\times 0.5)& \approx 1.045\\
+            \text{LOF}_2(c) & = (\text{lrd}_2(a) + \text{lrd}_2(b)) / (\norm{N_2(c)} \cdot \text{lrd}_2(c))  & = (0.5+0.5) / (2\times 0.667)& \approx 0.750\\
+            \text{LOF}_2(d) & = (\text{lrd}_2(a) + \text{lrd}_2(b)) / (\norm{N_2(d)} \cdot \text{lrd}_2(d))  & = (0.5+0.5) / (2\times 0.4)& = 1.25\\
         \end{array}
     \end{equation*}
 
