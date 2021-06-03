@@ -277,19 +277,21 @@
             \end{table}
 
             \[
-                \frac{\norm{\{o' | \text{dist}(o, o') \le r\}}}{\norm{D}} \le \pi
+                \frac{|\{o' | \text{dist}(o, o') \le r\}|}{|D|} \le \pi
             \]
+            where $|D|$ is the {\em cardinality} of the set $D$.\\
+            \hspace*{1em}
 
             We need to define the hyperparameters: $r$ and $\pi$.
         \end{column}
         \begin{column}{0.5\textwidth}
-            The number of data points, $\norm{D}$, is 7.\\
+            The number of data points, $|D|$, is 7.\\
             Let $r=2$,
 
             \begin{table}[]
                 \scriptsize
                 \begin{tabular}{c|c|c}
-                             &  \textbf{\# of objects within $r$} & \textbf{Divide by $\norm{D}$}\\ \hline
+                             &  \textbf{\# of objects within $r$} & \textbf{Divide by $|D|$}\\ \hline
                 \textbf{1,1} &  3 & 0.43 \\
                 \textbf{1,2} &  4 & 0.57 \\
                 \textbf{2,2} &  5 & 0.71 \\
@@ -311,7 +313,7 @@
 %-------------------------------------------------------------------------------
 \begin{frame}
     \frametitle{Tutorial Question 2 -- Density-based Approach: Local Outlier Factor (LOF)}
-    \small
+    \footnotesize
 
     \begin{block}{Question 2}
         Consider a set of points (0,0), (1,0), (0,1), (3,0). 
@@ -323,7 +325,7 @@
 
             \begin{figure}
                 \centering
-                \includegraphics[width=0.4\textwidth]{../imgs/outlier_lof.pdf}
+                \includegraphics[width=0.35\textwidth]{../imgs/outlier_lof.pdf}
             \end{figure}
 
             \begin{table}[]
@@ -348,12 +350,13 @@
                 \textbf{c (0,1)} & 2 & 2 \\
                 \textbf{d (3,0)} & 3 & 2  
                 \end{tabular}
-                \caption{Distance between data point $o$ and its k-th nearest neighbour}
+                \caption{Distance between data point $o$ and its k-th nearest neighbour ($k=2$)}
             \end{table}
+            We denote the set of $k$-nearest neighbours as $N_k(o)$:
             \[
                 N_k(o) = \{o' | o' \in D, \text{dist}(o, o') \le \text{dist}_k(o)\}
             \]
-            Note that $N_k(o)$ may contain more than $k$ objects, because objects may have same distance.
+            \textbf{Note:} $|N_k(o)|$ may contain more than $k$ objects, because objects may have same distance.
         \end{column}
     \end{columns}
 
@@ -413,16 +416,16 @@
     
     The {\em Local Reachability Density} (LRD) of an object $o$ is defined as
     \[
-        \text{lrd}_k(o) = \frac{\norm{N_k(o)}}{\sum_{o' \in N_k(o)} \text{reachdist}_k(o \leftarrow o')}
+        \text{lrd}_k(o) = \frac{|N_k(o)|}{\sum_{o' \in N_k(o)} \text{reachdist}_k(o \leftarrow o')}
         \]
         
     \begin{equation*}
         \footnotesize
         \begin{array}{rlll}
-            \text{lrd}_2(a) & = \norm{N_2(a)} / (\text{reachdist}_2(a \leftarrow b) + \text{reachdist}_2(a \leftarrow c))                                      & = 2 / (2 + 2) & = 0.5\\
-            \text{lrd}_2(b) & = \norm{N_2(b)} / (\text{reachdist}_2(b \leftarrow a) + \text{reachdist}_2(b \leftarrow c) + \text{reachdist}_2(b \leftarrow d)) & = 3 / (1+2+3) & = 0.5\\
-            \text{lrd}_2(c) & = \norm{N_2(c)} / (\text{reachdist}_2(c \leftarrow a) + \text{reachdist}_2(c \leftarrow b))                                      & = 2 / (1 + 2) & = 0.667\\
-            \text{lrd}_2(d) & = \norm{N_2(d)} / (\text{reachdist}_2(d \leftarrow a) + \text{reachdist}_2(d \leftarrow b))                                      & = 2 / (3 + 2) & = 0.4\\
+            \text{lrd}_2(a) & = |N_2(a)| / (\text{reachdist}_2(a \leftarrow b) + \text{reachdist}_2(a \leftarrow c))                                      & = 2 / (2 + 2) & = 0.5\\
+            \text{lrd}_2(b) & = |N_2(b)| / (\text{reachdist}_2(b \leftarrow a) + \text{reachdist}_2(b \leftarrow c) + \text{reachdist}_2(b \leftarrow d)) & = 3 / (1+2+3) & = 0.5\\
+            \text{lrd}_2(c) & = |N_2(c)| / (\text{reachdist}_2(c \leftarrow a) + \text{reachdist}_2(c \leftarrow b))                                      & = 2 / (1 + 2) & = 0.667\\
+            \text{lrd}_2(d) & = |N_2(d)| / (\text{reachdist}_2(d \leftarrow a) + \text{reachdist}_2(d \leftarrow b))                                      & = 2 / (3 + 2) & = 0.4\\
         \end{array}
     \end{equation*}
 
@@ -434,17 +437,17 @@
     
     The {\em Local Outlier Factor} (LOF) of an object $o$ is
     \[
-        \text{LOF}_k(o) = \frac{\sum_{o' \in N_k(o)} \frac{\text{lrd}_k(o')}{\text{lrd}_k(o)}}{\norm{N_k(o)}} 
-        = \frac{\sum_{o' \in N_k(o)} \text{lrd}_k(o')}{\norm{N_k(o)} \cdot \text{lrd}_k(o)}
-        \]
+        \text{LOF}_k(o) = \frac{\sum_{o' \in N_k(o)} \frac{\text{lrd}_k(o')}{\text{lrd}_k(o)}}{|N_k(o)|} 
+        = \frac{\sum_{o' \in N_k(o)} \text{lrd}_k(o')}{|N_k(o)| \cdot \text{lrd}_k(o)}
+    \]
         
-        \begin{equation*}
+    \begin{equation*}
         \footnotesize
         \begin{array}{rlll}
-            \text{LOF}_2(a) & = (\text{lrd}_2(b) + \text{lrd}_2(c)) / (\norm{N_2(a)} \cdot \text{lrd}_2(a)) & = (0.5+0.667) / (2\times 0.5)& = 1.167\\
-            \text{LOF}_2(b) & = (\text{lrd}_2(a) + \text{lrd}_2(c) + \text{lrd}_2(d)) / (\norm{N_2(b)} \cdot \text{lrd}_2(b))  & = (0.5+0.667+0.4) / (3\times 0.5)& \approx 1.045\\
-            \text{LOF}_2(c) & = (\text{lrd}_2(a) + \text{lrd}_2(b)) / (\norm{N_2(c)} \cdot \text{lrd}_2(c))  & = (0.5+0.5) / (2\times 0.667)& \approx 0.750\\
-            \text{LOF}_2(d) & = (\text{lrd}_2(a) + \text{lrd}_2(b)) / (\norm{N_2(d)} \cdot \text{lrd}_2(d))  & = (0.5+0.5) / (2\times 0.4)& = 1.25\\
+            \text{LOF}_2(a) & = (\text{lrd}_2(b) + \text{lrd}_2(c)) / (|N_2(a)| \cdot \text{lrd}_2(a)) & = (0.5+0.667) / (2\times 0.5)& = 1.167\\
+            \text{LOF}_2(b) & = (\text{lrd}_2(a) + \text{lrd}_2(c) + \text{lrd}_2(d)) / (|N_2(b)| \cdot \text{lrd}_2(b))  & = (0.5+0.667+0.4) / (3\times 0.5)& \approx 1.045\\
+            \text{LOF}_2(c) & = (\text{lrd}_2(a) + \text{lrd}_2(b)) / (|N_2(c)| \cdot \text{lrd}_2(c))  & = (0.5+0.5) / (2\times 0.667)& \approx 0.750\\
+            \text{LOF}_2(d) & = (\text{lrd}_2(a) + \text{lrd}_2(b)) / (|N_2(d)| \cdot \text{lrd}_2(d))  & = (0.5+0.5) / (2\times 0.4)& = 1.25\\
         \end{array}
     \end{equation*}
 
@@ -499,11 +502,19 @@
         Give examples of three requirements for data stream mining that makes it different from regular data mining.
     \end{block}
 
+    Examples:
     \begin{itemize}
         \item Web data, e.g. Amazon web orders, video steaming (real-time decoding)
         \item IoT sensors, e.g. Real-time temperature monitoring, blood pressure monitors, step monitor on a smartwatch
         \item Finance, e.g. Real-time stock price data
         \item Transportation and supply-chain, e.g. traffic information, pack-house logistic
+    \end{itemize}
+
+    Requirements:
+    \begin{itemize}
+        \item Process one instance at a time, and only inspect it once
+        \item Time and space constraint
+        \item Need to adapt changes (Concept drift)
     \end{itemize}
 \end{frame}
 
