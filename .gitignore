@@ -426,3 +426,5 @@ TSWLatexianTemp*
 
 latex/__latexindent_temp.tex
 data/openml
+data/.DS_Store
+data/MNIST/.DS_Store
